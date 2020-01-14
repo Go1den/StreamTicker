@@ -19,5 +19,4 @@ S_TWITTER = Slide("imagefiles/twitter.png", "GoldenSRL")
 S_YOUTUBE = Slide("imagefiles/youtube.png", "YouTube.com/GoldenSRL")
 S_DISCORD = Slide("imagefiles/discord.png", "discord.gg/go1den")
 
-MASTER_SLIDE_LIST = [S_LATEST_CHEER, S_MOST_RECENT_CHEERER, S_LATEST_SUBSCRIBER, S_MOST_RECENT_SUBSCRIBER_NAME,
-                     S_INSTAGRAM, S_TWITTER, S_YOUTUBE, S_DISCORD]
+MASTER_SLIDE_LIST = [S_INSTAGRAM, S_TWITTER, S_YOUTUBE, S_DISCORD]
