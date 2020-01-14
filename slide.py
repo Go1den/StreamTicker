@@ -30,9 +30,12 @@ class Slide:
             return self.getTextWithoutFileInput()
 
     def getBitImage(self):
-        with open(self.filePath) as f:
-            contents = f.readline().rstrip().replace(':', ' -')
-        self.image = bitutilities.chooseBitIcon(int(contents.split(' ')[2]))
+        try:
+            with open(self.filePath) as f:
+                contents = f.readline().rstrip().replace(':', ' -')
+            self.image = bitutilities.chooseBitIcon(int(contents.split(' ')[2]))
+        except:
+            self.image = ["bitimagefiles/bit10reduced.png"]
 
 
 
