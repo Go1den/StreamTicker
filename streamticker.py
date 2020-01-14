@@ -7,15 +7,10 @@ from settings import *
 from slideConstants import MASTER_SLIDE_LIST
 from slideshow import Slideshow
 
-slideshow = Slideshow(MASTER_SLIDE_LIST)
-idx = 0
-win = GraphWin('StreamTicker by Go1den', WINDOW_WIDTH, WINDOW_HEIGHT)  # give title and dimensions
-win.setBackground(WINDOW_BG_COLOR)
-
-def drawBackground(win):
+def drawBackground(window):
     try:
         backgroundImage = Image(Point(202, 24), WINDOW_BG_IMAGE)
-        backgroundImage.draw(win)
+        backgroundImage.draw(window)
     except:
         print("Unable to load background image.")
 
@@ -43,15 +38,16 @@ def analyzeMemory():
 def getDifference(sum1, sum2):
     summary.print_(summary.get_diff(sum1, sum2))
 
-def main(idx, slideshow, methodOfDeparture):
+def main(slideshow):
+    methodOfDeparture = 0
+    idx = 0
     while True:
         # sum1 = analyzeMemory()
         currentSlideImage = Image(Point(24, 66), slideshow.slides[idx].image)
         currentSlideImage.draw(win)
         moveAllOnLine([currentSlideImage], 0, -1, 44, MOVE_ALL_ON_LINE_DELAY)
         characters = list(slideshow.slides[idx].getMessageText())
-        messageList = []
-        messageList.append(currentSlideImage)
+        messageList = [currentSlideImage]
         oddOrEven = False
         xPos = 40
         for charac in characters:
@@ -107,9 +103,12 @@ def main(idx, slideshow, methodOfDeparture):
         time.sleep(MESSAGE_INTERMISSION)
         idx += 1
         # sum2 = analyzeMemory()
-        # getDifference(sum1, sum2)
+        # getDifference(sum1, sum2
         if idx >= len(slideshow.slides):
             idx = 0
 
+thisSlideshow = Slideshow(MASTER_SLIDE_LIST)
+win = GraphWin('StreamTicker by Go1den', WINDOW_WIDTH, WINDOW_HEIGHT)
+win.setBackground(WINDOW_BG_COLOR)
 drawBackground(win)
-main(idx, slideshow, 0)
+main(thisSlideshow)
