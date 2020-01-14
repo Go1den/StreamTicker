@@ -3,30 +3,13 @@ import random
 from pympler import muppy, summary
 
 from graphics import *
+from settings import *
 from slideConstants import MASTER_SLIDE_LIST
 from slideshow import Slideshow
 
-MESSAGE_DURATION = 5
-MESSAGE_INTERMISSION = .5
-MESSAGE_COLOR = 'white'
-MESSAGE_STYLE = 'bold'
-MESSAGE_FONT_FACE = 'PT Mono'
-
-MAX_LENGTH_FOR_NORMAL_FONT_SIZE = 16
-NORMAL_FONT_SIZE = 26
-SMALLER_FONT_SIZE = 22
-
-WINDOW_WIDTH = 400
-WINDOW_HEIGHT = 44
-WINDOW_BG_COLOR = 'black'
-WINDOW_BG_IMAGE = "imagefiles/background.png"
-
-MOVE_ALL_ON_LINE_DELAY = .004
-
 slideshow = Slideshow(MASTER_SLIDE_LIST)
-subscribers = []
 idx = 0
-win = GraphWin('StreamTicker', WINDOW_WIDTH, WINDOW_HEIGHT)  # give title and dimensions
+win = GraphWin('StreamTicker by Go1den', WINDOW_WIDTH, WINDOW_HEIGHT)  # give title and dimensions
 win.setBackground(WINDOW_BG_COLOR)
 
 def drawBackground(win):
@@ -54,7 +37,7 @@ def moveAllOnLine(shapeList, dx, dy, repetitions, delay):
 def analyzeMemory():
     all_objects = muppy.get_objects()
     sum1 = summary.summarize(all_objects)
-    #summary.print_(sum1)
+    # summary.print_(sum1)
     return sum1
 
 def getDifference(sum1, sum2):
