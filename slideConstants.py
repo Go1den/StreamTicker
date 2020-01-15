@@ -8,7 +8,7 @@ F_TOTAL_CHEER_AMOUNT = "Streamlabs/total_cheer_amount.txt"
 F_TOTAL_SUBSCRIBER_COUNT = "Streamlabs/total_subscriber_count.txt"
 F_TOTAL_SUBSCRIBER_SCORE = "Streamlabs/total_subscriber_score.txt"
 
-S_LATEST_CHEER = Slide("bitimagefiles/bit10reduced.png", "Latest Cheer:", "", "", "", False)
+S_LATEST_CHEER = Slide("bitimagefiles/bit10.png", "Latest Cheer:", "", "", "", False)
 S_MOST_RECENT_CHEERER = Slide("", "", "Streamlabs/most_recent_cheerer.txt", "", "", True)
 
 S_LATEST_SUBSCRIBER = Slide("imagefiles/noWay.png", "Latest subscriber:", "", "", "", False)
