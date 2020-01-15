@@ -1,8 +1,7 @@
 import random
 
-from pympler import muppy, summary
-
 from graphics import *
+from mover import moveAllOnLine
 from settings import *
 from slideConstants import MASTER_SLIDE_LIST
 from slideshow import Slideshow
@@ -14,35 +13,10 @@ def drawBackground(window):
     except:
         print("Unable to load background image.")
 
-def moveAll(shapeList, dx, dy):
-    """ Move all shapes in shapeList by (dx, dy)."""
-    for shape in shapeList:
-        shape.move(dx, dy)
-
-def moveAllOnLine(shapeList, dx, dy, repetitions, delay):
-    """Animate the shapes in shapeList along a line.
-    Move by (dx, dy) each time.
-    Repeat the specified number of repetitions.
-    Have the specified delay (in seconds) after each repeat.
-    """
-    for i in range(repetitions):
-        moveAll(shapeList, dx, dy)
-        time.sleep(delay)
-
-def analyzeMemory():
-    all_objects = muppy.get_objects()
-    sum1 = summary.summarize(all_objects)
-    # summary.print_(sum1)
-    return sum1
-
-def getDifference(sum1, sum2):
-    summary.print_(summary.get_diff(sum1, sum2))
-
 def main(slideshow):
     methodOfDeparture = 0
     idx = 0
     while True:
-        # sum1 = analyzeMemory()
         currentSlideImage = Image(Point(24, 66), slideshow.slides[idx].image)
         currentSlideImage.draw(win)
         moveAllOnLine([currentSlideImage], 0, -1, 44, MOVE_ALL_ON_LINE_DELAY)
@@ -102,8 +76,6 @@ def main(slideshow):
         methodOfDeparture = (methodOfDeparture + 1) % 4
         time.sleep(MESSAGE_INTERMISSION)
         idx += 1
-        # sum2 = analyzeMemory()
-        # getDifference(sum1, sum2
         if idx >= len(slideshow.slides):
             idx = 0
 
