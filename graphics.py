@@ -59,8 +59,8 @@ class GraphWin(tk.Canvas):
         if self.closed:
             raise GraphicsError("window is closed")
 
-    def _onKey(self, evnt):
-        self.lastKey = evnt.keysym
+    def _onKey(self, event):
+        self.lastKey = event.keysym
 
     def setBackground(self, color):
         """Set background color of the window"""
@@ -162,11 +162,9 @@ class GraphWin(tk.Canvas):
         return key
 
     def getHeight(self):
-        """Return the height of the window"""
         return self.height
 
     def getWidth(self):
-        """Return the width of the window"""
         return self.width
 
     def toScreen(self, x, y):
@@ -263,15 +261,12 @@ class GraphicsObject:
         self.config = config
 
     def setFill(self, color):
-        """Set interior color to color"""
         self._reconfig("fill", color)
 
     def setOutline(self, color):
-        """Set outline color to color"""
         self._reconfig("outline", color)
 
     def setWidth(self, width):
-        """Set line weight to width"""
         self._reconfig("width", width)
 
     def draw(self, graphwin):
@@ -676,18 +671,14 @@ class Image(GraphicsObject):
         return other
 
     def getWidth(self):
-        """Returns the width of the image in pixels"""
         return self.img.width()
 
     def getHeight(self):
-        """Returns the height of the image in pixels"""
         return self.img.height()
 
     def getPixel(self, x, y):
         """Returns a list [r,g,b] with the RGB color values for pixel (x,y)
-        r,g,b are in range(256)
-
-        """
+        r,g,b are in range(256)"""
 
         value = self.img.get(x, y)
         if type(value) == type(0):
@@ -698,16 +689,12 @@ class Image(GraphicsObject):
             return list(map(int, value.split()))
 
     def setPixel(self, x, y, color):
-        """Sets pixel (x,y) to the given color
-        
-        """
+        """Sets pixel (x,y) to the given color"""
         self.img.put("{" + color + "}", (x, y))
 
     def save(self, filename):
         """Saves the pixmap image to filename.
-        The format for the save image is determined from the filname extension.
-
-        """
+        The format for the save image is determined from the filename extension."""
 
         path, name = os.path.split(filename)
         ext = name.split(".")[-1]
@@ -717,50 +704,3 @@ def color_rgb(r, g, b):
     """r,g,b are intensities of red, green, and blue in range(256)
     Returns color specifier string for the resulting color"""
     return "#%02x%02x%02x" % (r, g, b)
-
-def test():
-    win = GraphWin()
-    win.setCoords(0, 0, 10, 10)
-    t = Text(Point(5, 5), "Centered Text")
-    t.draw(win)
-    p = Polygon(Point(1, 1), Point(5, 3), Point(2, 7))
-    p.draw(win)
-    e = Entry(Point(5, 6), 10)
-    e.draw(win)
-    win.getMouse()
-    p.setFill("red")
-    p.setOutline("blue")
-    p.setWidth(2)
-    s = ""
-    for pt in p.getPoints():
-        s = s + "(%0.1f,%0.1f) " % (pt.getX(), pt.getY())
-    t.setText(e.getText())
-    e.setFill("green")
-    e.setText("Spam!")
-    e.move(2, 0)
-    win.getMouse()
-    p.move(2, 3)
-    s = ""
-    for pt in p.getPoints():
-        s = s + "(%0.1f,%0.1f) " % (pt.getX(), pt.getY())
-    t.setText(s)
-    win.getMouse()
-    p.undraw()
-    e.undraw()
-    t.setStyle("bold")
-    win.getMouse()
-    t.setStyle("normal")
-    win.getMouse()
-    t.setStyle("italic")
-    win.getMouse()
-    t.setStyle("bold italic")
-    win.getMouse()
-    t.setSize(14)
-    win.getMouse()
-    t.setFace("arial")
-    t.setSize(20)
-    win.getMouse()
-    win.close()
-
-if __name__ == "__main__":
-    test()
