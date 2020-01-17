@@ -1,4 +1,7 @@
+import math
 import time
+
+from settings import WINDOW_HEIGHT, MOVE_ALL_ON_LINE_DELAY
 
 def moveAll(shapeList, dx, dy):
     """ Move all shapes in shapeList by (dx, dy)."""
@@ -14,3 +17,10 @@ def moveAllOnLine(shapeList, dx, dy, repetitions, delay):
     for i in range(repetitions):
         moveAll(shapeList, dx, dy)
         time.sleep(delay)
+
+def rollMessageIntoWindow(messageList, repetitions):
+    for m in messageList[1:]:
+        if m.getAnchor().getY() == math.ceil(WINDOW_HEIGHT * 1.5):
+            moveAllOnLine([m], 0, -4, repetitions, MOVE_ALL_ON_LINE_DELAY)
+        else:
+            moveAllOnLine([m], 0, 4, repetitions, MOVE_ALL_ON_LINE_DELAY)
