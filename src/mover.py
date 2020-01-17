@@ -1,7 +1,7 @@
 import math
 import time
 
-from settings import WINDOW_HEIGHT, MOVE_ALL_ON_LINE_DELAY
+from src.settings import WINDOW_HEIGHT, MOVE_ALL_ON_LINE_DELAY
 
 def moveAll(shapeList, dx, dy):
     """ Move all shapes in shapeList by (dx, dy)."""

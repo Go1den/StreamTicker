@@ -1,5 +1,5 @@
-from graphics import GraphWin, Point, Image
-from settings import WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_BG_COLOR, WINDOW_BG_IMAGE
+from src.graphics import GraphWin, Point, Image
+from src.settings import WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_BG_COLOR, WINDOW_BG_IMAGE, BACKGROUND_X_POS, BACKGROUND_Y_POS
 
 def createWindow():
     win = GraphWin('StreamTicker by Go1den', WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -8,7 +8,7 @@ def createWindow():
 
 def drawBackground(window):
     try:
-        backgroundImage = Image(Point(202, 24), WINDOW_BG_IMAGE)
+        backgroundImage = Image(Point(BACKGROUND_X_POS, BACKGROUND_Y_POS), WINDOW_BG_IMAGE)
         backgroundImage.draw(window)
     except:
         print("Unable to load background image.")

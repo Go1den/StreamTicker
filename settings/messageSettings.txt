@@ -1,0 +1,43 @@
+[MessageSettings]
+
+# This is the duration in seconds of each message
+MESSAGE_DURATION = 5
+
+# This is the duration in seconds of the pause between the previous message disappearing and the next message appearing
+MESSAGE_INTERMISSION = .5
+
+# This is the default color of the text. Plain color words are accepted.
+MESSAGE_COLOR = white
+
+# Allows a modifier on the font, such as bold or italic.
+MESSAGE_STYLE = bold
+
+# This is the name of the font. STRONG PREFERENCE FOR MONOSPACED FONTS. If it can't find the font you list here, it will attempt to use a (bad) default.
+MESSAGE_FONT_FACE = Courier New
+
+# This is the maximum number of characters in a message before it will attempt to shrink the font. If you set this too high, your messages could trail outside of the window
+MAX_LENGTH_FOR_NORMAL_FONT_SIZE = 16
+
+# This is the normal font size of a message
+NORMAL_FONT_SIZE = 26
+
+# This is the horizontal gap in pixels between each character for a message that uses NORMAL_FONT_SIZE
+NORMAL_FONT_SIZE_GAP = 20
+
+# Read this carefully. This is the number of pixels to be subtracted from the usual gap between characters for a message that uses NORMAL_FONT_SIZE
+# if the character is a space (e.g. " ").
+# In other words, we don't want to waste a bunch of space in the window separating words. Set this to a higher number to move words closer together, or a lower number
+# to move them farther apart.
+NORMAL_FONT_SIZE_GAP_FOR_SPACES = 4
+
+# This is the smaller font size used when a message exceeds the length of MAX_LENGTH_FOR_NORMAL_FONT_SIZE
+SMALLER_FONT_SIZE = 22
+
+# This is the horizontal gap in pixels between each character for a message that uses SMALLER_FONT_SIZE
+SMALLER_FONT_SIZE_GAP = 16
+
+# Read this carefully. This is the number of pixels to be subtracted from the usual gap between characters for a message that uses SMALLER_FONT_SIZE
+# if the character is a space (e.g. " ").
+# In other words, we don't want to waste a bunch of space in the window separating words. Set this to a higher number to move words closer together, or a lower number
+# to move them farther apart.
+SMALLER_FONT_SIZE_GAP_FOR_SPACES = 6
