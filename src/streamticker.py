@@ -1,9 +1,9 @@
-from departure import *
-from graphics import *
-from mover import moveAllOnLine, rollMessageIntoWindow
-from settings import *
-from slideConstants import MASTER_SLIDE_LIST
-from slideshow import Slideshow
+from src.departure import *
+from src.graphics import *
+from src.mover import moveAllOnLine, rollMessageIntoWindow
+from src.settings import *
+from src.slideConstants import MASTER_SLIDE_LIST
+from src.slideshow import Slideshow
 
 FLOOR_YPOS = math.ceil(WINDOW_HEIGHT * 1.5)
 CEILING_YPOS = math.ceil(WINDOW_HEIGHT * -.5)
@@ -40,7 +40,7 @@ def main(slideshow):
     idx = 0
     repetitions = math.floor(WINDOW_HEIGHT / 4)
     while True:
-        currentSlideImage = Image(Point(24, FLOOR_YPOS), slideshow.slides[idx].image)
+        currentSlideImage = Image(Point(IMAGE_X_POS, FLOOR_YPOS), slideshow.slides[idx].image)
         currentSlideImage.draw(slideshow.window)
         moveAllOnLine([currentSlideImage], 0, -1, WINDOW_HEIGHT, MOVE_ALL_ON_LINE_DELAY)
         characters = list(slideshow.slides[idx].getMessageText())

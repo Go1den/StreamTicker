@@ -1,0 +1,13 @@
+[DepartureSettings]
+
+# All of these impact which methods of departure can be taken by a message leaving the window. Enable or disable them by setting them to True or False (Capitalization matters)
+# Each departure method has an equal chance of being selected for any given message. Disable all the ones you don't like, or leave them all on for more variety.
+
+ENABLE_DEPARTING_BY_SLIDING_RIGHT = True
+ENABLE_DEPARTING_BY_SLIDING_LEFT = True
+ENABLE_DEPARTING_BY_SLIDING_UP = True
+ENABLE_DEPARTING_BY_SLIDING_DOWN = True
+ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT = True
+ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT = True
+ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER = True
+ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES = True

@@ -1,4 +1,4 @@
-from slide import Slide
+from src.slide import Slide
 
 F_MOST_RECENT_SUBSCRIBER = "Streamlabs/most_recent_subscriber.txt"
 F_SESSION_CHEER_AMOUNT = "Streamlabs/session_cheer_amount.txt"
