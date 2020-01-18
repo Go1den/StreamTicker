@@ -41,3 +41,6 @@ SMALLER_FONT_SIZE_GAP = 16
 # In other words, we don't want to waste a bunch of space in the window separating words. Set this to a higher number to move words closer together, or a lower number
 # to move them farther apart.
 SMALLER_FONT_SIZE_GAP_FOR_SPACES = 6
+
+# This is the path to the default image. The default image is used if none is provided for a message.
+DEFAULT_IMAGE = imagefiles/stLogo28.png
