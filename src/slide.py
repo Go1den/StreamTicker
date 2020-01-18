@@ -1,9 +1,10 @@
 from src import bitutilities
+from src.settings import DEFAULT_IMAGE
 
 class Slide:
 
     def __init__(self, image="", text="", filePath="", prefixText="", suffixText="", isBitMessage=False, nickname=""):
-        self.image = image
+        self.image = image if image else DEFAULT_IMAGE
         self.text = text
         self.filePath = filePath
         self.prefixText = prefixText
