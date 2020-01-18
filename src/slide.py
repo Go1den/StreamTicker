@@ -2,13 +2,14 @@ from src import bitutilities
 
 class Slide:
 
-    def __init__(self, image="", text="", filePath="", prefixText="", suffixText="", isBitMessage=False):
+    def __init__(self, image="", text="", filePath="", prefixText="", suffixText="", isBitMessage=False, nickname=""):
         self.image = image
         self.text = text
         self.filePath = filePath
         self.prefixText = prefixText
         self.suffixText = suffixText
         self.isBitMessage = isBitMessage
+        self.nickname = nickname
         if isBitMessage:
             self.getBitImage()
 
