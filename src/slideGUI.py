@@ -11,7 +11,6 @@ def writeJSON():
     with open("messages.json") as f:
         existingJSON = json.load(f)
         slides = existingJSON['slides']
-        print(slides)
         newSlide = constructJSON()
         slides.append(newSlide)
     with open("messages.json", 'w') as f:
@@ -45,10 +44,6 @@ def addMessage():
     if validateMessage():
         try:
             writeJSON()
-            # with open("messages.txt", "r+") as f:
-            #     content = f.read()
-            #     f.seek(0, 0)
-            #     f.write(constructMessage() + "\n" + content)
             currentStatus.configure(text="Message added!")
             addMessageButton.configure(state=DISABLED)
             clearAllFields()
