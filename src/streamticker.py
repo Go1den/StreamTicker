@@ -1,14 +1,31 @@
+import json
+
 from src.departure import *
 from src.graphics import *
 from src.mover import moveAllOnLine, rollMessageIntoWindow
 from src.settings import *
-from src.slideConstants import MASTER_SLIDE_LIST
+from src.slide import Slide
 from src.slideshow import Slideshow
 
 FLOOR_YPOS = math.ceil(WINDOW_HEIGHT * 1.5)
 CEILING_YPOS = math.ceil(WINDOW_HEIGHT * -.5)
 
 ENABLED_DEPARTURE_METHODS = getEnabledDepartureMethods()
+
+def getSlides():
+    slides = []
+    with open("messages.json") as f:
+        data = json.loads(f.read())
+        for slide in data['slides']:
+            print(slide)
+            slides.append(Slide(slide['image'],
+                                slide['text'],
+                                slide['filePath'],
+                                slide['prefixText'],
+                                slide['suffixText'],
+                                True if slide['isBitMessage'] == "True" else False,
+                                slide['nickname']))
+    return slides
 
 def generateCharacterObjects(slideshow, characters, messageList):
     oddOrEven = False
@@ -54,6 +71,6 @@ def main(slideshow):
         time.sleep(MESSAGE_INTERMISSION)
         idx = incrementIndex(idx, slideshow)
 
-thisSlideshow = Slideshow(MASTER_SLIDE_LIST)
+thisSlideshow = Slideshow(getSlides())
 thisSlideshow.drawBackground()
 main(thisSlideshow)
