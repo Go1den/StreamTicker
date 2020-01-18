@@ -20,6 +20,7 @@ NORMAL_FONT_SIZE_GAP_FOR_SPACES = int(messageSettings.get('NORMAL_FONT_SIZE_GAP_
 SMALLER_FONT_SIZE = int(messageSettings.get('SMALLER_FONT_SIZE', 22))
 SMALLER_FONT_SIZE_GAP = int(messageSettings.get('SMALLER_FONT_SIZE_GAP', 16))
 SMALLER_FONT_SIZE_GAP_FOR_SPACES = int(messageSettings.get('SMALLER_FONT_SIZE_GAP_FOR_SPACES', 6))
+DEFAULT_IMAGE = str(messageSettings.get('DEFAULT_IMAGE', 'imagefiles/stLogo28.png'))
 
 windowConfig = configparser.ConfigParser()
 windowConfig.read(WINDOWSETTINGS_FILE)
