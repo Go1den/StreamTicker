@@ -1,9 +1,33 @@
+import json
+import random
 from tkinter import *
 
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
 FILE_CONTENTS = ""
+
+def writeJSON():
+    with open("messages.json") as f:
+        existingJSON = json.load(f)
+        slides = existingJSON['slides']
+        print(slides)
+        newSlide = constructJSON()
+        slides.append(newSlide)
+    with open("messages.json", 'w') as f:
+        json.dump(existingJSON, f, indent=4)
+
+def constructJSON():
+    slide = {
+        "image": imagepath.get(),
+        "text": text.get(),
+        "filePath": filepath.get(),
+        "prefixText": prefix.get(),
+        "suffixText": suffix.get(),
+        "isBitMessage": "False",
+        "nickname": nickname.get().upper() + str(random.randint(0, 999999))
+    }
+    return slide
 
 def clearAllFields():
     nickname.delete(0, END)
@@ -13,16 +37,23 @@ def clearAllFields():
     filepath.delete(0, END)
     imagepath.delete(0, END)
 
+def constructMessage():
+    return nickname.get().upper() + str(random.randint(0,
+                                                       999999)) + " = Slide(\"" + imagepath.get() + "\", \"" + text.get() + "\", \"" + filepath.get() + "\", \"" + prefix.get() + "\", \"" + suffix.get() + "\", " + "False)"
+
 def addMessage():
     if validateMessage():
         try:
-            with open("messages.txt", "a") as f:
-                f.write("Test")
+            writeJSON()
+            # with open("messages.txt", "r+") as f:
+            #     content = f.read()
+            #     f.seek(0, 0)
+            #     f.write(constructMessage() + "\n" + content)
             currentStatus.configure(text="Message added!")
             addMessageButton.configure(state=DISABLED)
             clearAllFields()
-        except FileNotFoundError:
-            currentStatus.configure(text="Unable to write to messages.txt!")
+        except:
+            currentStatus.configure(text="Unable to write to messages.json!")
 
 def addNewSlide():
     print("%s%s%s%s" % (prefix.get(), text.get(), FILE_CONTENTS, suffix.get()))
@@ -45,6 +76,10 @@ def hasNickname():
     if not nickname.get():
         currentStatus.configure(text="Please provide a nickname for this message.")
         return False
+    else:
+        if not nickname.get().isalpha():
+            currentStatus.configure(text="Nickname must consist of only letters.")
+            return False
     return True
 
 def atLeastOneFieldPopulated():
