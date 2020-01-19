@@ -1,12 +1,26 @@
 import json
 import random
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
+from src.settings import DEFAULT_IMAGE
+
 FILE_CONTENTS = ""
+
+def selectTextFile():
+    filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select text file", filetypes=[("All files", "*")])
+    print(filename)
+    filepath.configure(text=filename)
+    tryReadingTextFile()
+
+def selectImageFile():
+    filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("png files", "*.png")])
+    print(filename)
+    imagepath.configure(text=filename)
+    tryReadingImageFile()
 
 def writeJSON():
     with open("messages.json") as f:
@@ -19,9 +33,9 @@ def writeJSON():
 
 def constructJSON(sortOrder):
     slide = {
-        "image": imagepath.get(),
+        "image": imagepath.cget("text"),
         "text": text.get(),
-        "filePath": filepath.get(),
+        "filePath": filepath.cget("text"),
         "prefixText": prefix.get(),
         "suffixText": suffix.get(),
         "isBitMessage": "False",
@@ -31,12 +45,16 @@ def constructJSON(sortOrder):
     return slide
 
 def clearAllFields():
+    global FILE_CONTENTS
     nickname.delete(0, END)
     prefix.delete(0, END)
     text.delete(0, END)
     suffix.delete(0, END)
-    filepath.delete(0, END)
-    imagepath.delete(0, END)
+    filepath.configure(text="")
+    imagepath.configure(text="")
+    FILE_CONTENTS = ""
+    changeImage(defaultRender)
+    previewMessage()
 
 def addMessage():
     if validateMessage(False):
@@ -55,9 +73,8 @@ def previewMessage():
     preview.configure(text=prefix.get() + text.get() + FILE_CONTENTS + suffix.get())
 
 def validateMessage(showResult=True):
-    if not filepath.get():
-        previewMessage()
-    if hasNickname() and atLeastOneFieldPopulated() and testReadingImageFile(False) and testReadingTextFile(False):
+    previewMessage()
+    if hasNickname() and atLeastOneFieldPopulated() and tryReadingImageFile() and tryReadingTextFile():
         if showResult:
             messagebox.showinfo("Success", "Message is valid and ready to be added!")
         addMessageButton.configure(state=ACTIVE)
@@ -77,58 +94,57 @@ def hasNickname():
     return True
 
 def atLeastOneFieldPopulated():
-    result = prefix.get() or text.get() or suffix.get() or filepath.get() or imagepath.get()
+    result = prefix.get() or text.get() or suffix.get() or filepath.cget("text") or imagepath.cget("text")
     if not result:
         messagebox.showinfo("Error", "You can't add a blank message!")
     return result
 
-def testReadingImageFile(showResult=True):
-    global newLabel
-    if not imagepath.get():
+def changeImage(img):
+    imageDisplay.configure(image=img)
+    imageDisplay.image = img
+
+def tryReadingImageFile():
+    if not imagepath.cget("text"):
+        changeImage(defaultRender)
         return True
     try:
-        load = ImagePIL.open(imagepath.get())
+        load = ImagePIL.open(imagepath.cget("text"))
         render = ImageTk.PhotoImage(load)
-        if showResult:
-            messagebox.showinfo("Success", "Image has a valid filepath!")
-        newLabel = Label(master, image=render)
-        newLabel.image = render
-        newLabel.grid(row=98, column=1, sticky=E)
+        changeImage(render)
         return True
     except:
+        changeImage(defaultRender)
         messagebox.showinfo("Error", "Invalid filepath or image file.")
-        newLabel.grid_forget()
         return False
 
-def testReadingTextFile(showResult=True):
+def tryReadingTextFile():
     global FILE_CONTENTS
-    if not filepath.get():
+    if not filepath.cget("text"):
+        FILE_CONTENTS = ""
+        previewMessage()
         return True
     try:
-        with open(filepath.get()) as f:
+        with open(filepath.cget("text")) as f:
             FILE_CONTENTS = f.read()
-            if showResult:
-                messagebox.showinfo("Success", "Valid filepath for text!")
             previewMessage()
             return True
     except FileNotFoundError:
-        messagebox.showinfo("Error", "Invalid filepath for text.")
+        messagebox.showinfo("Error", "Invalid filepath or text file.")
         FILE_CONTENTS = ""
         previewMessage()
         return False
 
 master = Tk()
 master.wm_title("StreamTicker MessageMaker")
-Label(master, text="Create a new message:").grid(row=0, sticky=W)
-Label(master, text="Nickname this message:").grid(row=1, column=1, sticky=E)
-Label(master, text="Message Prefix").grid(row=2, column=1, sticky=E)
-Label(master, text="Message Text").grid(row=3, column=1, sticky=E)
-Label(master, text="Message Suffix").grid(row=4, column=1, sticky=E)
-Label(master, text="Message Preview: ").grid(row=98, column=0, sticky=E)
+Label(master, text="Create a new message:").grid(row=0, column=1)
+Label(master, text="Nickname this message:").grid(row=1, column=0, sticky=E)
+Label(master, text="Message Prefix").grid(row=2, column=0, sticky=E)
+Label(master, text="Message Text").grid(row=3, column=0, sticky=E)
+Label(master, text="Message Suffix").grid(row=4, column=0, sticky=E)
 # Label(master, text="Use Twitch Bit icons").grid(row=5, sticky=E)
-Label(master, text="Text filepath:").grid(row=8, column=1, sticky=E)
-Label(master, text="Image filepath:").grid(row=10, column=1, sticky=E)
-Label(master, text="Current status:").grid(row=97, column=0, sticky=E)
+Label(master, text="Text filepath:").grid(row=8, column=0, sticky=E)
+Label(master, text="Image Preview").grid(row=97, column=0, sticky=E)
+Label(master, text="Message Preview").grid(row=97, column=1, sticky=E)
 
 nickname = Entry(master)
 prefix = Entry(master)
@@ -136,35 +152,33 @@ text = Entry(master)
 suffix = Entry(master)
 preview = Label(master)
 # bits = Checkbutton(master)
-filepath = Entry(master)
-imagepath = Entry(master)
-newLabel = Label(master)
-currentStatus = Label(master)
+filepath = Label(master)
+imagepath = Label(master)
+imageDisplay = Label(master)
 
 nickname.insert(0, "")
 prefix.insert(0, "")
 text.insert(0, "")
 suffix.insert(0, "")
-filepath.insert(0, "")
-imagepath.insert(0, "")
 
-nickname.grid(row=1, column=2)
-prefix.grid(row=2, column=2)
-text.grid(row=3, column=2)
-suffix.grid(row=4, column=2)
-preview.grid(row=98, column=2, columnspan=2, sticky=W)
-# bits.grid(row=5, column=2)
-filepath.grid(row=8, column=2)
-imagepath.grid(row=10, column=2)
-currentStatus.grid(row=97, column=1, columnspan=3, sticky=W)
-newLabel.grid(row=98, column=1)
-
-Button(master, text='Preview', command=previewMessage).grid(row=4, column=3, sticky=W, pady=4, padx=4)
-Button(master, text='Validate filepath', command=testReadingTextFile).grid(row=8, column=3, sticky=W, pady=4, padx=4)
-Button(master, text='Validate filepath', command=testReadingImageFile).grid(row=10, column=3, sticky=W, pady=4, padx=4)
-Button(master, text='Validate Message', command=validateMessage).grid(row=99, column=0, pady=4, padx=4)
+nickname.grid(row=1, column=1)
+prefix.grid(row=2, column=1)
+text.grid(row=3, column=1)
+suffix.grid(row=4, column=1)
+preview.grid(row=98, column=1, columnspan=2, sticky=W)
+# bits.grid(row=5, column=1)
+filepath.grid(row=8, column=1, columnspan=2)
+imagepath.grid(row=10, column=1, columnspan=2)
+imageDisplay.grid(row=98, column=0, sticky=E)
+load = ImagePIL.open(DEFAULT_IMAGE)
+defaultRender = ImageTk.PhotoImage(load)
+changeImage(defaultRender)
+Button(master, text='Preview', command=previewMessage).grid(row=4, column=2, sticky=W, pady=4, padx=4)
+Button(master, text='(Optional) Select Text File', command=selectTextFile).grid(row=8, column=0, sticky=E, pady=4)
+Button(master, text='(Optional) Select Image', command=selectImageFile).grid(row=10, column=0, sticky=E, pady=4)
+Button(master, text='Validate Message', command=validateMessage).grid(row=99, column=0, pady=4, padx=4, sticky=W)
 addMessageButton = Button(master, state=DISABLED, text='Add Message', command=addMessage)
-addMessageButton.grid(row=99, column=1, pady=4, padx=4)
-Button(master, text='Quit', command=master.quit).grid(row=99, column=3, pady=4, padx=4, sticky=E)
+addMessageButton.grid(row=99, column=1, pady=4, padx=4, sticky=W)
+Button(master, text='Quit', command=master.quit).grid(row=99, column=2, pady=4, padx=4, sticky=E)
 master.mainloop()
 mainloop()
