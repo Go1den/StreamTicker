@@ -25,7 +25,7 @@ def constructJSON(sortOrder):
         "prefixText": prefix.get(),
         "suffixText": suffix.get(),
         "isBitMessage": "False",
-        "nickname": nickname.get().upper() + str(random.randint(0, 999999)),
+        "nickname": nickname.get().upper() + "_" + str(random.randint(0, 999999)),
         "sortOrder": str(sortOrder)
     }
     return slide
@@ -37,10 +37,6 @@ def clearAllFields():
     suffix.delete(0, END)
     filepath.delete(0, END)
     imagepath.delete(0, END)
-
-def constructMessage():
-    return nickname.get().upper() + str(random.randint(0,
-                                                       999999)) + " = Slide(\"" + imagepath.get() + "\", \"" + text.get() + "\", \"" + filepath.get() + "\", \"" + prefix.get() + "\", \"" + suffix.get() + "\", " + "False)"
 
 def addMessage():
     if validateMessage(False):
@@ -61,7 +57,7 @@ def previewMessage():
 def validateMessage(showResult=True):
     if not filepath.get():
         previewMessage()
-    if hasNickname() and atLeastOneFieldPopulated() and testReadingImageFile() and testReadingTextFile():
+    if hasNickname() and atLeastOneFieldPopulated() and testReadingImageFile(False) and testReadingTextFile(False):
         if showResult:
             messagebox.showinfo("Success", "Message is valid and ready to be added!")
         addMessageButton.configure(state=ACTIVE)
@@ -86,14 +82,15 @@ def atLeastOneFieldPopulated():
         messagebox.showinfo("Error", "You can't add a blank message!")
     return result
 
-def testReadingImageFile():
+def testReadingImageFile(showResult=True):
     global newLabel
     if not imagepath.get():
         return True
     try:
         load = ImagePIL.open(imagepath.get())
         render = ImageTk.PhotoImage(load)
-        messagebox.showinfo("Success", "Image has a valid filepath!")
+        if showResult:
+            messagebox.showinfo("Success", "Image has a valid filepath!")
         newLabel = Label(master, image=render)
         newLabel.image = render
         newLabel.grid(row=98, column=1, sticky=E)
@@ -103,14 +100,15 @@ def testReadingImageFile():
         newLabel.grid_forget()
         return False
 
-def testReadingTextFile():
+def testReadingTextFile(showResult=True):
     global FILE_CONTENTS
     if not filepath.get():
         return True
     try:
         with open(filepath.get()) as f:
             FILE_CONTENTS = f.read()
-            messagebox.showinfo("Success", "Valid filepath for text!")
+            if showResult:
+                messagebox.showinfo("Success", "Valid filepath for text!")
             previewMessage()
             return True
     except FileNotFoundError:
