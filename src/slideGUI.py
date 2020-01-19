@@ -1,6 +1,7 @@
 import json
 import random
 from tkinter import *
+from tkinter import messagebox
 
 from PIL import Image as ImagePIL
 from PIL import ImageTk
@@ -11,13 +12,12 @@ def writeJSON():
     with open("messages.json") as f:
         existingJSON = json.load(f)
         slides = existingJSON['slides']
-        print(slides)
-        newSlide = constructJSON()
+        newSlide = constructJSON(len(slides) + 1)
         slides.append(newSlide)
     with open("messages.json", 'w') as f:
         json.dump(existingJSON, f, indent=4)
 
-def constructJSON():
+def constructJSON(sortOrder):
     slide = {
         "image": imagepath.get(),
         "text": text.get(),
@@ -25,7 +25,8 @@ def constructJSON():
         "prefixText": prefix.get(),
         "suffixText": suffix.get(),
         "isBitMessage": "False",
-        "nickname": nickname.get().upper() + str(random.randint(0, 999999))
+        "nickname": nickname.get().upper() + "_" + str(random.randint(0, 999999)),
+        "sortOrder": str(sortOrder)
     }
     return slide
 
@@ -37,23 +38,15 @@ def clearAllFields():
     filepath.delete(0, END)
     imagepath.delete(0, END)
 
-def constructMessage():
-    return nickname.get().upper() + str(random.randint(0,
-                                                       999999)) + " = Slide(\"" + imagepath.get() + "\", \"" + text.get() + "\", \"" + filepath.get() + "\", \"" + prefix.get() + "\", \"" + suffix.get() + "\", " + "False)"
-
 def addMessage():
-    if validateMessage():
+    if validateMessage(False):
         try:
             writeJSON()
-            # with open("messages.txt", "r+") as f:
-            #     content = f.read()
-            #     f.seek(0, 0)
-            #     f.write(constructMessage() + "\n" + content)
-            currentStatus.configure(text="Message added!")
+            messagebox.showinfo("Success", "Message added successfully!")
             addMessageButton.configure(state=DISABLED)
             clearAllFields()
         except:
-            currentStatus.configure(text="Unable to write to messages.json!")
+            messagebox.showinfo("Error", "Unable to write to messages.json!")
 
 def addNewSlide():
     print("%s%s%s%s" % (prefix.get(), text.get(), FILE_CONTENTS, suffix.get()))
@@ -61,11 +54,12 @@ def addNewSlide():
 def previewMessage():
     preview.configure(text=prefix.get() + text.get() + FILE_CONTENTS + suffix.get())
 
-def validateMessage():
+def validateMessage(showResult=True):
     if not filepath.get():
         previewMessage()
-    if hasNickname() and atLeastOneFieldPopulated() and testReadingImageFile() and testReadingTextFile():
-        currentStatus.configure(text="Message is valid and ready to be added!")
+    if hasNickname() and atLeastOneFieldPopulated() and testReadingImageFile(False) and testReadingTextFile(False):
+        if showResult:
+            messagebox.showinfo("Success", "Message is valid and ready to be added!")
         addMessageButton.configure(state=ACTIVE)
         return True
     else:
@@ -74,50 +68,53 @@ def validateMessage():
 
 def hasNickname():
     if not nickname.get():
-        currentStatus.configure(text="Please provide a nickname for this message.")
+        messagebox.showinfo("Error", "Please provide a nickname for this message.")
         return False
     else:
         if not nickname.get().isalpha():
-            currentStatus.configure(text="Nickname must consist of only letters.")
+            messagebox.showinfo("Error", "Nickname must consist of only letters.")
             return False
     return True
 
 def atLeastOneFieldPopulated():
     result = prefix.get() or text.get() or suffix.get() or filepath.get() or imagepath.get()
     if not result:
-        currentStatus.configure(text="You can't add a blank message!")
+        messagebox.showinfo("Error", "You can't add a blank message!")
     return result
 
-def testReadingImageFile():
+def testReadingImageFile(showResult=True):
     global newLabel
     if not imagepath.get():
         return True
     try:
         load = ImagePIL.open(imagepath.get())
         render = ImageTk.PhotoImage(load)
-        currentStatus.configure(text="Image has a valid filepath!")
+        if showResult:
+            messagebox.showinfo("Success", "Image has a valid filepath!")
         newLabel = Label(master, image=render)
         newLabel.image = render
         newLabel.grid(row=98, column=1, sticky=E)
         return True
     except:
-        currentStatus.configure(text="Invalid filepath or image file.")
+        messagebox.showinfo("Error", "Invalid filepath or image file.")
         newLabel.grid_forget()
         return False
 
-def testReadingTextFile():
+def testReadingTextFile(showResult=True):
     global FILE_CONTENTS
     if not filepath.get():
         return True
     try:
         with open(filepath.get()) as f:
             FILE_CONTENTS = f.read()
-            currentStatus.configure(text="Valid filepath for text!")
+            if showResult:
+                messagebox.showinfo("Success", "Valid filepath for text!")
             previewMessage()
             return True
     except FileNotFoundError:
-        currentStatus.configure(text="Invalid filepath for text.")
+        messagebox.showinfo("Error", "Invalid filepath for text.")
         FILE_CONTENTS = ""
+        previewMessage()
         return False
 
 master = Tk()
@@ -162,46 +159,12 @@ imagepath.grid(row=10, column=2)
 currentStatus.grid(row=97, column=1, columnspan=3, sticky=W)
 newLabel.grid(row=98, column=1)
 
-Button(master,
-       text='Preview',
-       command=previewMessage).grid(row=4,
-                                    column=3,
-                                    sticky=W,
-                                    pady=4, padx=4)
-
-Button(master,
-       text='Validate filepath',
-       command=testReadingTextFile).grid(row=8,
-                                         column=3,
-                                         sticky=W,
-                                         pady=4, padx=4)
-
-Button(master,
-       text='Validate filepath',
-       command=testReadingImageFile).grid(row=10,
-                                          column=3,
-                                          sticky=W,
-                                          pady=4, padx=4)
-
-Button(master,
-       text='Validate Message',
-       command=validateMessage).grid(row=99,
-                                     column=0,
-                                     pady=4, padx=4)
-
-addMessageButton = Button(master,
-                          state=DISABLED,
-                          text='Add Message',
-                          command=addMessage)
-addMessageButton.grid(row=99,
-                      column=1,
-                      pady=4, padx=4)
-
-Button(master,
-       text='Quit',
-       command=master.quit).grid(row=99,
-                                 column=3,
-                                 pady=4, padx=4)
-
+Button(master, text='Preview', command=previewMessage).grid(row=4, column=3, sticky=W, pady=4, padx=4)
+Button(master, text='Validate filepath', command=testReadingTextFile).grid(row=8, column=3, sticky=W, pady=4, padx=4)
+Button(master, text='Validate filepath', command=testReadingImageFile).grid(row=10, column=3, sticky=W, pady=4, padx=4)
+Button(master, text='Validate Message', command=validateMessage).grid(row=99, column=0, pady=4, padx=4)
+addMessageButton = Button(master, state=DISABLED, text='Add Message', command=addMessage)
+addMessageButton.grid(row=99, column=1, pady=4, padx=4)
+Button(master, text='Quit', command=master.quit).grid(row=99, column=3, pady=4, padx=4, sticky=E)
 master.mainloop()
 mainloop()
