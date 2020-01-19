@@ -1,12 +1,9 @@
-from os import path
-
 from src import bitutilities
-from src.settings import DEFAULT_IMAGE
 
 class Slide:
 
     def __init__(self, image="", text="", filePath="", prefixText="", suffixText="", isBitMessage=False, nickname=""):
-        self.image = image if path.isfile(image) else DEFAULT_IMAGE
+        self.image = image
         self.text = text
         self.filePath = filePath
         self.prefixText = prefixText

@@ -5,7 +5,7 @@ from tkinter import messagebox
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
-from src.settings import DEFAULT_IMAGE
+from src.settings import Settings
 
 def getExistingJSON():
     with open("messages.json") as f:
@@ -88,7 +88,7 @@ def populateTableRows(checkboxes, orderEntries):
             load = ImagePIL.open(slide['image'])
             render = ImageTk.PhotoImage(load)
         except:
-            load = ImagePIL.open(DEFAULT_IMAGE)
+            load = ImagePIL.open(settings.DEFAULT_IMAGE)
             render = ImageTk.PhotoImage(load)
         newLabel = Label(master, image=render)
         newLabel.image = render
@@ -101,6 +101,7 @@ def populateTableRows(checkboxes, orderEntries):
         idx += 1
     return idx
 
+settings = Settings()
 master = Tk()
 master.wm_title("StreamTicker MessageManager")
 Label(master, text="Here are your existing messages:").grid(row=0, column=0, columnspan=3, sticky=W)

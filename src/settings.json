@@ -13,6 +13,8 @@
     ],
     "message": [
         {
+            "MESSAGE_DURATION": "5",
+            "MESSAGE_INTERMISSION": ".5",
             "MESSAGE_COLOR": "white",
             "MESSAGE_STYLE": "bold",
             "MESSAGE_FONT_FACE": "Courier New",
