@@ -1,0 +1,42 @@
+{
+    "departure": [
+        {
+            "ENABLE_DEPARTING_BY_SLIDING_RIGHT": "True",
+            "ENABLE_DEPARTING_BY_SLIDING_LEFT": "True",
+            "ENABLE_DEPARTING_BY_SLIDING_UP": "True",
+            "ENABLE_DEPARTING_BY_SLIDING_DOWN": "True",
+            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT": "True",
+            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT": "True",
+            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER": "True",
+            "ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES": "True"
+        }
+    ],
+    "message": [
+        {
+            "MESSAGE_COLOR": "white",
+            "MESSAGE_STYLE": "bold",
+            "MESSAGE_FONT_FACE": "Courier New",
+            "MAX_LENGTH_FOR_NORMAL_FONT_SIZE": "16",
+            "NORMAL_FONT_SIZE": "26",
+            "NORMAL_FONT_SIZE_GAP": "20",
+            "NORMAL_FONT_SIZE_GAP_FOR_SPACES": "4",
+            "SMALLER_FONT_SIZE": "22",
+            "SMALLER_FONT_SIZE_GAP": "16",
+            "SMALLER_FONT_SIZE_GAP_FOR_SPACES": "6",
+            "DEFAULT_IMAGE": "imagefiles/stLogo28.png"
+        }
+    ],
+    "window": [
+        {
+            "MESSAGE_X_POS": "60",
+            "IMAGE_X_POS": "22",
+            "WINDOW_WIDTH": "400",
+            "WINDOW_HEIGHT": "44",
+            "WINDOW_BG_COLOR": "black",
+            "WINDOW_BG_IMAGE": "imagefiles/background.png",
+            "BACKGROUND_X_POS": "202",
+            "BACKGROUND_Y_POS": "24",
+            "MOVE_ALL_ON_LINE_DELAY": ".004"
+        }
+    ]
+}
