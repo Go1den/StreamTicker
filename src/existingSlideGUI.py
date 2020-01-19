@@ -74,6 +74,9 @@ def readFile(file):
 def populateTableRows(checkboxes, orderEntries):
     existingJSON = getExistingJSON()
     slides = sorted(existingJSON['slides'], key=lambda x: int(x.get('sortOrder')))
+    if len(slides) == 0:
+        messagebox.showinfo("Error", "No messages have been created yet. This program will now close.")
+        exit(1)
     idx = 1
     for slide in slides:
         chkValue = BooleanVar()
