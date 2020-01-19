@@ -5,7 +5,7 @@ I wanted something that looked cooler than static text on the stream. Now, years
 to be highly customizable and usable by everyone!
 
 StreamTicker is free to own and use, but if you find it interesting and would like to support me, I would kindly
-request a Twitch subscription at twitch.tv/go1den. It's only a couple of dollars and it helps me out, even if you don't watch my channel!
+request a Twitch subscription at twitch.tv/go1den.
 
 Some beginner notes:
 All of your messages are stored in messages.json. There are some default messages already in place. You'll want to edit these!
