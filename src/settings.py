@@ -3,11 +3,10 @@ import json
 class Settings:
     def __init__(self):
         with open("settings.json") as f:
-            data = json.loads(f.read())
+            self.data = json.loads(f.read())
 
         # Departure settings
-        d = data['departure'][0]
-        print(d)
+        d = self.data['departure'][0]
         self.ENABLE_DEPARTING_BY_SLIDING_RIGHT = bool(d['ENABLE_DEPARTING_BY_SLIDING_RIGHT'] or False)
         self.ENABLE_DEPARTING_BY_SLIDING_LEFT = bool(d['ENABLE_DEPARTING_BY_SLIDING_LEFT'] or False)
         self.ENABLE_DEPARTING_BY_SLIDING_UP = bool(d['ENABLE_DEPARTING_BY_SLIDING_UP'] or False)
@@ -18,7 +17,7 @@ class Settings:
         self.ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES = bool(d['ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES'] or False)
 
         # Message settings
-        m = data['message'][0]
+        m = self.data['message'][0]
         self.MESSAGE_DURATION = int(m['MESSAGE_DURATION'] or 5)
         self.MESSAGE_INTERMISSION = float(m['MESSAGE_INTERMISSION'] or .5)
         self.MESSAGE_COLOR = str(m['MESSAGE_COLOR'] or "white")
@@ -34,7 +33,7 @@ class Settings:
         self.DEFAULT_IMAGE = str(m['DEFAULT_IMAGE'] or "imagefiles/stLogo28.png")
 
         # Window settings
-        w = data['window'][0]
+        w = self.data['window'][0]
         self.MESSAGE_X_POS = int(w['MESSAGE_X_POS'] or 60)
         self.IMAGE_X_POS = int(w['IMAGE_X_POS'] or 21)
         self.WINDOW_WIDTH = int(w['WINDOW_WIDTH'] or 400)
