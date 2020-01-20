@@ -6,7 +6,7 @@ from tkinter import messagebox, filedialog
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
-from src.settings import Settings
+from settings import Settings
 
 def selectTextFile():
     global FILE_PATH

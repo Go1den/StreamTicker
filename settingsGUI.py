@@ -2,8 +2,8 @@ import json
 from tkinter import *
 from tkinter import messagebox, colorchooser, filedialog, font, ttk
 
-from src.CreateToolTip import CreateToolTip
-from src.settings import Settings
+from CreateToolTip import CreateToolTip
+from settings import Settings
 
 def getDefaultSettings():
     global WINDOW_BG_IMAGE, CHECK_SLIDING_RIGHT, CHECK_SLIDING_DOWN, CHECK_SLIDING_LEFT, CHECK_SLIDING_UP, CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER, \

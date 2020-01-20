@@ -2,8 +2,8 @@ import math
 import random
 import time
 
-from src.graphics import Rectangle, Point
-from src.mover import moveAllOnLine
+from graphics import Rectangle, Point
+from mover import moveAllOnLine
 
 def getEnabledDepartureMethods(settings):
     enabledMethods = []

@@ -1,5 +1,5 @@
-from src.graphics import GraphWin, Point, Image
-from src.settings import Settings
+from graphics import GraphWin, Point, Image
+from settings import Settings
 
 class Slideshow:
 

@@ -5,7 +5,7 @@ from tkinter import messagebox
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
-from src.settings import Settings
+from settings import Settings
 
 def getExistingJSON():
     with open("messages.json") as f:

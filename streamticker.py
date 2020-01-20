@@ -1,10 +1,10 @@
 import json
 
-from src.departure import *
-from src.graphics import *
-from src.mover import moveAllOnLine, rollMessageIntoWindow
-from src.slide import Slide
-from src.slideshow import Slideshow
+from departure import *
+from graphics import *
+from mover import moveAllOnLine, rollMessageIntoWindow
+from slide import Slide
+from slideshow import Slideshow
 
 def getSlides():
     slides = []
