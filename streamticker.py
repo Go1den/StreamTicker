@@ -1,4 +1,5 @@
 import json
+import sys
 
 from departure import *
 from graphics import *
@@ -50,22 +51,25 @@ def incrementIndex(idx, slideshow):
     return idx
 
 def main(slideshow):
-    idx = 0
-    repetitions = math.floor(slideshow.settings.WINDOW_HEIGHT / 4)
-    while True:
-        currentSlideImage = Image(Point(slideshow.settings.IMAGE_X_POS, FLOOR_YPOS), slideshow.slides[idx].image)
-        currentSlideImage.draw(slideshow.window)
-        moveAllOnLine([currentSlideImage], 0, -1, slideshow.settings.WINDOW_HEIGHT, slideshow.settings.MOVE_ALL_ON_LINE_DELAY)
-        characters = list(slideshow.slides[idx].getMessageText())
-        messageList = [currentSlideImage]
-        generateCharacterObjects(slideshow, characters, messageList)
-        rollMessageIntoWindow(slideshow.settings, messageList, repetitions)
-        time.sleep(slideshow.settings.MESSAGE_DURATION)
-        chooseDepartureMethodAndDepartFromWindow(slideshow.settings, messageList, repetitions, ENABLED_DEPARTURE_METHODS)
-        slideshow.window.delete('all')
-        slideshow.drawBackground()
-        time.sleep(slideshow.settings.MESSAGE_INTERMISSION)
-        idx = incrementIndex(idx, slideshow)
+    try:
+        idx = 0
+        repetitions = math.floor(slideshow.settings.WINDOW_HEIGHT / 4)
+        while True:
+            currentSlideImage = Image(Point(slideshow.settings.IMAGE_X_POS, FLOOR_YPOS), slideshow.slides[idx].image)
+            currentSlideImage.draw(slideshow.window)
+            moveAllOnLine([currentSlideImage], 0, -1, slideshow.settings.WINDOW_HEIGHT, slideshow.settings.MOVE_ALL_ON_LINE_DELAY)
+            characters = list(slideshow.slides[idx].getMessageText())
+            messageList = [currentSlideImage]
+            generateCharacterObjects(slideshow, characters, messageList)
+            rollMessageIntoWindow(slideshow.settings, messageList, repetitions)
+            time.sleep(slideshow.settings.MESSAGE_DURATION)
+            chooseDepartureMethodAndDepartFromWindow(slideshow.settings, messageList, repetitions, ENABLED_DEPARTURE_METHODS)
+            slideshow.window.delete('all')
+            slideshow.drawBackground()
+            time.sleep(slideshow.settings.MESSAGE_INTERMISSION)
+            idx = incrementIndex(idx, slideshow)
+    except:
+        sys.exit(1)
 
 myShow = Slideshow(getSlides())
 myShow.drawBackground()
