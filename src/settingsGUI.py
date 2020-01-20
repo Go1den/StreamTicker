@@ -5,6 +5,73 @@ from tkinter import messagebox, colorchooser, filedialog, font, ttk
 from src.CreateToolTip import CreateToolTip
 from src.settings import Settings
 
+def getDefaultSettings():
+    global WINDOW_BG_IMAGE, CHECK_SLIDING_RIGHT, CHECK_SLIDING_DOWN, CHECK_SLIDING_LEFT, CHECK_SLIDING_UP, CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER, \
+        CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT, CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT
+    d = settings.data['departure'][0]
+    d['ENABLE_DEPARTING_BY_SLIDING_RIGHT'] = True
+    CHECK_SLIDING_RIGHT = True
+    d['ENABLE_DEPARTING_BY_SLIDING_LEFT'] = True
+    CHECK_SLIDING_LEFT = True
+    d['ENABLE_DEPARTING_BY_SLIDING_UP'] = True
+    CHECK_SLIDING_UP = True
+    d['ENABLE_DEPARTING_BY_SLIDING_DOWN'] = True
+    CHECK_SLIDING_DOWN = True
+    d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT'] = True
+    CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT = True
+    d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT'] = True
+    CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT = True
+    d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER'] = True
+    CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER = True
+    # d['ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES'] = CHECK_COVERING_WITH_RECTANGLES.get()
+    m = settings.data['message'][0]
+    m['MESSAGE_DURATION'] = "5"
+    ENTRY_MESSAGE_DURATION.configure(text="5")
+    m['MESSAGE_INTERMISSION'] = "0.5"
+    ENTRY_MESSAGE_INTERMISSION.configure(text="0.5")
+    m['MESSAGE_COLOR'] = "#ffffff"
+    LABEL_MESSAGE_COLOR.configure(text="#ffffff", foreground="#ffffff")
+    # m['MESSAGE_STYLE'] = ENTRY_MESSAGE_STYLE.get()
+    m['MESSAGE_FONT_FACE'] = "Courier New"
+    FONT_COMBO_BOX.set("Courier New")
+    m['MAX_LENGTH_FOR_NORMAL_FONT_SIZE'] = "16"
+    ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.configure(text="16")
+    m['NORMAL_FONT_SIZE'] = "26"
+    ENTRY_NORMAL_FONT_SIZE.configure(text="26")
+    m['NORMAL_FONT_SIZE_GAP'] = "20"
+    ENTRY_NORMAL_FONT_SIZE_GAP.configure(text="20")
+    m['NORMAL_FONT_SIZE_GAP_FOR_SPACES'] = "4"
+    ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.configure(text="4")
+    m['SMALLER_FONT_SIZE'] = "22"
+    ENTRY_SMALLER_FONT_SIZE.configure(text="22")
+    m['SMALLER_FONT_SIZE_GAP'] = "16"
+    ENTRY_SMALLER_FONT_SIZE_GAP.configure(text="16")
+    m['SMALLER_FONT_SIZE_GAP_FOR_SPACES'] = "6"
+    ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.configure(text="6")
+    w = settings.data['window'][0]
+    w['MESSAGE_X_POS'] = "60"
+    ENTRY_MESSAGE_X_POS.configure(text="60")
+    w['IMAGE_X_POS'] = "22"
+    ENTRY_IMAGE_X_POS.configure(text="22")
+    w['WINDOW_WIDTH'] = "400"
+    ENTRY_WINDOW_WIDTH.configure(text="400")
+    w['WINDOW_HEIGHT'] = "44"
+    ENTRY_WINDOW_HEIGHT.configure(text="44")
+    w['WINDOW_BG_COLOR'] = "#000000"
+    LABEL_WINDOW_BG_COLOR.configure(background="#000000", text="#000000")
+    w['WINDOW_BG_IMAGE'] = "imagefiles/background.png"
+    WINDOW_BG_IMAGE = "imagefiles/background.png"
+    w['BACKGROUND_X_POS'] = "202"
+    ENTRY_BACKGROUND_X_POS.configure(text="202")
+    w['BACKGROUND_Y_POS'] = "44"
+    ENTRY_BACKGROUND_Y_POS.configure(text="44")
+    w['MOVE_ALL_ON_LINE_DELAY'] = ".004"
+    ENTRY_MOVE_ALL_ON_LINE_DELAY.configure(text=".004")
+    with open("settings.json", 'w') as f:
+        json.dump(settings.data, f, indent=4)
+    messagebox.showinfo("Success", "Default settings restored!")
+    return
+
 def selectImageFile(label):
     global WINDOW_BG_IMAGE
     filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("png files", "*.png")])
@@ -52,6 +119,9 @@ def validateWindowSettings():
         return False
     elif not ENTRY_WINDOW_HEIGHT.get().isnumeric() or int(ENTRY_WINDOW_HEIGHT.get()) > 1080 or int(ENTRY_WINDOW_HEIGHT.get()) < 44:
         messagebox.showinfo("Error", "Window height must be a whole number between 44 and 1080.")
+        return False
+    elif int(ENTRY_WINDOW_HEIGHT.get()) % 4 != 0:
+        messagebox.showinfo("Error", "Window height must be divisible by 4. This is because of how the math is performed for rolling letters onto the screen. Sorry!")
         return False
     elif not ENTRY_BACKGROUND_X_POS.get().isnumeric() or int(ENTRY_BACKGROUND_X_POS.get()) > int(ENTRY_WINDOW_WIDTH.get()) or int(ENTRY_BACKGROUND_X_POS.get()) < 0:
         messagebox.showinfo("Error", "Background X coordinate must be a whole number between 0 and your chosen window width.")
@@ -211,7 +281,7 @@ ENTRY_WINDOW_WIDTH = Entry(master)
 ENTRY_WINDOW_WIDTH.insert(0, settings.WINDOW_WIDTH)
 ENTRY_WINDOW_WIDTH.grid(row=1, column=3, sticky=W)
 LABEL_WINDOW_HEIGHT = Label(master, text="Window Height:")
-TOOLTOP_WINDOW_HEIGHT = CreateToolTip(LABEL_WINDOW_HEIGHT, "Height of the window in pixels.\nValid values are between 44 and 1080.")
+TOOLTOP_WINDOW_HEIGHT = CreateToolTip(LABEL_WINDOW_HEIGHT, "Height of the window in pixels.\nValid values are multiples of 4 between 44 and 1080.")
 LABEL_WINDOW_HEIGHT.grid(row=2, column=2, sticky=E)
 ENTRY_WINDOW_HEIGHT = Entry(master)
 ENTRY_WINDOW_HEIGHT.insert(0, settings.WINDOW_HEIGHT)
@@ -242,7 +312,8 @@ ENTRY_MESSAGE_X_POS.insert(0, settings.MESSAGE_X_POS)
 ENTRY_MESSAGE_X_POS.grid(row=6, column=3, sticky=W)
 LABEL_WINDOW_BG_COLOR = Label(master)
 BUTTON_WINDOW_BG_COLOR = Button(master, text='Window BG Color:', command=lambda: colorChooser(LABEL_WINDOW_BG_COLOR, False))
-TOOLTIP_WINDOW_BG_COLOR = CreateToolTip(BUTTON_WINDOW_BG_COLOR, "The background color of the window will show if no background image exists,\nor if the background image does not cover the entire window.")
+TOOLTIP_WINDOW_BG_COLOR = CreateToolTip(BUTTON_WINDOW_BG_COLOR,
+                                        "The background color of the window will show if no background image exists,\nor if the background image does not cover the entire window.")
 BUTTON_WINDOW_BG_COLOR.grid(row=7, column=2, sticky=E, padx=4)
 LABEL_WINDOW_BG_COLOR.configure(text=settings.WINDOW_BG_COLOR, background=settings.WINDOW_BG_COLOR)
 LABEL_WINDOW_BG_COLOR.grid(row=7, column=3, sticky=W)
@@ -261,7 +332,8 @@ ENTRY_MESSAGE_DURATION = Entry(master)
 ENTRY_MESSAGE_DURATION.insert(0, settings.MESSAGE_DURATION)
 ENTRY_MESSAGE_DURATION.grid(row=1, column=5, sticky=W)
 LABEL_MESSAGE_FONT_FACE = Label(master, text="Message Font:")
-TOOLTIP_MESSAGE_FONT_FACE = CreateToolTip(LABEL_MESSAGE_FONT_FACE, "The font to be used for all messages.\nDue to the way this program operates, it is STRONGLY recommended that you select a monospaced font.")
+TOOLTIP_MESSAGE_FONT_FACE = CreateToolTip(LABEL_MESSAGE_FONT_FACE,
+                                          "The font to be used for all messages.\nDue to the way this program operates, it is STRONGLY recommended that you select a monospaced font.")
 LABEL_MESSAGE_FONT_FACE.grid(row=2, column=4, sticky=E)
 FONT_FAMILIES = sorted([f for f in font.families()])
 FONT_COMBO_BOX = ttk.Combobox()
@@ -282,36 +354,41 @@ ENTRY_NORMAL_FONT_SIZE = Entry(master)
 ENTRY_NORMAL_FONT_SIZE.insert(0, settings.NORMAL_FONT_SIZE)
 ENTRY_NORMAL_FONT_SIZE.grid(row=5, column=5, sticky=W)
 LABEL_NORMAL_FONT_SIZE_GAP = Label(master, text="Font Gap Size:")
-TOOLTIP_NORMAL_FONT_SIZE_GAP = CreateToolTip(LABEL_NORMAL_FONT_SIZE_GAP, "This is the number of pixels between each character in a message.\nIf your messages seem squished, raise this value.\nIf they seem stretched, lower it.")
+TOOLTIP_NORMAL_FONT_SIZE_GAP = CreateToolTip(LABEL_NORMAL_FONT_SIZE_GAP,
+                                             "This is the number of pixels between each character in a message.\nIf your messages seem squished, raise this value.\nIf they seem stretched, lower it.")
 LABEL_NORMAL_FONT_SIZE_GAP.grid(row=6, column=4, sticky=E)
 ENTRY_NORMAL_FONT_SIZE_GAP = Entry(master)
 ENTRY_NORMAL_FONT_SIZE_GAP.insert(0, settings.NORMAL_FONT_SIZE_GAP)
 ENTRY_NORMAL_FONT_SIZE_GAP.grid(row=6, column=5, sticky=W)
 LABEL_NORMAL_FONT_SIZE_GAP_FOR_SPACES = Label(master, text="Penalty For Spaces:")
-TOOLTIP_NORMAL_FONT_SIZE_GAP_FOR_SPACES = CreateToolTip(LABEL_NORMAL_FONT_SIZE_GAP_FOR_SPACES, "This determines how large the gaps are between words in each message.\nIncreasing it will move words closer together.\nDecreasing it will move words farther apart.")
+TOOLTIP_NORMAL_FONT_SIZE_GAP_FOR_SPACES = CreateToolTip(LABEL_NORMAL_FONT_SIZE_GAP_FOR_SPACES,
+                                                        "This determines how large the gaps are between words in each message.\nIncreasing it will move words closer together.\nDecreasing it will move words farther apart.")
 LABEL_NORMAL_FONT_SIZE_GAP_FOR_SPACES.grid(row=7, column=4, sticky=E)
 ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES = Entry(master)
 ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.insert(0, settings.NORMAL_FONT_SIZE_GAP_FOR_SPACES)
 ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.grid(row=7, column=5, sticky=W)
 LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = Label(master, text="Max Length for Normal Message:")
-TOOLTIP_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = CreateToolTip(LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE, "When a message is longer than this many characters,\n it becomes a 'Smaller Font Message' and those settings apply.")
+TOOLTIP_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = CreateToolTip(LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE,
+                                                        "When a message is longer than this many characters,\n it becomes a 'Smaller Font Message' and those settings apply.")
 LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.grid(row=8, column=4, sticky=E)
 ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = Entry(master)
 ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.insert(0, settings.MAX_LENGTH_FOR_NORMAL_FONT_SIZE)
 ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.grid(row=8, column=5, sticky=W)
 
 LABEL_MESSAGE_INTERMISSION = Label(master, text="Message Intermission:")
-TOOLTIP_MESSAGE_INTERMISSION = CreateToolTip(LABEL_MESSAGE_INTERMISSION, "The amount of time between when the previous message disappears\nand the next message appears, in seconds. This can be a decimal value.")
+TOOLTIP_MESSAGE_INTERMISSION = CreateToolTip(LABEL_MESSAGE_INTERMISSION,
+                                             "The amount of time between when the previous message disappears\nand the next message appears, in seconds. This can be a decimal value.")
 LABEL_MESSAGE_INTERMISSION.grid(row=1, column=6, sticky=E)
 ENTRY_MESSAGE_INTERMISSION = Entry(master)
 ENTRY_MESSAGE_INTERMISSION.insert(0, settings.MESSAGE_INTERMISSION)
 ENTRY_MESSAGE_INTERMISSION.grid(row=1, column=7, sticky=W)
-#Label(master, text="Message Style:").grid(row=2, column=6, sticky=E)
-#ENTRY_MESSAGE_STYLE = Entry(master)
-#ENTRY_MESSAGE_STYLE.insert(0, settings.MESSAGE_STYLE)
-#ENTRY_MESSAGE_STYLE.grid(row=2, column=7, sticky=W)
+# Label(master, text="Message Style:").grid(row=2, column=6, sticky=E)
+# ENTRY_MESSAGE_STYLE = Entry(master)
+# ENTRY_MESSAGE_STYLE.insert(0, settings.MESSAGE_STYLE)
+# ENTRY_MESSAGE_STYLE.grid(row=2, column=7, sticky=W)
 LABEL_MOVE_ALL_ON_LINE_DELAY = Label(master, text="Scroll Speed:")
-TOOLTIP_MOVE_ALL_ON_LINE_DELAY = CreateToolTip(LABEL_MOVE_ALL_ON_LINE_DELAY, "This controls the general pace of the app.\nSetting this higher will significantly slow it down.\nValid values are 0 < x < 0.5.")
+TOOLTIP_MOVE_ALL_ON_LINE_DELAY = CreateToolTip(LABEL_MOVE_ALL_ON_LINE_DELAY,
+                                               "This controls the general pace of the app.\nSetting this higher will significantly slow it down.\nValid values are 0 < x < 0.5.")
 LABEL_MOVE_ALL_ON_LINE_DELAY.grid(row=2, column=6, sticky=E)
 ENTRY_MOVE_ALL_ON_LINE_DELAY = Entry(master)
 ENTRY_MOVE_ALL_ON_LINE_DELAY.insert(0, settings.MOVE_ALL_ON_LINE_DELAY)
@@ -324,18 +401,21 @@ ENTRY_SMALLER_FONT_SIZE = Entry(master)
 ENTRY_SMALLER_FONT_SIZE.insert(0, settings.SMALLER_FONT_SIZE)
 ENTRY_SMALLER_FONT_SIZE.grid(row=5, column=7, sticky=W)
 LABEL_SMALLER_FONT_SIZE_GAP = Label(master, text="Font Gap Size:")
-TOOLTIP_SMALLER_FONT_SIZE_GAP = CreateToolTip(LABEL_SMALLER_FONT_SIZE_GAP, "This is the number of pixels between each character in a long message.\nIf your messages seem squished, raise this value.\nIf they seem stretched, lower it.")
+TOOLTIP_SMALLER_FONT_SIZE_GAP = CreateToolTip(LABEL_SMALLER_FONT_SIZE_GAP,
+                                              "This is the number of pixels between each character in a long message.\nIf your messages seem squished, raise this value.\nIf they seem stretched, lower it.")
 LABEL_SMALLER_FONT_SIZE_GAP.grid(row=6, column=6, sticky=E)
 ENTRY_SMALLER_FONT_SIZE_GAP = Entry(master)
 ENTRY_SMALLER_FONT_SIZE_GAP.insert(0, settings.SMALLER_FONT_SIZE_GAP)
 ENTRY_SMALLER_FONT_SIZE_GAP.grid(row=6, column=7, sticky=W)
 LABEL_SMALLER_FONT_SIZE_GAP_FOR_SPACES = Label(master, text="Penalty For Spaces:")
-TOOLTIP_SMALLER_FONT_SIZE_GAP_FOR_SPACES = CreateToolTip(LABEL_SMALLER_FONT_SIZE_GAP_FOR_SPACES, "This determines how large the gaps are between words in each long message.\nIncreasing it will move words closer together.\nDecreasing it will move words farther apart.")
+TOOLTIP_SMALLER_FONT_SIZE_GAP_FOR_SPACES = CreateToolTip(LABEL_SMALLER_FONT_SIZE_GAP_FOR_SPACES,
+                                                         "This determines how large the gaps are between words in each long message.\nIncreasing it will move words closer together.\nDecreasing it will move words farther apart.")
 LABEL_SMALLER_FONT_SIZE_GAP_FOR_SPACES.grid(row=7, column=6, sticky=E)
 ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES = Entry(master)
 ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.insert(0, settings.SMALLER_FONT_SIZE_GAP_FOR_SPACES)
 ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.grid(row=7, column=7, sticky=W)
 
+Button(master, text='Restore Defaults', command=getDefaultSettings).grid(row=9, column=6, pady=4, padx=4, sticky=E)
 Button(master, text='Save Settings', command=updateSettingsJSON).grid(row=9, column=7, pady=4, sticky=W)
 Button(master, text='Quit', command=master.quit).grid(row=9, column=7, padx=4, pady=4, sticky=E)
 master.mainloop()
