@@ -6,9 +6,7 @@ from tkinter import messagebox, filedialog
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
-from src.settings import DEFAULT_IMAGE
-
-FILE_CONTENTS = ""
+from src.settings import Settings
 
 def selectTextFile():
     filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select text file", filetypes=[("All files", "*")])
@@ -33,7 +31,7 @@ def writeJSON():
 
 def constructJSON(sortOrder):
     slide = {
-        "image": imagepath.cget("text"),
+        "image": imagepath.cget("text") or settings.DEFAULT_IMAGE,
         "text": text.get(),
         "filePath": filepath.cget("text"),
         "prefixText": prefix.get(),
@@ -134,6 +132,9 @@ def tryReadingTextFile():
         previewMessage()
         return False
 
+settings = Settings()
+FILE_CONTENTS = ""
+
 master = Tk()
 master.wm_title("StreamTicker MessageMaker")
 Label(master, text="Create a new message:").grid(row=0, column=1)
@@ -156,11 +157,6 @@ filepath = Label(master)
 imagepath = Label(master)
 imageDisplay = Label(master)
 
-nickname.insert(0, "")
-prefix.insert(0, "")
-text.insert(0, "")
-suffix.insert(0, "")
-
 nickname.grid(row=1, column=1)
 prefix.grid(row=2, column=1)
 text.grid(row=3, column=1)
@@ -170,7 +166,7 @@ preview.grid(row=98, column=1, columnspan=2, sticky=W)
 filepath.grid(row=8, column=1, columnspan=2)
 imagepath.grid(row=10, column=1, columnspan=2)
 imageDisplay.grid(row=98, column=0, sticky=E)
-load = ImagePIL.open(DEFAULT_IMAGE)
+load = ImagePIL.open(settings.DEFAULT_IMAGE)
 defaultRender = ImageTk.PhotoImage(load)
 changeImage(defaultRender)
 Button(master, text='Preview', command=previewMessage).grid(row=4, column=2, sticky=W, pady=4, padx=4)
