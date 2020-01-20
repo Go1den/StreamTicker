@@ -157,11 +157,6 @@ filepath = Label(master)
 imagepath = Label(master)
 imageDisplay = Label(master)
 
-nickname.insert(0, "")
-prefix.insert(0, "")
-text.insert(0, "")
-suffix.insert(0, "")
-
 nickname.grid(row=1, column=1)
 prefix.grid(row=2, column=1)
 text.grid(row=3, column=1)
