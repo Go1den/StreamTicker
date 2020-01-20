@@ -7,17 +7,30 @@ to be highly customizable and usable by everyone!
 StreamTicker is free to own and use, but if you find it interesting and would like to support me, I would kindly
 request a Twitch subscription at https://twitch.tv/go1den.
 
-Some beginner notes:
-All of your messages are stored in messages.json. There are some default messages already in place. You'll want to edit these!
+Included with StreamTicker:
 
-New images should be added to the imagefiles directory. Using the default window size, the recommended image size is 28x28. Only .png files work at the moment.
+messageMaker.exe: This program can be used to quickly generate new messages. Add your own images, read from files, or just display plain text. It's simple to generate a message!
 
-To create new messages, you can either edit messages.json directly (not recommended unless you know what you're doing), or you can use the included message generator app.
-The app is helpful because it will allow you to test to make sure you provided the correct image path, file path (if you are reading data from a file), and just
-generally double check the appearance of the whole message.
+messageManager.exe: This program displays your existing messages, and allows you to reorder them or delete ones you no longer want.
 
-You can edit settings in the settings folder if you're feeling bolder... proceed at your own risk. If you screw things up too badly, you can always download the default
-settings files again.
+settings.exe: The real fun begins here. You can customize just about EVERYTHING in this app. The possibilities are endless. Make StreamTicker your own. If you get too creative, you can always restore the default settings here.
 
-Please report any bugs you find at https://github.com/Go1den/StreamTicker/issues
+streamTicker.exe: This is the StreamTicker itself. It will open a window that scrolls through all of the messages you currently have created.
 
+messages.json: Your messages are stored here. I strongly recommend using messageMaker.exe and messageManager.exe instead of editing this file directly.
+
+settings.json: Your settings are stored here. I strongly recommend using settings.exe to edit settings instead.
+
+imagefiles - A folder containing some sample backgrounds and icons you can use to generate some messages right away!
+
+stIcon.ico: Don't delete me! I'm just a humble icon file. Besides, if you delete me, I might get my revenge...
+
+A few more things!
+Using the default window size, the recommended image size for a message's image is 28x28, and the recommended image size for a background is 400x44. Only .png files are supported at the moment.
+
+Lastly, please report any bugs you find at https://github.com/Go1den/StreamTicker/issues!
+
+If you want to see more of what I do, check out https://www.go1den.com
+
+Thanks for downloading StreamTicker! You're awesome!
+-Go1den (twitch.tv/go1den and @GoldenSRL on Twitter)
