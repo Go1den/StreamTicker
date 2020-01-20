@@ -2,7 +2,7 @@ import json
 from tkinter import *
 from tkinter import messagebox, colorchooser, filedialog, font, ttk
 
-from CreateToolTip import CreateToolTip
+from createToolTip import CreateToolTip
 from settings import Settings
 
 def getDefaultSettings():
