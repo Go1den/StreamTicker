@@ -36,4 +36,4 @@ class Slide:
                 contents = f.readline().rstrip().replace(':', ' -')
             self.image = bitutilities.chooseBitIcon(int(contents.split(' ')[2]))
         except:
-            self.image = ["bitimagefiles/bit10.png"]
+            self.image = ["imagefiles/bit10.png"]
