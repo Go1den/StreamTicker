@@ -1,6 +1,6 @@
 import json
 from tkinter import *
-from tkinter import messagebox, colorchooser, filedialog
+from tkinter import messagebox, colorchooser, filedialog, font, ttk
 
 from src.CreateToolTip import CreateToolTip
 from src.settings import Settings
@@ -59,13 +59,13 @@ def validateWindowSettings():
     elif not ENTRY_BACKGROUND_Y_POS.get().isnumeric() or int(ENTRY_BACKGROUND_Y_POS.get()) > int(ENTRY_WINDOW_HEIGHT.get()) or int(ENTRY_BACKGROUND_Y_POS.get()) < 0:
         messagebox.showinfo("Error", "Background Y coordinate must be a whole number between 0 and your chosen window height.")
         return False
-    elif not ENTRY_IMAGE_X_POS.get().isnumeric() or int(ENTRY_IMAGE_X_POS.get()) > int(ENTRY_WINDOW_WIDTH.get()):
+    elif not ENTRY_IMAGE_X_POS.get().isnumeric() or int(ENTRY_IMAGE_X_POS.get()) > int(ENTRY_WINDOW_WIDTH.get()) or int(ENTRY_IMAGE_X_POS.get()) < 0:
         messagebox.showinfo("Error", "Image X coordinate must be a whole number between 0 and your chosen window width.")
         return False
-    elif not ENTRY_MESSAGE_X_POS.get().isnumeric() or int(ENTRY_MESSAGE_X_POS.get()) > int(ENTRY_WINDOW_WIDTH.get()):
+    elif not ENTRY_MESSAGE_X_POS.get().isnumeric() or int(ENTRY_MESSAGE_X_POS.get()) > int(ENTRY_WINDOW_WIDTH.get()) or int(ENTRY_MESSAGE_X_POS.get()) < 0:
         messagebox.showinfo("Error", "Message X coordinate must be a whole number between 0 and your chosen window width.")
         return False
-    elif ENTRY_IMAGE_X_POS.get() >= ENTRY_MESSAGE_X_POS.get():
+    elif int(ENTRY_IMAGE_X_POS.get()) >= int(ENTRY_MESSAGE_X_POS.get()):
         messagebox.showinfo("Error", "Image X coordinate must be less than Message X coordinate.")
         return False
     elif not isFloat(ENTRY_MOVE_ALL_ON_LINE_DELAY.get()) or float(ENTRY_MOVE_ALL_ON_LINE_DELAY.get()) > 0.5 or float(ENTRY_MOVE_ALL_ON_LINE_DELAY.get()) <= 0:
@@ -77,13 +77,40 @@ def validateMessageSettings():
     if not ENTRY_MESSAGE_DURATION.get().isnumeric() or int(ENTRY_MESSAGE_DURATION.get()) <= 0:
         messagebox.showinfo("Error", "Message duration must be a whole number greater than 0.")
         return False
-    if not isFloat(ENTRY_MESSAGE_INTERMISSION.get()) or float(ENTRY_MESSAGE_INTERMISSION.get()) <= 0:
+    elif not isFloat(ENTRY_MESSAGE_INTERMISSION.get()) or float(ENTRY_MESSAGE_INTERMISSION.get()) <= 0:
         messagebox.showinfo("Error", "Message intermission must be a decimal value greater than 0.")
         return False
     return True
 
+def validateFontSettings():
+    if not ENTRY_NORMAL_FONT_SIZE.get().isnumeric() or int(ENTRY_NORMAL_FONT_SIZE.get()) < 8:
+        messagebox.showinfo("Error", "Normal message font size must be a whole number greater than or equal to 8.")
+        return False
+    elif not ENTRY_SMALLER_FONT_SIZE.get().isnumeric() or int(ENTRY_SMALLER_FONT_SIZE.get()) < 8:
+        messagebox.showinfo("Error", "Long message font size must be a whole number greater than or equal to 8.")
+        return False
+    elif int(ENTRY_NORMAL_FONT_SIZE.get()) < int(ENTRY_SMALLER_FONT_SIZE.get()):
+        messagebox.showinfo("Error", "Normal message font size cannot be less than long message font size.")
+        return False
+    elif not ENTRY_NORMAL_FONT_SIZE_GAP.get().isnumeric():
+        messagebox.showinfo("Error", "Normal message font gap size must be a whole number.")
+        return False
+    elif not ENTRY_SMALLER_FONT_SIZE_GAP.get().isnumeric():
+        messagebox.showinfo("Error", "Long message font gap size must be a whole number.")
+        return False
+    elif not ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.get().isnumeric():
+        messagebox.showinfo("Error", "Normal message penalty for spaces must be a whole number.")
+        return False
+    elif not ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.get().isnumeric():
+        messagebox.showinfo("Error", "Long message penalty for spaces must be a whole number.")
+        return False
+    elif not ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.get().isnumeric() or int(ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.get()) < 1:
+        messagebox.showinfo("Error", "Max length for normal messages must be a positive whole number.")
+        return False
+    return True
+
 def updateSettingsJSON():
-    if validateDepartureSettings() and validateWindowSettings() and validateMessageSettings():
+    if validateDepartureSettings() and validateWindowSettings() and validateMessageSettings() and validateFontSettings():
         d = settings.data['departure'][0]
         d['ENABLE_DEPARTING_BY_SLIDING_RIGHT'] = CHECK_SLIDING_RIGHT.get()
         d['ENABLE_DEPARTING_BY_SLIDING_LEFT'] = CHECK_SLIDING_LEFT.get()
@@ -93,6 +120,29 @@ def updateSettingsJSON():
         d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT'] = CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT.get()
         d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER'] = CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER.get()
         # d['ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES'] = CHECK_COVERING_WITH_RECTANGLES.get()
+        m = settings.data['message'][0]
+        m['MESSAGE_DURATION'] = ENTRY_MESSAGE_DURATION.get()
+        m['MESSAGE_INTERMISSION'] = ENTRY_MESSAGE_INTERMISSION.get()
+        m['MESSAGE_COLOR'] = LABEL_MESSAGE_COLOR.cget("text")
+        # m['MESSAGE_STYLE'] = ENTRY_MESSAGE_STYLE.get()
+        m['MESSAGE_FONT_FACE'] = FONT_COMBO_BOX.get()
+        m['MAX_LENGTH_FOR_NORMAL_FONT_SIZE'] = ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.get()
+        m['NORMAL_FONT_SIZE'] = ENTRY_NORMAL_FONT_SIZE.get()
+        m['NORMAL_FONT_SIZE_GAP'] = ENTRY_NORMAL_FONT_SIZE_GAP.get()
+        m['NORMAL_FONT_SIZE_GAP_FOR_SPACES'] = ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.get()
+        m['SMALLER_FONT_SIZE'] = ENTRY_SMALLER_FONT_SIZE.get()
+        m['SMALLER_FONT_SIZE_GAP'] = ENTRY_SMALLER_FONT_SIZE_GAP.get()
+        m['SMALLER_FONT_SIZE_GAP_FOR_SPACES'] = ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.get()
+        w = settings.data['window'][0]
+        w['MESSAGE_X_POS'] = ENTRY_MESSAGE_X_POS.get()
+        w['IMAGE_X_POS'] = ENTRY_IMAGE_X_POS.get()
+        w['WINDOW_WIDTH'] = ENTRY_WINDOW_WIDTH.get()
+        w['WINDOW_HEIGHT'] = ENTRY_WINDOW_HEIGHT.get()
+        w['WINDOW_BG_COLOR'] = LABEL_WINDOW_BG_COLOR.cget("text")
+        w['WINDOW_BG_IMAGE'] = WINDOW_BG_IMAGE
+        w['BACKGROUND_X_POS'] = ENTRY_BACKGROUND_X_POS.get()
+        w['BACKGROUND_Y_POS'] = ENTRY_BACKGROUND_Y_POS.get()
+        w['MOVE_ALL_ON_LINE_DELAY'] = ENTRY_MOVE_ALL_ON_LINE_DELAY.get()
         with open("settings.json", 'w') as f:
             json.dump(settings.data, f, indent=4)
         messagebox.showinfo("Success", "Settings updated!")
@@ -213,9 +263,11 @@ ENTRY_MESSAGE_DURATION.grid(row=1, column=5, sticky=W)
 LABEL_MESSAGE_FONT_FACE = Label(master, text="Message Font:")
 TOOLTIP_MESSAGE_FONT_FACE = CreateToolTip(LABEL_MESSAGE_FONT_FACE, "The font to be used for all messages.\nDue to the way this program operates, it is STRONGLY recommended that you select a monospaced font.")
 LABEL_MESSAGE_FONT_FACE.grid(row=2, column=4, sticky=E)
-ENTRY_MESSAGE_FONT_FACE = Entry(master)
-ENTRY_MESSAGE_FONT_FACE.insert(0, settings.MESSAGE_FONT_FACE)
-ENTRY_MESSAGE_FONT_FACE.grid(row=2, column=5, sticky=W)
+FONT_FAMILIES = sorted([f for f in font.families()])
+FONT_COMBO_BOX = ttk.Combobox()
+FONT_COMBO_BOX.configure(values=FONT_FAMILIES)
+FONT_COMBO_BOX.set(settings.MESSAGE_FONT_FACE)
+FONT_COMBO_BOX.grid(row=2, column=5, sticky=W)
 LABEL_MESSAGE_COLOR = Label(master)
 BUTTON_MESSAGE_COLOR = Button(master, text='Message Color:', command=lambda: colorChooser(LABEL_MESSAGE_COLOR, True))
 TOOLTIP_MESSAGE_COLOR = CreateToolTip(BUTTON_MESSAGE_COLOR, "Color of the font used to display each message.")
