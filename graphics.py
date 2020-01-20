@@ -34,6 +34,7 @@ class GraphWin(tk.Canvas):
     def __init__(self, title="Graphics Window",
                  width=200, height=200, autoflush=True):
         master = tk.Toplevel(_root)
+        master.iconbitmap("stIcon.ico")
         master.protocol("WM_DELETE_WINDOW", self.close)
         tk.Canvas.__init__(self, master, width=width, height=height)
         self.master.title(title)

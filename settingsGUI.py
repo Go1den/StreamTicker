@@ -223,6 +223,7 @@ WINDOW_BG_IMAGE = settings.WINDOW_BG_IMAGE
 
 master = Tk()
 master.wm_title("StreamTicker Settings")
+master.iconbitmap("stIcon.ico")
 Label(master, text="Departure Settings").grid(row=0, column=0, columnspan=3, sticky=W)
 Label(master, text="Allow messages to leave the screen by:").grid(row=1, column=0, columnspan=3, sticky=W)
 

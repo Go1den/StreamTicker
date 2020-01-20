@@ -104,6 +104,7 @@ def populateTableRows(checkboxes, orderEntries):
 settings = Settings()
 master = Tk()
 master.wm_title("StreamTicker MessageManager")
+master.iconbitmap("stIcon.ico")
 Label(master, text="Here are your existing messages:").grid(row=0, column=0, columnspan=3, sticky=W)
 Label(master, text="Message Order").grid(row=0, column=5, columnspan=2)
 checkboxes = []

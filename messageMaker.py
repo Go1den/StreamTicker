@@ -154,6 +154,7 @@ FILE_PATH = ""
 
 master = Tk()
 master.wm_title("StreamTicker MessageMaker")
+master.iconbitmap("stIcon.ico")
 Label(master, text="Create a new message:").grid(row=0, column=1)
 Label(master, text="Nickname this message:").grid(row=1, column=0, sticky=E)
 Label(master, text="Message Prefix").grid(row=2, column=0, sticky=E)
