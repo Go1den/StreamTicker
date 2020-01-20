@@ -1,44 +1,44 @@
 {
     "window": [
         {
-            "WINDOW_HEIGHT": "44",
-            "BACKGROUND_X_POS": "202",
+            "MOVE_ALL_ON_LINE_DELAY": ".004",
             "WINDOW_BG_IMAGE": "imagefiles/background.png",
             "WINDOW_WIDTH": "400",
-            "MOVE_ALL_ON_LINE_DELAY": ".004",
+            "BACKGROUND_X_POS": "202",
+            "WINDOW_HEIGHT": "44",
+            "BACKGROUND_Y_POS": "24",
             "IMAGE_X_POS": "22",
-            "WINDOW_BG_COLOR": "black",
-            "MESSAGE_X_POS": "60",
-            "BACKGROUND_Y_POS": "24"
-        }
-    ],
-    "message": [
-        {
-            "MESSAGE_DURATION": "5",
-            "MESSAGE_FONT_FACE": "Courier New",
-            "NORMAL_FONT_SIZE_GAP": "20",
-            "MESSAGE_INTERMISSION": ".5",
-            "SMALLER_FONT_SIZE_GAP_FOR_SPACES": "6",
-            "SMALLER_FONT_SIZE": "22",
-            "DEFAULT_IMAGE": "imagefiles/stLogo28.png",
-            "NORMAL_FONT_SIZE": "26",
-            "MESSAGE_COLOR": "white",
-            "SMALLER_FONT_SIZE_GAP": "16",
-            "NORMAL_FONT_SIZE_GAP_FOR_SPACES": "4",
-            "MESSAGE_STYLE": "bold",
-            "MAX_LENGTH_FOR_NORMAL_FONT_SIZE": "16"
+            "WINDOW_BG_COLOR": "#000000",
+            "MESSAGE_X_POS": "60"
         }
     ],
     "departure": [
         {
-            "ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES": false,
-            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT": true,
             "ENABLE_DEPARTING_BY_SLIDING_RIGHT": true,
-            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER": true,
-            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT": true,
             "ENABLE_DEPARTING_BY_SLIDING_DOWN": true,
+            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER": true,
+            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT": true,
+            "ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT": true,
+            "ENABLE_DEPARTING_BY_SLIDING_LEFT": true,
             "ENABLE_DEPARTING_BY_SLIDING_UP": true,
-            "ENABLE_DEPARTING_BY_SLIDING_LEFT": true
+            "ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES": false
+        }
+    ],
+    "message": [
+        {
+            "MESSAGE_STYLE": "bold",
+            "NORMAL_FONT_SIZE_GAP_FOR_SPACES": "4",
+            "MESSAGE_COLOR": "#ffffff",
+            "MAX_LENGTH_FOR_NORMAL_FONT_SIZE": "16",
+            "DEFAULT_IMAGE": "imagefiles/stLogo28.png",
+            "SMALLER_FONT_SIZE": "22",
+            "NORMAL_FONT_SIZE_GAP": "20",
+            "SMALLER_FONT_SIZE_GAP_FOR_SPACES": "6",
+            "MESSAGE_FONT_FACE": "Courier New",
+            "MESSAGE_INTERMISSION": ".5",
+            "NORMAL_FONT_SIZE": "26",
+            "SMALLER_FONT_SIZE_GAP": "16",
+            "MESSAGE_DURATION": "5"
         }
     ]
 }
