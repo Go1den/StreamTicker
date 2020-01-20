@@ -1,4 +1,14 @@
 {
     "slides": [
+        {
+            "isBitMessage": "False",
+            "text": "StreamTicker by Go1den",
+            "filePath": "",
+            "suffixText": "",
+            "sortOrder": "1",
+            "nickname": "STREAMTICKER_000001",
+            "prefixText": "",
+            "image": "imagefiles/stLogo28.png"
+        }
     ]
 }
