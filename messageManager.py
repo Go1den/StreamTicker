@@ -110,8 +110,8 @@ Label(master, text="Message Order").grid(row=0, column=5, columnspan=2)
 checkboxes = []
 orderEntries = []
 idx = populateTableRows(checkboxes, orderEntries)
-Button(master, text='Delete Selected + Quit', command=writeUpdatedSlidesToJSON).grid(row=idx, column=0, columnspan=3, pady=4, padx=4, sticky=W)
-Button(master, text='Reorder + Quit', command=reorderSlidesToJSON).grid(row=idx, column=4, columnspan=2, pady=4, padx=2, sticky=W)
-Button(master, text='Quit', command=master.quit).grid(row=idx, column=6, pady=4, padx=2, sticky=E)
+Button(master, text='Delete Selected + Quit', command=writeUpdatedSlidesToJSON, width=18).grid(row=idx, column=0, columnspan=3, pady=4, padx=4, sticky=W)
+Button(master, text='Reorder + Quit', command=reorderSlidesToJSON, width=18).grid(row=idx, column=4, columnspan=2, pady=4, padx=2, sticky=W)
+Button(master, text='Quit', command=master.quit, width=5).grid(row=idx, column=6, pady=4, padx=2, sticky=E)
 master.mainloop()
 mainloop()
