@@ -26,7 +26,7 @@
     ],
     "message": [
         {
-            "MESSAGE_STYLE": "bold",
+            "MESSAGE_STYLE": "",
             "NORMAL_FONT_SIZE_GAP_FOR_SPACES": "4",
             "MESSAGE_COLOR": "#ffffff",
             "MAX_LENGTH_FOR_NORMAL_FONT_SIZE": "16",
