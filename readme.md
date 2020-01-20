@@ -30,7 +30,7 @@ Using the default window size, the recommended image size for a message's image 
 
 Lastly, please report any bugs you find at https://github.com/Go1den/StreamTicker/issues!
 
-If you want to see more of what I do, check out www.go1den.com
+If you want to see more of what I do, check out https://www.go1den.com
 
 Thanks for downloading StreamTicker! You're awesome!
 -Go1den (twitch.tv/go1den and @GoldenSRL on Twitter)
