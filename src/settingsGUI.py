@@ -10,66 +10,67 @@ def getDefaultSettings():
         CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT, CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT
     d = settings.data['departure'][0]
     d['ENABLE_DEPARTING_BY_SLIDING_RIGHT'] = True
-    CHECK_SLIDING_RIGHT = True
+    # CHECK_SLIDING_RIGHT = True
     d['ENABLE_DEPARTING_BY_SLIDING_LEFT'] = True
-    CHECK_SLIDING_LEFT = True
+    # CHECK_SLIDING_LEFT = True
     d['ENABLE_DEPARTING_BY_SLIDING_UP'] = True
-    CHECK_SLIDING_UP = True
+    # CHECK_SLIDING_UP = True
     d['ENABLE_DEPARTING_BY_SLIDING_DOWN'] = True
-    CHECK_SLIDING_DOWN = True
+    # CHECK_SLIDING_DOWN = True
     d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT'] = True
-    CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT = True
+    # CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT = True
     d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT'] = True
-    CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT = True
+    # CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT = True
     d['ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER'] = True
-    CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER = True
+    # CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER = True
     # d['ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES'] = CHECK_COVERING_WITH_RECTANGLES.get()
     m = settings.data['message'][0]
     m['MESSAGE_DURATION'] = "5"
-    ENTRY_MESSAGE_DURATION.configure(text="5")
+    # ENTRY_MESSAGE_DURATION.configure(text="5")
     m['MESSAGE_INTERMISSION'] = "0.5"
-    ENTRY_MESSAGE_INTERMISSION.configure(text="0.5")
+    # ENTRY_MESSAGE_INTERMISSION.configure(text="0.5")
     m['MESSAGE_COLOR'] = "#ffffff"
-    LABEL_MESSAGE_COLOR.configure(text="#ffffff", foreground="#ffffff")
+    # LABEL_MESSAGE_COLOR.configure(text="#ffffff", foreground="#ffffff")
     # m['MESSAGE_STYLE'] = ENTRY_MESSAGE_STYLE.get()
     m['MESSAGE_FONT_FACE'] = "Courier New"
-    FONT_COMBO_BOX.set("Courier New")
+    # FONT_COMBO_BOX.set("Courier New")
     m['MAX_LENGTH_FOR_NORMAL_FONT_SIZE'] = "16"
-    ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.configure(text="16")
+    # ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.configure(text="16")
     m['NORMAL_FONT_SIZE'] = "26"
-    ENTRY_NORMAL_FONT_SIZE.configure(text="26")
+    # ENTRY_NORMAL_FONT_SIZE.configure(text="26")
     m['NORMAL_FONT_SIZE_GAP'] = "20"
-    ENTRY_NORMAL_FONT_SIZE_GAP.configure(text="20")
+    # ENTRY_NORMAL_FONT_SIZE_GAP.configure(text="20")
     m['NORMAL_FONT_SIZE_GAP_FOR_SPACES'] = "4"
-    ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.configure(text="4")
+    # ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.configure(text="4")
     m['SMALLER_FONT_SIZE'] = "22"
-    ENTRY_SMALLER_FONT_SIZE.configure(text="22")
+    # ENTRY_SMALLER_FONT_SIZE.configure(text="22")
     m['SMALLER_FONT_SIZE_GAP'] = "16"
-    ENTRY_SMALLER_FONT_SIZE_GAP.configure(text="16")
+    # ENTRY_SMALLER_FONT_SIZE_GAP.configure(text="16")
     m['SMALLER_FONT_SIZE_GAP_FOR_SPACES'] = "6"
-    ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.configure(text="6")
+    # ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.configure(text="6")
     w = settings.data['window'][0]
     w['MESSAGE_X_POS'] = "60"
-    ENTRY_MESSAGE_X_POS.configure(text="60")
+    # ENTRY_MESSAGE_X_POS.configure(text="60")
     w['IMAGE_X_POS'] = "22"
-    ENTRY_IMAGE_X_POS.configure(text="22")
+    # ENTRY_IMAGE_X_POS.configure(text="22")
     w['WINDOW_WIDTH'] = "400"
-    ENTRY_WINDOW_WIDTH.configure(text="400")
+    # ENTRY_WINDOW_WIDTH.configure(text="400")
     w['WINDOW_HEIGHT'] = "44"
-    ENTRY_WINDOW_HEIGHT.configure(text="44")
+    # ENTRY_WINDOW_HEIGHT.configure(text="44")
     w['WINDOW_BG_COLOR'] = "#000000"
-    LABEL_WINDOW_BG_COLOR.configure(background="#000000", text="#000000")
+    # LABEL_WINDOW_BG_COLOR.configure(background="#000000", text="#000000")
     w['WINDOW_BG_IMAGE'] = "imagefiles/background.png"
-    WINDOW_BG_IMAGE = "imagefiles/background.png"
+    # WINDOW_BG_IMAGE = "imagefiles/background.png"
     w['BACKGROUND_X_POS'] = "202"
-    ENTRY_BACKGROUND_X_POS.configure(text="202")
+    # ENTRY_BACKGROUND_X_POS.configure(text="202")
     w['BACKGROUND_Y_POS'] = "24"
-    ENTRY_BACKGROUND_Y_POS.configure(text="44")
+    # ENTRY_BACKGROUND_Y_POS.configure(text="44")
     w['MOVE_ALL_ON_LINE_DELAY'] = ".004"
-    ENTRY_MOVE_ALL_ON_LINE_DELAY.configure(text=".004")
+    # ENTRY_MOVE_ALL_ON_LINE_DELAY.configure(text=".004")
     with open("settings.json", 'w') as f:
         json.dump(settings.data, f, indent=4)
-    messagebox.showinfo("Success", "Default settings restored!")
+    messagebox.showinfo("Success", "Default settings restored! The program will now close.")
+    exit(1)
     return
 
 def selectImageFile(label):
@@ -369,7 +370,7 @@ ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.insert(0, settings.NORMAL_FONT_SIZE_GAP_FO
 ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.grid(row=7, column=5, sticky=W)
 LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = Label(master, text="Max Length for Normal Message:")
 TOOLTIP_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = CreateToolTip(LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE,
-                                                        "When a message is longer than this many characters,\n it becomes a 'Smaller Font Message' and those settings apply.")
+                                                        "When a message is longer than this many characters,\nit becomes a 'Long Message' and those settings apply.")
 LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.grid(row=8, column=4, sticky=E)
 ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = Entry(master)
 ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.insert(0, settings.MAX_LENGTH_FOR_NORMAL_FONT_SIZE)
@@ -415,7 +416,7 @@ ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES = Entry(master)
 ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.insert(0, settings.SMALLER_FONT_SIZE_GAP_FOR_SPACES)
 ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.grid(row=7, column=7, sticky=W)
 
-Button(master, text='Restore Defaults', command=getDefaultSettings).grid(row=9, column=6, pady=4, padx=4, sticky=E)
+Button(master, text='Restore Defaults + Quit', command=getDefaultSettings).grid(row=9, column=6, pady=4, padx=4, sticky=E)
 Button(master, text='Save Settings', command=updateSettingsJSON).grid(row=9, column=7, pady=4, sticky=W)
 Button(master, text='Quit', command=master.quit).grid(row=9, column=7, padx=4, pady=4, sticky=E)
 master.mainloop()
