@@ -63,7 +63,7 @@ def getDefaultSettings():
     WINDOW_BG_IMAGE = "imagefiles/background.png"
     w['BACKGROUND_X_POS'] = "202"
     ENTRY_BACKGROUND_X_POS.configure(text="202")
-    w['BACKGROUND_Y_POS'] = "44"
+    w['BACKGROUND_Y_POS'] = "24"
     ENTRY_BACKGROUND_Y_POS.configure(text="44")
     w['MOVE_ALL_ON_LINE_DELAY'] = ".004"
     ENTRY_MOVE_ALL_ON_LINE_DELAY.configure(text=".004")
