@@ -7,6 +7,8 @@ to be highly customizable and usable by everyone!
 StreamTicker is free to own and use, but if you find it interesting and would like to support me, I would kindly
 request a Twitch subscription at https://twitch.tv/go1den.
 
+To download the program, head to my personal website: https://go1den.com/streamticker/
+
 Included with StreamTicker:
 
 messageMaker.exe: This program can be used to quickly generate new messages. Add your own images, read from files, or just display plain text. It's simple to generate a message!
