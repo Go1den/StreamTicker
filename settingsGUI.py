@@ -70,7 +70,7 @@ def getDefaultSettings():
     with open("settings.json", 'w') as f:
         json.dump(settings.data, f, indent=4)
     messagebox.showinfo("Success", "Default settings restored! The program will now close.")
-    exit(1)
+    sys.exit(1)
     return
 
 def selectImageFile(label):

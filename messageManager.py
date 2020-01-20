@@ -28,7 +28,7 @@ def writeUpdatedSlidesToJSON():
     existingJSON['slides'] = updateSortOrderNumbersAfterDelete(slides)
     writeJSON(existingJSON)
     messagebox.showinfo("Success", "The selected messages were deleted. The program will now close.")
-    exit(1)
+    sys.exit(1)
 
 def updateSortOrderNumbersAfterDelete(slides):
     idx = 1
@@ -58,7 +58,7 @@ def reorderSlidesToJSON():
             existingJSON['slides'] = slides
             writeJSON(existingJSON)
             messagebox.showinfo("Success", "Messages were reordered successfully. You can confirm this by opening this program again. The program will now close.")
-            exit(1)
+            sys.exit(1)
         else:
             messagebox.showinfo("Error", "Please make sure all numbers between 1 and " + str(len(orderEntries)) + " are present.")
             print("NO MATCH")
@@ -76,7 +76,7 @@ def populateTableRows(checkboxes, orderEntries):
     slides = sorted(existingJSON['slides'], key=lambda x: int(x.get('sortOrder')))
     if len(slides) == 0:
         messagebox.showinfo("Error", "No messages have been created yet. This program will now close.")
-        exit(1)
+        sys.exit(1)
     idx = 1
     for slide in slides:
         chkValue = BooleanVar()
