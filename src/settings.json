@@ -2,7 +2,7 @@
     "window": [
         {
             "MOVE_ALL_ON_LINE_DELAY": ".004",
-            "WINDOW_BG_IMAGE": "imagefiles/background.png",
+            "WINDOW_BG_IMAGE": "imagefiles/background1.png",
             "WINDOW_WIDTH": "400",
             "BACKGROUND_X_POS": "202",
             "WINDOW_HEIGHT": "44",

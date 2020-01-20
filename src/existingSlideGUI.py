@@ -66,7 +66,7 @@ def reorderSlidesToJSON():
 def readFile(file):
     try:
         with open(file, "r") as f:
-            contents = f.read()
+            contents = f.readline().rstrip()
         return contents
     except:
         return ""

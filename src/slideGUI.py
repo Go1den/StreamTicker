@@ -9,16 +9,28 @@ from PIL import ImageTk
 from src.settings import Settings
 
 def selectTextFile():
+    global FILE_PATH
     filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select text file", filetypes=[("All files", "*")])
     print(filename)
-    filepath.configure(text=filename)
+    FILE_PATH = filename
+    filepath.configure(text=getFileNameFromPath(filename))
     tryReadingTextFile()
 
 def selectImageFile():
+    global IMAGE_PATH
     filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("png files", "*.png")])
     print(filename)
-    imagepath.configure(text=filename)
+    IMAGE_PATH = filename
+    imagepath.configure(text=getFileNameFromPath(filename))
     tryReadingImageFile()
+
+def getFileNameFromPath(path):
+    try:
+        x = path.split('/')[-1]
+        y = path.split('\\')[-1]
+        return x if len(x) <= len(y) else y
+    except:
+        return path
 
 def writeJSON():
     with open("messages.json") as f:
@@ -31,9 +43,9 @@ def writeJSON():
 
 def constructJSON(sortOrder):
     slide = {
-        "image": imagepath.cget("text") or settings.DEFAULT_IMAGE,
+        "image": IMAGE_PATH or settings.DEFAULT_IMAGE,
         "text": text.get(),
-        "filePath": filepath.cget("text"),
+        "filePath": FILE_PATH,
         "prefixText": prefix.get(),
         "suffixText": suffix.get(),
         "isBitMessage": "False",
@@ -43,7 +55,7 @@ def constructJSON(sortOrder):
     return slide
 
 def clearAllFields():
-    global FILE_CONTENTS
+    global FILE_CONTENTS, FILE_PATH, IMAGE_PATH
     nickname.delete(0, END)
     prefix.delete(0, END)
     text.delete(0, END)
@@ -51,6 +63,8 @@ def clearAllFields():
     filepath.configure(text="")
     imagepath.configure(text="")
     FILE_CONTENTS = ""
+    FILE_PATH = ""
+    IMAGE_PATH = ""
     changeImage(defaultRender)
     previewMessage()
 
@@ -92,7 +106,7 @@ def hasNickname():
     return True
 
 def atLeastOneFieldPopulated():
-    result = prefix.get() or text.get() or suffix.get() or filepath.cget("text") or imagepath.cget("text")
+    result = prefix.get() or text.get() or suffix.get() or filepath.cget("text")
     if not result:
         messagebox.showinfo("Error", "You can't add a blank message!")
     return result
@@ -102,11 +116,11 @@ def changeImage(img):
     imageDisplay.image = img
 
 def tryReadingImageFile():
-    if not imagepath.cget("text"):
+    if not IMAGE_PATH:
         changeImage(defaultRender)
         return True
     try:
-        load = ImagePIL.open(imagepath.cget("text"))
+        load = ImagePIL.open(IMAGE_PATH)
         render = ImageTk.PhotoImage(load)
         changeImage(render)
         return True
@@ -116,14 +130,14 @@ def tryReadingImageFile():
         return False
 
 def tryReadingTextFile():
-    global FILE_CONTENTS
-    if not filepath.cget("text"):
+    global FILE_CONTENTS, FILE_PATH
+    if not FILE_PATH:
         FILE_CONTENTS = ""
         previewMessage()
         return True
     try:
-        with open(filepath.cget("text")) as f:
-            FILE_CONTENTS = f.read()
+        with open(FILE_PATH) as f:
+            FILE_CONTENTS = f.readline().rstrip()
             previewMessage()
             return True
     except FileNotFoundError:
@@ -134,6 +148,9 @@ def tryReadingTextFile():
 
 settings = Settings()
 FILE_CONTENTS = ""
+
+IMAGE_PATH = ""
+FILE_PATH = ""
 
 master = Tk()
 master.wm_title("StreamTicker MessageMaker")
@@ -163,8 +180,8 @@ text.grid(row=3, column=1)
 suffix.grid(row=4, column=1)
 preview.grid(row=98, column=1, columnspan=2, sticky=W)
 # bits.grid(row=5, column=1)
-filepath.grid(row=8, column=1, columnspan=2)
-imagepath.grid(row=10, column=1, columnspan=2)
+filepath.grid(row=8, column=1, columnspan=2, sticky=W)
+imagepath.grid(row=10, column=1, columnspan=2, sticky=W)
 imageDisplay.grid(row=98, column=0, sticky=E)
 load = ImagePIL.open(settings.DEFAULT_IMAGE)
 defaultRender = ImageTk.PhotoImage(load)

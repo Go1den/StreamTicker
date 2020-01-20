@@ -25,7 +25,8 @@ class Slide:
     def getTextWithFileInput(self):
         try:
             with open(self.filePath) as f:
-                contents = f.readline().rstrip().replace(':', ' -')
+                # contents = f.readline().rstrip().replace(':', ' -')
+                contents = f.readline().rstrip()
             return self.prefixText + self.text + contents + self.suffixText
         except:
             return self.getTextWithoutFileInput()
@@ -33,7 +34,8 @@ class Slide:
     def getBitImage(self):
         try:
             with open(self.filePath) as f:
-                contents = f.readline().rstrip().replace(':', ' -')
+                # contents = f.readline().rstrip().replace(':', ' -')
+                contents = f.readline().rstrip()
             self.image = bitutilities.chooseBitIcon(int(contents.split(' ')[2]))
         except:
             self.image = ["imagefiles/bit10.png"]
