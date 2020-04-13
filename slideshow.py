@@ -1,11 +1,15 @@
+import json
+from os import path
+
 from graphics import GraphWin, Point, Image
 from settings import Settings
+from slide import Slide
 
 class Slideshow:
 
-    def __init__(self, slides=None):
-        self.settings = Settings()
-        self.slides = slides
+    def __init__(self, data=None):
+        self.settings = Settings(data)
+        self.slides = self.getSlides()
         self.window = self.createWindow()
 
     def drawBackground(self):
@@ -19,3 +23,18 @@ class Slideshow:
         win = GraphWin('StreamTicker by Go1den', self.settings.WINDOW_WIDTH, self.settings.WINDOW_HEIGHT)
         win.setBackground(self.settings.WINDOW_BG_COLOR)
         return win
+
+    def getSlides(self):
+        slides = []
+        with open("messages.json") as f:
+            data = json.loads(f.read())
+            for slide in data['slides']:
+                print(slide)
+                slides.append(Slide(slide['image'] if path.exists(slide['image']) else self.settings.DEFAULT_IMAGE,
+                                    slide['text'],
+                                    slide['filePath'] if path.exists(slide['filePath']) else "",
+                                    slide['prefixText'],
+                                    slide['suffixText'],
+                                    True if slide['isBitMessage'] == "True" else False,
+                                    slide['nickname']))
+        return slides

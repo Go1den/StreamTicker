@@ -5,7 +5,7 @@ from tkinter import messagebox
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
-from settings import Settings
+DEFAULT_IMAGE = "imagefiles/stLogo28.png"
 
 def getExistingJSON():
     with open("messages.json") as f:
@@ -41,7 +41,6 @@ def updateSortOrderNumbersOnReorder(existingJSON, newSortOrderNumbers):
     slides = sorted(existingJSON['slides'], key=lambda x: int(x.get('sortOrder')))
     existingSortNumbers = [slide['sortOrder'] for slide in slides]
     dictionary = dict(zip(existingSortNumbers, newSortOrderNumbers))
-    print(dictionary)
     for slide in slides:
         slide['sortOrder'] = str(dictionary.get(slide['sortOrder']))
     return sorted(slides, key=lambda x: int(x.get('sortOrder')))
@@ -61,7 +60,6 @@ def reorderSlidesToJSON():
             sys.exit(1)
         else:
             messagebox.showinfo("Error", "Please make sure all numbers between 1 and " + str(len(orderEntries)) + " are present.")
-            print("NO MATCH")
 
 def readFile(file):
     try:
@@ -88,7 +86,7 @@ def populateTableRows(checkboxes, orderEntries):
             load = ImagePIL.open(slide['image'])
             render = ImageTk.PhotoImage(load)
         except:
-            load = ImagePIL.open(settings.DEFAULT_IMAGE)
+            load = ImagePIL.open(DEFAULT_IMAGE)
             render = ImageTk.PhotoImage(load)
         newLabel = Label(master, image=render)
         newLabel.image = render
@@ -101,7 +99,6 @@ def populateTableRows(checkboxes, orderEntries):
         idx += 1
     return idx
 
-settings = Settings()
 master = Tk()
 master.wm_title("StreamTicker MessageManager")
 master.iconbitmap("stIcon.ico")

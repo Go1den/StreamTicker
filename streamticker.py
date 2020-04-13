@@ -1,26 +1,12 @@
 import json
 import sys
+from os import path
 
 from departure import *
 from graphics import *
 from mover import moveAllOnLine, rollMessageIntoWindow
 from slide import Slide
 from slideshow import Slideshow
-
-def getSlides():
-    slides = []
-    with open("messages.json") as f:
-        data = json.loads(f.read())
-        for slide in data['slides']:
-            print(slide)
-            slides.append(Slide(slide['image'],
-                                slide['text'],
-                                slide['filePath'],
-                                slide['prefixText'],
-                                slide['suffixText'],
-                                True if slide['isBitMessage'] == "True" else False,
-                                slide['nickname']))
-    return slides
 
 def generateCharacterObjects(slideshow, characters, messageList):
     oddOrEven = False
@@ -68,10 +54,14 @@ def main(slideshow):
             slideshow.drawBackground()
             time.sleep(slideshow.settings.MESSAGE_INTERMISSION)
             idx = incrementIndex(idx, slideshow)
-    except:
+    except Exception as e:
+        print(e)
         sys.exit(1)
 
-myShow = Slideshow(getSlides())
+with open("messages.json") as f:
+    data = json.loads(f.read())
+
+myShow = Slideshow(data)
 myShow.drawBackground()
 FLOOR_YPOS = math.ceil(myShow.settings.WINDOW_HEIGHT * 1.5)
 CEILING_YPOS = math.ceil(myShow.settings.WINDOW_HEIGHT * -.5)

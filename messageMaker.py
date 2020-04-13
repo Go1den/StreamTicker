@@ -6,12 +6,11 @@ from tkinter import messagebox, filedialog
 from PIL import Image as ImagePIL
 from PIL import ImageTk
 
-from settings import Settings
+DEFAULT_IMAGE = "imagefiles/stLogo28.png"
 
 def selectTextFile():
     global FILE_PATH
     filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select text file", filetypes=[("All files", "*")])
-    print(filename)
     FILE_PATH = filename
     filepath.configure(text=getFileNameFromPath(filename))
     tryReadingTextFile()
@@ -19,7 +18,6 @@ def selectTextFile():
 def selectImageFile():
     global IMAGE_PATH
     filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("png files", "*.png")])
-    print(filename)
     IMAGE_PATH = filename
     imagepath.configure(text=getFileNameFromPath(filename))
     tryReadingImageFile()
@@ -43,7 +41,7 @@ def writeJSON():
 
 def constructJSON(sortOrder):
     slide = {
-        "image": IMAGE_PATH or settings.DEFAULT_IMAGE,
+        "image": IMAGE_PATH or DEFAULT_IMAGE,
         "text": text.get(),
         "filePath": FILE_PATH,
         "prefixText": prefix.get(),
@@ -146,9 +144,7 @@ def tryReadingTextFile():
         previewMessage()
         return False
 
-settings = Settings()
 FILE_CONTENTS = ""
-
 IMAGE_PATH = ""
 FILE_PATH = ""
 
@@ -184,7 +180,7 @@ preview.grid(row=98, column=1, columnspan=2, sticky=W)
 filepath.grid(row=8, column=1, columnspan=2, sticky=W)
 imagepath.grid(row=10, column=1, columnspan=2, sticky=W)
 imageDisplay.grid(row=98, column=0, sticky=E)
-load = ImagePIL.open(settings.DEFAULT_IMAGE)
+load = ImagePIL.open(DEFAULT_IMAGE)
 defaultRender = ImageTk.PhotoImage(load)
 changeImage(defaultRender)
 Button(master, text='Preview', command=previewMessage).grid(row=4, column=2, sticky=W, pady=4, padx=4)
