@@ -531,7 +531,7 @@ class Text(GraphicsObject):
             raise GraphicsError(INVALID_FONT)
 
     def setSize(self, size):
-        if 5 <= size <= 36:
+        if 8 <= size <= 256:
             f, s, b = self.config['font']
             self._reconfig("font", (f, size, b))
         else:

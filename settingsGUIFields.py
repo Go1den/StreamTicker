@@ -71,10 +71,10 @@ class SettingsGUIFields():
             self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP.set("16")
             self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.set("6")
 
-            self.VAR_ENTRY_MESSAGE_X_POS.set("60")
-            self.VAR_ENTRY_IMAGE_X_POS.set("22")
             self.VAR_ENTRY_WINDOW_WIDTH.set("400")
             self.VAR_ENTRY_WINDOW_HEIGHT.set("44")
+            self.VAR_ENTRY_MESSAGE_X_POS.set("60")
+            self.VAR_ENTRY_IMAGE_X_POS.set("22")
             self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = "#000000"
             self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set("#000000")
             if windowLabel:
@@ -84,8 +84,6 @@ class SettingsGUIFields():
             self.VAR_ENTRY_BACKGROUND_X_POS.set("202")
             self.VAR_ENTRY_BACKGROUND_Y_POS.set("44")
             self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(".004")
-            if confirm:
-                messagebox.showinfo("Success", "Default settings restored!")
 
     def loadJson(self, file, messageLabel=None, windowLabel=None):
         try:

@@ -1,7 +1,7 @@
 class Settings:
     def __init__(self, data):
         self.data = data
-
+        self.ACCEPTABLE_STYLES = ['bold', 'normal', 'italic', 'bold italic', 'oblique', 'regular']
         # Departure settings
         d = self.data['departure'] if 'departure' in self.data else {}
         if isinstance(d, list):
@@ -25,7 +25,7 @@ class Settings:
         self.MESSAGE_DURATION = int(m['MESSAGE_DURATION'] if 'MESSAGE_DURATION' in m else 5)
         self.MESSAGE_INTERMISSION = float(m['MESSAGE_INTERMISSION'] if 'MESSAGE_INTERMISSION' in m else .5)
         self.MESSAGE_COLOR = str(m['MESSAGE_COLOR'] if 'MESSAGE_COLOR' in m else "white")
-        self.MESSAGE_STYLE = str(m['MESSAGE_STYLE'] if 'MESSAGE_STYLE' in m else "bold")
+        self.MESSAGE_STYLE = str(m['MESSAGE_STYLE'] if 'MESSAGE_STYLE' in m and m['MESSAGE_STYLE'] in self.ACCEPTABLE_STYLES else "normal")
         self.MESSAGE_FONT_FACE = str(m['MESSAGE_FONT_FACE'] if 'MESSAGE_FONT_FACE' in m else "Courier New")
         self.MAX_LENGTH_FOR_NORMAL_FONT_SIZE = int(m['MAX_LENGTH_FOR_NORMAL_FONT_SIZE'] if 'MAX_LENGTH_FOR_NORMAL_FONT_SIZE' in m else 16)
         self.NORMAL_FONT_SIZE = int(m['NORMAL_FONT_SIZE'] if 'NORMAL_FONT_SIZE' in m else 26)
@@ -49,3 +49,4 @@ class Settings:
         self.BACKGROUND_X_POS = int(w['BACKGROUND_X_POS'] if 'BACKGROUND_X_POS' in w else 202)
         self.BACKGROUND_Y_POS = int(w['BACKGROUND_Y_POS'] if 'BACKGROUND_Y_POS' in w else 24)
         self.MOVE_ALL_ON_LINE_DELAY = float(w['MOVE_ALL_ON_LINE_DELAY'] if 'MOVE_ALL_ON_LINE_DELAY' in w else .004)
+        print(self.MOVE_ALL_ON_LINE_DELAY)

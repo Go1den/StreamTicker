@@ -58,7 +58,7 @@ def main(slideshow):
         print(e)
         sys.exit(1)
 
-with open("messages.json") as f:
+with open("settings.json") as f:
     data = json.loads(f.read())
 
 myShow = Slideshow(data)
