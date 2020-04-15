@@ -23,7 +23,6 @@ def updateYScales():
 
 def loadFile(fields, messageLabel, windowLabel, path):
     global CURRENTLY_LOADED_FILE
-    # fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select layout file", filetypes=[("json files", "*.json")])
     if path:
         fileToLoad = path
     else:
@@ -36,7 +35,6 @@ def loadFile(fields, messageLabel, windowLabel, path):
 def saveAsFile(fields, overwriteLastLoadedOrSavedFile):
     if validateBeforeSaving(fields):
         if not overwriteLastLoadedOrSavedFile:
-            # saveFile = filedialog.asksaveasfilename(initialdir=sys.argv[0], title="Save as...", filetypes=[("json files", "*.json")], defaultextension='.json')
             saveFile = filedialog.asksaveasfilename(initialdir=sys.argv[0], title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")], defaultextension='.json')
         else:
             saveFile = CURRENTLY_LOADED_FILE
