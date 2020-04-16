@@ -83,7 +83,7 @@ class SettingsGUIFields():
             self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background1.png")
             self.VAR_ENTRY_BACKGROUND_X_POS.set("202")
             self.VAR_ENTRY_BACKGROUND_Y_POS.set("44")
-            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(".004")
+            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("Fast")
 
     def loadJson(self, file, messageLabel=None, windowLabel=None):
         try:
@@ -129,9 +129,26 @@ class SettingsGUIFields():
             self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(s.WINDOW_BG_IMAGE))
             self.VAR_ENTRY_BACKGROUND_X_POS.set(s.BACKGROUND_X_POS)
             self.VAR_ENTRY_BACKGROUND_Y_POS.set(s.BACKGROUND_Y_POS)
-            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(s.MOVE_ALL_ON_LINE_DELAY)
+            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(self.convertDelayValueToName(s.MOVE_ALL_ON_LINE_DELAY))
             messagebox.showinfo("Success", "Settings loaded!")
             return True
         except:
             messagebox.showerror("Error", "Unable to load file. Please select a valid layout file.")
             return False
+
+    def convertDelayNameToValue(self, name):
+        delayDict = {'Fastest': ".002",
+                     'Fast': ".004",
+                     'Normal': ".006",
+                     'Slow': ".008",
+                     'Slowest': ".01"}
+        return delayDict[name] if delayDict[name] else ".004"
+
+    def convertDelayValueToName(self, value):
+        delayDict = {".002": "Fastest",
+                     ".004": "Fast",
+                     ".006": "Normal",
+                     ".008": "Slow",
+                     ".01": "Slowest"
+        }
+        return delayDict[value] if delayDict[value] else "Fast"
