@@ -1,6 +1,6 @@
 from tkinter import messagebox
 
-import helperMethods
+from utils import helperMethods
 
 def validate(fields):
     if not fields.VAR_ENTRY_MESSAGE_DURATION.get().isnumeric() or int(fields.VAR_ENTRY_MESSAGE_DURATION.get()) <= 0:

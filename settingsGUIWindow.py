@@ -1,11 +1,11 @@
 from tkinter import Tk
 
-from backgroundFrame import BackgroundFrame
-from departureFrame import DepartureFrame
-from menubar import Menubar
-from messageFrame import MessageFrame
+from frames.backgroundFrame import BackgroundFrame
+from frames.departureFrame import DepartureFrame
+from frames.menubar import Menubar
+from frames.messageFrame import MessageFrame
 from settingsGUIFields import SettingsGUIFields
-from slidingFrame import SlidingFrame
+from frames.slidingFrame import SlidingFrame
 
 class SettingsGUIWindow:
     def __init__(self):

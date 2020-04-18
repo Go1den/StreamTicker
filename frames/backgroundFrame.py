@@ -1,8 +1,8 @@
 import sys
-from tkinter import Frame, GROOVE, Label, Button, W, E, NSEW, colorchooser, filedialog, Canvas, NW, NE
+from tkinter import Frame, GROOVE, Label, Button, W, E, NSEW, colorchooser, filedialog, Canvas
 
-import helperMethods
-from createToolTip import CreateToolTip
+from utils import helperMethods
+from utils.createToolTip import CreateToolTip
 
 class BackgroundFrame:
     def __init__(self, master, fields):

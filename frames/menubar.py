@@ -2,10 +2,7 @@ import json
 import sys
 from tkinter import Menu, filedialog, messagebox
 
-import validateDepartureSettings
-import validateFontSettings
-import validateMessageSettings
-import validateWindowSettings
+from validations import validateMessageSettings, validateDepartureSettings, validateFontSettings, validateWindowSettings
 
 class Menubar:
     def __init__(self, master, fields, sFrame, mFrame, bgFrame):

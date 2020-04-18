@@ -1,7 +1,7 @@
 import json
 from tkinter import BooleanVar, StringVar, messagebox
 
-import helperMethods
+from utils import helperMethods
 from settings import Settings
 
 class SettingsGUIFields():

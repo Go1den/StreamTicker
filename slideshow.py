@@ -1,7 +1,7 @@
 import json
 from os import path
 
-from graphics import GraphWin, Point, Image
+from utils.graphics import GraphWin, Point, Image
 from settings import Settings
 from slide import Slide
 

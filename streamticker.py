@@ -1,11 +1,9 @@
 import json
 import sys
-from os import path
 
 from departure import *
-from graphics import *
+from utils.graphics import *
 from mover import moveAllOnLine, rollMessageIntoWindow
-from slide import Slide
 from slideshow import Slideshow
 
 def generateCharacterObjects(slideshow, characters, messageList):

@@ -1,6 +1,6 @@
 from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, NSEW, font, colorchooser, Canvas
 
-from createToolTip import CreateToolTip
+from utils.createToolTip import CreateToolTip
 
 class MessageFrame:
     def __init__(self, master, fields):

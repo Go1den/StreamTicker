@@ -1,8 +1,6 @@
 import math
 import random
-import time
 
-from graphics import Rectangle, Point
 from mover import moveAllOnLine
 
 def getEnabledDepartureMethods(settings):
@@ -74,12 +72,12 @@ def departBySlidingRight(settings, messageList, directionToLeave):
 def departBySlidingLeft(settings, messageList, directionToLeave):
     moveAllOnLine(messageList, directionToLeave * -1, 0, math.ceil(settings.WINDOW_WIDTH / 4), settings.MOVE_ALL_ON_LINE_DELAY)
 
-def departByCoveringWithRectangles(settings, slideshow):  # TODO: Implement later when I figure this out
-    recList = []
-    for yCoordRange in range(0, settings.WINDOW_HEIGHT + 4, 4):
-        recList.append(Rectangle(Point(0, yCoordRange), Point(settings.WINDOW_WIDTH, yCoordRange + 4)))
-    random.shuffle(recList)
-    for rec in recList:
-        rec.setFill(settings.WINDOW_BG_COLOR)
-        rec.draw(slideshow.window)
-        time.sleep(.05)
+# def departByCoveringWithRectangles(settings, slideshow):  # TODO: Implement later when I figure this out
+#     recList = []
+#     for yCoordRange in range(0, settings.WINDOW_HEIGHT + 4, 4):
+#         recList.append(Rectangle(Point(0, yCoordRange), Point(settings.WINDOW_WIDTH, yCoordRange + 4)))
+#     random.shuffle(recList)
+#     for rec in recList:
+#         rec.setFill(settings.WINDOW_BG_COLOR)
+#         rec.draw(slideshow.window)
+#         time.sleep(.05)

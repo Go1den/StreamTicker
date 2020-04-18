@@ -1,4 +1,4 @@
-import bitutilities
+from utils import bitutilities
 
 class Slide:
 
