@@ -7,6 +7,6 @@ def validate(fields):
         messagebox.showinfo("Error", "Message duration must be a whole number greater than 0.")
         return False
     elif not helperMethods.isFloat(fields.VAR_ENTRY_MESSAGE_INTERMISSION.get()) or float(fields.VAR_ENTRY_MESSAGE_INTERMISSION.get()) <= 0:
-        messagebox.showinfo("Error", "Message intermission must be a decimal value greater than 0.")
+        messagebox.showinfo("Error", "Message intermission must be greater than 0.")
         return False
     return True

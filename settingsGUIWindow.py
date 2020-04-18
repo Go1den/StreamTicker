@@ -19,5 +19,5 @@ class SettingsGUIWindow:
         self.sFrame = SlidingFrame(self.master, self.fields)
         self.bgFrame = BackgroundFrame(self.master, self.fields)
         self.mFrame = MessageFrame(self.master, self.fields)
-        self.menubar = Menubar(self.master, self.fields, self.sFrame, self.bgFrame, self.mFrame)
+        self.menubar = Menubar(self.master, self.fields, self.sFrame, self.mFrame, self.bgFrame)
         self.master.mainloop()

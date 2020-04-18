@@ -43,7 +43,7 @@ class SettingsGUIFields():
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY = StringVar()
         self.getDefaultValues(False)
 
-    def getDefaultValues(self, confirm, messageLabel=None, windowLabel=None):
+    def getDefaultValues(self, confirm, mFrame=None, bgFrame=None):
         if not confirm or messagebox.askokcancel("Confirm New Settings", "All changes made will be lost, and the default values will be set. Do you want to continue?"):
             self.VAR_CHECK_SLIDING_RIGHT.set(True)
             self.VAR_CHECK_SLIDING_LEFT.set(True)
@@ -60,8 +60,6 @@ class SettingsGUIFields():
             self.VAR_ENTRY_MESSAGE_INTERMISSION.set("0.5")
             self.VAR_LABEL_MESSAGE_COLOR_TEXT.set("#ffffff")
             self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = "#ffffff"
-            if messageLabel:
-                messageLabel.configure(foreground=self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)
             self.VAR_FONT_COMBO_BOX.set("Courier New")
             self.VAR_ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.set("16")
             self.VAR_ENTRY_NORMAL_FONT_SIZE.set("26")
@@ -77,15 +75,16 @@ class SettingsGUIFields():
             self.VAR_ENTRY_IMAGE_X_POS.set("22")
             self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = "#000000"
             self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set("#000000")
-            if windowLabel:
-                windowLabel.configure(background=self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)
             self.VAR_PATH_WINDOW_BG_IMAGE.set("imagefiles/background.png")
             self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background1.png")
             self.VAR_ENTRY_BACKGROUND_X_POS.set("202")
             self.VAR_ENTRY_BACKGROUND_Y_POS.set("44")
             self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("Fast")
+            if mFrame and bgFrame:
+                self.updateColorBoxes(mFrame, bgFrame)
 
-    def loadJson(self, file, messageLabel=None, windowLabel=None):
+    def loadJson(self, file, mFrame, bgFrame):
+        # Todo: backup the current settings so that if load fails, we can revert to those rather than doing a partial load
         try:
             with open(file) as f:
                 data = json.loads(f.read())
@@ -106,8 +105,6 @@ class SettingsGUIFields():
             self.VAR_ENTRY_MESSAGE_INTERMISSION.set(s.MESSAGE_INTERMISSION)
             self.VAR_LABEL_MESSAGE_COLOR_TEXT.set(s.MESSAGE_COLOR)
             self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = s.MESSAGE_COLOR
-            if messageLabel:
-                messageLabel.configure(foreground=self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)
             self.VAR_FONT_COMBO_BOX.set(s.MESSAGE_FONT_FACE)
             self.VAR_ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.set(s.MAX_LENGTH_FOR_NORMAL_FONT_SIZE)
             self.VAR_ENTRY_NORMAL_FONT_SIZE.set(s.NORMAL_FONT_SIZE)
@@ -123,16 +120,16 @@ class SettingsGUIFields():
             self.VAR_ENTRY_WINDOW_HEIGHT.set(s.WINDOW_HEIGHT)
             self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set(s.WINDOW_BG_COLOR)
             self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = s.WINDOW_BG_COLOR
-            if windowLabel:
-                windowLabel.configure(background=self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)
             self.VAR_PATH_WINDOW_BG_IMAGE.set(s.WINDOW_BG_IMAGE)
             self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(s.WINDOW_BG_IMAGE))
             self.VAR_ENTRY_BACKGROUND_X_POS.set(s.BACKGROUND_X_POS)
             self.VAR_ENTRY_BACKGROUND_Y_POS.set(s.BACKGROUND_Y_POS)
-            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(self.convertDelayValueToName(s.MOVE_ALL_ON_LINE_DELAY))
+            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(self.convertDelayValueToName(float(s.MOVE_ALL_ON_LINE_DELAY)))
+            self.updateColorBoxes(mFrame, bgFrame)
             messagebox.showinfo("Success", "Settings loaded!")
             return True
-        except:
+        except Exception as e:
+            print(e)
             messagebox.showerror("Error", "Unable to load file. Please select a valid layout file.")
             return False
 
@@ -145,10 +142,14 @@ class SettingsGUIFields():
         return delayDict[name] if delayDict[name] else ".004"
 
     def convertDelayValueToName(self, value):
-        delayDict = {".002": "Fastest",
-                     ".004": "Fast",
-                     ".006": "Normal",
-                     ".008": "Slow",
-                     ".01": "Slowest"
-        }
+        delayDict = {.002: "Fastest",
+                     .004: "Fast",
+                     .006: "Normal",
+                     .008: "Slow",
+                     .01: "Slowest"
+                     }
         return delayDict[value] if delayDict[value] else "Fast"
+
+    def updateColorBoxes(self, mFrame, bgFrame):
+        bgFrame.CANVAS_WINDOW_BG_IMAGE.itemconfig(bgFrame.RECTANGLE_WINDOW_BG_IMAGE, fill=self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)
+        mFrame.CANVAS_MESSAGE_COLOR.itemconfig(mFrame.RECTANGLE_MESSAGE_COLOR, fill=self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)

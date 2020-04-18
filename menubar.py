@@ -8,17 +8,20 @@ import validateMessageSettings
 import validateWindowSettings
 
 class Menubar:
-    def __init__(self, master, fields, sFrame, bgFrame, mFrame):
+    def __init__(self, master, fields, sFrame, mFrame, bgFrame):
         self.menubar = Menu(master)
         self.currentlyLoadedFile = None
-        filemenu = Menu(self.menubar, tearoff=0)
-        filemenu.add_command(label="New Settings", command=lambda: self.loadDefault(sFrame, fields, mFrame.LABEL_MESSAGE_COLOR, bgFrame.LABEL_WINDOW_BG_COLOR))
-        filemenu.add_command(label="Load Settings", command=lambda: self.loadFile(fields, mFrame.LABEL_MESSAGE_COLOR, bgFrame.LABEL_WINDOW_BG_COLOR, None))
-        filemenu.add_command(label="Save Settings", command=lambda: self.saveAsFile(mFrame, fields, True))
-        filemenu.add_command(label="Save Settings as...", command=lambda: self.saveAsFile(mFrame, fields, False))
-        filemenu.insert_separator(4)
-        filemenu.add_command(label="Quit", command=lambda: exit(1))
-        self.menubar.add_cascade(label="File", menu=filemenu)
+        self.filemenu = Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label="New Settings", command=lambda: self.loadDefault(sFrame, mFrame, bgFrame, fields))
+        self.filemenu.add_command(label="Load Settings", command=lambda: self.loadFile(fields, mFrame, bgFrame, None))
+        self.filemenu.add_command(label="Save Settings", command=lambda: self.saveAsFile(mFrame, fields, True))
+        self.filemenu.add_command(label="Save Settings as...", command=lambda: self.saveAsFile(mFrame, fields, False))
+        self.filemenu.insert_separator(4)
+        self.filemenu.add_command(label="Quit", command=lambda: exit(1))
+        self.menubar.add_cascade(label="File", menu=self.filemenu)
+        self.viewmenu = Menu(self.menubar, tearoff=0)
+        self.viewmenu.add_command(label="Preview with current settings")
+        self.menubar.add_cascade(label="View", menu=self.viewmenu)
         master.config(menu=self.menubar)
 
     def saveAsFile(self, mFrame, fields, overwriteLastLoadedOrSavedFile):
@@ -27,23 +30,25 @@ class Menubar:
                 saveFile = filedialog.asksaveasfilename(initialdir=sys.argv[0], title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")], defaultextension='.json')
             else:
                 saveFile = self.currentlyLoadedFile
-            if saveFile is None:
+                if saveFile is None:
+                    saveFile = filedialog.asksaveasfilename(initialdir=sys.argv[0], title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")], defaultextension='.json')
+            if not saveFile or saveFile is None:
                 return
             self.saveJsonToFile(mFrame, fields, saveFile)
 
-    def loadDefault(self, sFrame, fields, messageLabel, windowLabel):
-        fields.getDefaultValues(True, messageLabel, windowLabel)
+    def loadDefault(self, sFrame, mFrame, bgFrame, fields):
+        fields.getDefaultValues(True, mFrame, bgFrame)
         sFrame.updateXScales()
         sFrame.updateYScales()
 
-    def loadFile(self, fields, messageLabel, windowLabel, path):
+    def loadFile(self, fields, mFrame, bgFrame, path):
         if path:
             fileToLoad = path
         else:
             fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select layout file", filetypes=[("StreamTicker Settings", "*.sts")])
-        if fileToLoad is None:
+        if not fileToLoad or fileToLoad is None:
             return
-        if fields.loadJson(fileToLoad, messageLabel, windowLabel):
+        if fields.loadJson(fileToLoad, mFrame, bgFrame):
             self.currentlyLoadedFile = fileToLoad
 
     def saveJsonToFile(self, mFrame, fields, saveFile):
