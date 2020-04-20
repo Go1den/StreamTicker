@@ -33,12 +33,12 @@ def getMainMenu(e):
     issueMenu.add_command(label="via Discord", command=lambda: webbrowser.open('https://discord.gg/nqWxgHm', new=2))
     issueMenu.add_command(label="via Github", command=lambda: webbrowser.open('https://github.com/Go1den/StreamTicker/issues', new=2))
 
-    rmenu.add_cascade(label="Messages", menu=messagesMenu)
-    rmenu.add_cascade(label="Settings", menu=settingsMenu)
+    rmenu.add_cascade(label="  Messages", menu=messagesMenu)
+    rmenu.add_cascade(label="  Settings", menu=settingsMenu)
     rmenu.add_separator()
-    rmenu.add_cascade(label="Report Issue", menu=issueMenu)
+    rmenu.add_cascade(label="  Report Issue", menu=issueMenu)
     rmenu.add_separator()
-    rmenu.add_command(label='About', command=lambda: getAboutWindow())
-    rmenu.add_command(label='Exit', command=quit)
-    rmenu.tk_popup(e.x_root + 45, e.y_root + 11, entry="0")
+    rmenu.add_command(label='  About StreamTicker', command=lambda: getAboutWindow())
+    rmenu.add_command(label='  Exit', command=quit)
+    rmenu.tk_popup(e.x_root + 74, e.y_root + 11, entry="0")
     return rmenu
