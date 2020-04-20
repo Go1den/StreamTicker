@@ -14,7 +14,7 @@ class Menubar:
         self.filemenu.add_command(label="Save Settings", command=lambda: self.saveAsFile(mFrame, fields, True))
         self.filemenu.add_command(label="Save Settings as...", command=lambda: self.saveAsFile(mFrame, fields, False))
         self.filemenu.insert_separator(4)
-        self.filemenu.add_command(label="Quit", command=lambda: exit(1))
+        self.filemenu.add_command(label="Quit", command=lambda: master.destroy())
         self.menubar.add_cascade(label="File", menu=self.filemenu)
         self.viewmenu = Menu(self.menubar, tearoff=0)
         self.viewmenu.add_command(label="Preview with current settings")

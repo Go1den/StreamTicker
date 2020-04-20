@@ -1,23 +1,23 @@
-from tkinter import Tk
+from tkinter import Toplevel
 
 from frames.backgroundFrame import BackgroundFrame
 from frames.departureFrame import DepartureFrame
 from frames.menubar import Menubar
 from frames.messageFrame import MessageFrame
-from settingsGUIFields import SettingsGUIFields
 from frames.slidingFrame import SlidingFrame
+from settingsGUIFields import SettingsGUIFields
 
-class SettingsGUIWindow:
-    def __init__(self):
-        self.master = Tk()
-        self.master.wm_title("StreamTicker Settings")
-        self.master.iconbitmap("stIcon.ico")
-        self.master.resizable(False, False)
-        
-        self.fields = SettingsGUIFields()
-        self.dFrame = DepartureFrame(self.master, self.fields)
-        self.sFrame = SlidingFrame(self.master, self.fields)
-        self.bgFrame = BackgroundFrame(self.master, self.fields)
-        self.mFrame = MessageFrame(self.master, self.fields)
-        self.menubar = Menubar(self.master, self.fields, self.sFrame, self.mFrame, self.bgFrame)
-        self.master.mainloop()
+def getSettingsWindow():
+    master = Toplevel()
+    master.wm_title("StreamTicker Settings")
+    master.iconbitmap("stIcon.ico")
+    master.resizable(False, False)
+    master.grab_set()
+
+    fields = SettingsGUIFields()
+    dFrame = DepartureFrame(master, fields)
+    sFrame = SlidingFrame(master, fields)
+    bgFrame = BackgroundFrame(master, fields)
+    mFrame = MessageFrame(master, fields)
+    menubar = Menubar(master, fields, sFrame, mFrame, bgFrame)
+    master.mainloop()
