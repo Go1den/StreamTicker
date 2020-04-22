@@ -1,4 +1,4 @@
-from tkinter import Frame, GROOVE, Label, Checkbutton, E, W, NSEW
+from tkinter import Frame, GROOVE, Label, Checkbutton, E, W
 
 class DepartureFrame:
     def __init__(self, master, fields):
@@ -49,5 +49,3 @@ class DepartureFrame:
         # self.CBOX_COVERING_WITH_RECTANGLES = Checkbutton(self.frame, var=fields.VAR_CHECK_COVERING_WITH_RECTANGLES)
         # self.CBOX_COVERING_WITH_RECTANGLES.grid(row=ROW_RECTANGLES, column=0)
         # Label(self.frame, text="Covering with rectangles").grid(row=ROW_RECTANGLES, column=1)
-
-        self.frame.grid(row=0, column=0, sticky=NSEW, padx=4, pady=4)

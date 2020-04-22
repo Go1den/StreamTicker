@@ -1,4 +1,4 @@
-from tkinter import Frame, GROOVE, Label, Scale, W, HORIZONTAL, NSEW
+from tkinter import Frame, GROOVE, Label, Scale, W, HORIZONTAL
 
 class SlidingFrame:
     def __init__(self, master, fields):
@@ -29,7 +29,6 @@ class SlidingFrame:
         self.SCALE_BG_Y_POS = Scale(self.frame, variable=fields.VAR_ENTRY_BACKGROUND_Y_POS, from_=0, to=40, tickinterval=40, orient=HORIZONTAL, resolution=1, length=500,
                                     label="Background Y Coordinate (location of BG center)")
         self.SCALE_BG_Y_POS.grid(row=3, column=3, sticky=W)
-        self.frame.grid(row=1, column=0, columnspan=3, sticky=NSEW, padx=4, pady=4)
 
     def updateXScales(self):
         self.SCALE_IMAGE_X_POS.configure(to=self.SCALE_WINDOW_WIDTH.get(), tickinterval=self.SCALE_WINDOW_WIDTH.get())

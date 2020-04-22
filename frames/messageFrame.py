@@ -1,4 +1,4 @@
-from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, NSEW, font, colorchooser, Canvas
+from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, font, colorchooser, Canvas
 
 from utils.createToolTip import CreateToolTip
 
@@ -9,12 +9,10 @@ class MessageFrame:
         ROW_MESSAGE_SETTINGS = 0
         ROW_MESSAGE_DURATION = 1
         ROW_MESSAGE_INTERMISSION = 2
-        ROW_FONT = 3
-        ROW_MESSAGE_COLOR = 4
+        ROW_FONT = 4
+        ROW_MESSAGE_COLOR = 6
         ROW_NORMAL_FONT_SIZE = 5
-        ROW_MAX_LENGTH = 6
-        ROW_SMALLER_FONT_SIZE = 7
-        ROW_MESSAGE_SPEED = 8
+        ROW_MESSAGE_SPEED = 3
 
         Label(self.frame, text="Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
         self.LABEL_MESSAGE_DURATION = Label(self.frame, text="Message Duration:")
@@ -53,35 +51,17 @@ class MessageFrame:
         self.LABEL_MESSAGE_COLOR.grid(row=0, column=1, sticky=W, pady=1)
         messageColorFrame.grid(row=ROW_MESSAGE_COLOR, column=1, sticky=W, pady=1)
 
-        self.LABEL_NORMAL_FONT_SIZE = Label(self.frame, text="Normal Message Font Size:")
+        self.LABEL_NORMAL_FONT_SIZE = Label(self.frame, text="Font Size:")
         self.TOOLTIP_NORMAL_FONT_SIZE = CreateToolTip(self.LABEL_NORMAL_FONT_SIZE, "Font size for messages of standard length.")
         self.LABEL_NORMAL_FONT_SIZE.grid(row=ROW_NORMAL_FONT_SIZE, column=0, sticky=E, pady=1)
         self.ENTRY_NORMAL_FONT_SIZE = Entry(self.frame, textvariable=fields.VAR_ENTRY_NORMAL_FONT_SIZE, width=4)
         self.ENTRY_NORMAL_FONT_SIZE.grid(row=ROW_NORMAL_FONT_SIZE, column=1, sticky=W, pady=1)
-
-        self.LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = Label(self.frame, text="Normal Message Max. Length:")
-        self.TOOLTIP_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = CreateToolTip(self.LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE,
-                                                                     "When a message is longer than this many characters,\nit becomes a 'Long Message' and those settings apply.")
-        self.LABEL_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.grid(row=ROW_MAX_LENGTH, column=0, sticky=E, pady=1)
-        maxLengthFrame = Frame(self.frame)
-        self.ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = Entry(maxLengthFrame, textvariable=fields.VAR_ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE, width=4)
-        self.ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.grid(row=0, column=0, sticky=W, pady=1)
-        Label(maxLengthFrame, text="characters").grid(row=0, column=1, sticky=W, pady=1)
-        maxLengthFrame.grid(row=ROW_MAX_LENGTH, column=1, sticky=W, pady=1)
-
-        self.LABEL_SMALLER_FONT_SIZE = Label(self.frame, text="Long Message Font Size:")
-        self.TOOLTIP_SMALLER_FONT_SIZE = CreateToolTip(self.LABEL_SMALLER_FONT_SIZE, "Font size for messages of greater than normal message max length.")
-        self.LABEL_SMALLER_FONT_SIZE.grid(row=ROW_SMALLER_FONT_SIZE, column=0, sticky=E, pady=1)
-        self.ENTRY_SMALLER_FONT_SIZE = Entry(self.frame, textvariable=fields.VAR_ENTRY_SMALLER_FONT_SIZE, width=4)
-        self.ENTRY_SMALLER_FONT_SIZE.grid(row=ROW_SMALLER_FONT_SIZE, column=1, sticky=W, pady=1)
 
         self.LABEL_MOVE_ALL_ON_LINE_DELAY = Label(self.frame, text="Message Scroll Speed:")
         self.LABEL_MOVE_ALL_ON_LINE_DELAY.grid(row=ROW_MESSAGE_SPEED, column=0, sticky=E, pady=1)
         self.MESSAGE_SPEEDS = ["Fastest", "Fast", "Normal", "Slow", "Slowest"]
         self.MESSAGE_SPEED_COMBO_BOX = ttk.Combobox(self.frame, values=self.MESSAGE_SPEEDS, textvariable=fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY, state="readonly")
         self.MESSAGE_SPEED_COMBO_BOX.grid(row=ROW_MESSAGE_SPEED, column=1, sticky=W, pady=1)
-
-        self.frame.grid(row=0, column=2, sticky=NSEW, padx=4, pady=4)
 
     def updateMessageColor(self, fields):
         color = colorchooser.askcolor(title="Select color")

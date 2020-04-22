@@ -1,5 +1,5 @@
 import sys
-from tkinter import Frame, GROOVE, Label, Button, W, E, NSEW, colorchooser, filedialog, Canvas
+from tkinter import Frame, GROOVE, Label, Button, W, E, colorchooser, filedialog, Canvas
 
 from utils import helperMethods
 from utils.createToolTip import CreateToolTip
@@ -30,7 +30,6 @@ class BackgroundFrame:
         self.RECTANGLE_WINDOW_BG_IMAGE = self.CANVAS_WINDOW_BG_IMAGE.create_rectangle(80, 4, 0, 30, fill=fields.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND, outline="")
         self.CANVAS_WINDOW_BG_IMAGE.grid(row=0, column=0, sticky=W)
         bgColorFrame.grid(row=ROW_BG_COLOR, column=1, sticky=W)
-        self.frame.grid(row=0, column=1, sticky=NSEW, padx=4, pady=4)
 
     def updateWindowColor(self, fields):
         color = colorchooser.askcolor(title="Select color")
