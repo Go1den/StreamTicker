@@ -1,5 +1,6 @@
-from tkinter import Toplevel, NSEW, E
+from tkinter import Toplevel, NSEW, E, Frame, GROOVE
 
+from frames.arrivalFrame import ArrivalFrame
 from frames.backgroundFrame import BackgroundFrame
 from frames.departureFrame import DepartureFrame
 from frames.messageFrame import MessageFrame
@@ -17,19 +18,26 @@ def getSettingsWindow(parent):
 
     fields = SettingsGUIFields()
 
-    dFrame = DepartureFrame(master, fields)
-    dFrame.frame.grid(row=0, column=0, sticky=NSEW, padx=4, pady=4)
+    transitionFrame = Frame(master, bd=2, relief=GROOVE)
 
-    bgFrame = BackgroundFrame(master, fields)
-    bgFrame.frame.grid(row=0, column=1, sticky=NSEW, padx=4, pady=4)
+    dFrame = DepartureFrame(transitionFrame, fields)
+    dFrame.frame.grid(row=0, column=0, sticky=NSEW)
+
+    aFrame = ArrivalFrame(transitionFrame, fields)
+    aFrame.frame.grid(row=0, column=1, sticky=NSEW)
+
+    transitionFrame.grid(row=0, column=0, columnspan=2, sticky=NSEW, padx=4, pady=4)
 
     mFrame = MessageFrame(master, fields)
     mFrame.frame.grid(row=0, column=2, sticky=NSEW, padx=4, pady=4)
 
+    bgFrame = BackgroundFrame(master, fields)
+    bgFrame.frame.grid(row=0, column=3, sticky=NSEW, padx=4, pady=4)
+
     sFrame = SlidingFrame(master, fields)
-    sFrame.frame.grid(row=1, column=0, columnspan=3, sticky=NSEW, padx=4, pady=4)
+    sFrame.frame.grid(row=1, column=0, columnspan=4, sticky=NSEW, padx=4, pady=4)
 
     okFrame = OkCancelFrame(master, fields)
-    okFrame.frame.grid(row=2, column=2, sticky=E, padx=4, pady=4)
+    okFrame.frame.grid(row=2, column=3, sticky=E, padx=4, pady=4)
 
     master.mainloop()

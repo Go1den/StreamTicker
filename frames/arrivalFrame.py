@@ -1,10 +1,11 @@
 from tkinter import Frame, Label, Checkbutton, E, W
 
-class DepartureFrame:
+class ArrivalFrame:
     def __init__(self, master, fields):
         self.frame = Frame(master)
 
-        ROW_DEPARTURE_SETTINGS = 0
+        #Todo: Update these arrival variables to use new arrival variables instead of copying departure
+        ROW_ARRIVAL_SETTINGS = 0
         ROW_ALLOW_MESSAGES = 1
         ROW_SLIDING_RIGHT = 2
         ROW_SLIDING_LEFT = 3
@@ -15,8 +16,8 @@ class DepartureFrame:
         ROW_RANDOM_ORDER = 8
         # ROW_RECTANGLES = 9
 
-        Label(self.frame, text="Global Transition Settings").grid(row=ROW_DEPARTURE_SETTINGS, column=0, columnspan=3, sticky=W)
-        Label(self.frame, text="Allow messages to leave the screen by:").grid(row=ROW_ALLOW_MESSAGES, column=0, columnspan=3, sticky=W)
+        Label(self.frame, text="").grid(row=ROW_ARRIVAL_SETTINGS, column=0, columnspan=3, sticky=W)
+        Label(self.frame, text="Allow messages to arrive on screen by:").grid(row=ROW_ALLOW_MESSAGES, column=0, columnspan=3, sticky=W)
 
         self.CBOX_SLIDING_RIGHT = Checkbutton(self.frame, variable=fields.VAR_CHECK_SLIDING_RIGHT)
         self.CBOX_SLIDING_RIGHT.grid(row=ROW_SLIDING_RIGHT, column=0, sticky=E)

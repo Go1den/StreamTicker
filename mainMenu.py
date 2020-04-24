@@ -2,6 +2,7 @@ import webbrowser
 from tkinter import Menu
 
 from aboutWindow import getAboutWindow
+from messagesGUIWindow import getMessagesWindow
 from settingsGUIWindow import getSettingsWindow
 
 def getMainMenu(win, e):
@@ -14,7 +15,7 @@ def getMainMenu(win, e):
     rmenu = Menu(e.widget.master, tearoff=0, takefocus=0)
 
     messagesMenu = Menu(rmenu, tearoff=0, takefocus=0)
-    messagesMenu.add_command(label="Edit...")
+    messagesMenu.add_command(label="Edit...", command=lambda: getMessagesWindow(win))
     messagesMenu.add_command(label="Load", command=lambda: win.loadMessages())
     messagesMenu.add_command(label="Save", command=lambda: win.saveMessages(False))
     messagesMenu.add_command(label="Save as...", command=lambda: win.saveMessages(True))

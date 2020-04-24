@@ -20,7 +20,7 @@ class BackgroundFrame:
                                                      "The background color of the window will show if no background image exists,\nor if the background image does not cover the entire window.")
         self.BUTTON_WINDOW_BG_COLOR.grid(row=ROW_BG_COLOR, column=0, sticky=E, padx=4)
         self.LABEL_WINDOW_BG_COLOR.grid(row=0, column=1, sticky=W)
-        self.LABEL_WINDOW_BG_IMAGE = Label(self.frame, textvariable=fields.VAR_DISPLAY_WINDOW_BG_IMAGE, width=40, anchor=W)
+        self.LABEL_WINDOW_BG_IMAGE = Label(self.frame, textvariable=fields.VAR_DISPLAY_WINDOW_BG_IMAGE, width=20, anchor=W)
         self.BUTTON_WINDOW_BG_IMAGE = Button(self.frame, text='Background Image:', command=lambda: self.selectImageFile(fields))
         self.TOOLTIP_WINDOW_BG_IMAGE = CreateToolTip(self.BUTTON_WINDOW_BG_IMAGE,
                                                      "The background image will persist during all messages.\nSet its coordinates with BG X Coord and BG Y Coord.")

@@ -14,7 +14,7 @@ class MessageFrame:
         ROW_NORMAL_FONT_SIZE = 5
         ROW_MESSAGE_SPEED = 3
 
-        Label(self.frame, text="Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
+        Label(self.frame, text="Global Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
         self.LABEL_MESSAGE_DURATION = Label(self.frame, text="Message Duration:")
         self.LABEL_MESSAGE_DURATION.grid(row=ROW_MESSAGE_DURATION, column=0, sticky=E, pady=1)
         messageDurationFrame = Frame(self.frame)
@@ -23,7 +23,7 @@ class MessageFrame:
         Label(messageDurationFrame, text="seconds").grid(row=0, column=1, sticky=W, pady=1)
         messageDurationFrame.grid(row=ROW_MESSAGE_DURATION, column=1, sticky=W, pady=1)
 
-        self.LABEL_MESSAGE_INTERMISSION = Label(self.frame, text="Time Between Each Message:")
+        self.LABEL_MESSAGE_INTERMISSION = Label(self.frame, text="Message Intermission:")
         self.LABEL_MESSAGE_INTERMISSION.grid(row=ROW_MESSAGE_INTERMISSION, column=0, sticky=E, pady=1)
         messageIntermissionFrame = Frame(self.frame)
         self.ENTRY_MESSAGE_INTERMISSION = Entry(messageIntermissionFrame, textvariable=fields.VAR_ENTRY_MESSAGE_INTERMISSION, width=4)
