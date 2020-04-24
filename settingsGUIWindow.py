@@ -11,6 +11,7 @@ from settingsGUIFields import SettingsGUIFields
 def getSettingsWindow(parent):
     master = Toplevel(parent)
     master.wm_attributes("-topmost", 1)
+    master.focus_force()
     master.wm_title("StreamTicker Settings")
     master.iconbitmap("stIcon.ico")
     master.resizable(False, False)

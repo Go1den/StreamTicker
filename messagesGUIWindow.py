@@ -7,6 +7,7 @@ from frames.messageOkCancelFrame import MessageOkCancelFrame
 def getMessagesWindow(parent):
     master = Toplevel(parent)
     master.wm_attributes("-topmost", 1)
+    master.focus_force()
     master.wm_title("StreamTicker Message Manager")
     master.iconbitmap("stIcon.ico")
     master.resizable(False, False)
