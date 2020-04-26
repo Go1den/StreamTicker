@@ -1,4 +1,4 @@
-from tkinter import Canvas, mainloop, W, PhotoImage
+from tkinter import Canvas, mainloop, W, PhotoImage, NW
 
 from streamTickerWindow import StreamTickerWindow
 
@@ -8,7 +8,7 @@ canvas = Canvas(win, width=400, height=44, bd=0, highlightthickness=0, backgroun
 canvas.bind('<Button-3>', win.rightClickMenu)
 
 img = PhotoImage(file="testBG.png")
-canvas.create_image(200, 22, image=img)
+canvas.create_image(0, 0, anchor=NW, image=img)
 
 testString = "This is a test"
 x = 4
