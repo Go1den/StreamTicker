@@ -12,7 +12,7 @@ class StreamTickerWindow(Tk):
         self.overrideredirect(True)
         self.bind('<Button-1>', self.clickwin)
         self.bind('<B1-Motion>', self.dragwin)
-        self.settingsJSON = self.getSettingsJSONOnStartup()
+        self.streamTickerWindowJSON = self.getSettingsJSONOnStartup()
         self.messagesPath = self.getOnStartup("messages", "")
         self.settingsPath = self.getOnStartup("settings", "")
         self._offsetx = self.getOnStartup("offsetx", 0)
@@ -51,7 +51,7 @@ class StreamTickerWindow(Tk):
             return {"messages": "", "settings": ""}
 
     def getOnStartup(self, key, default):
-        val = self.settingsJSON.get(key)
+        val = self.streamTickerWindowJSON.get(key)
         if val:
             return val
         else:
