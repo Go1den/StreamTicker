@@ -24,12 +24,22 @@
             "ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES": false
         }
     ],
+    "arrival": [
+        {
+            "ENABLE_ARRIVAL_BY_SLIDING_RIGHT": true,
+            "ENABLE_ARRIVAL_BY_SLIDING_DOWN": true,
+            "ENABLE_ARRIVAL_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER": true,
+            "ENABLE_ARRIVAL_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT": true,
+            "ENABLE_ARRIVAL_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT": true,
+            "ENABLE_ARRIVAL_BY_SLIDING_LEFT": true,
+            "ENABLE_ARRIVAL_BY_SLIDING_UP": true,
+            "ENABLE_ARRIVAL_BY_COVERING_WITH_RECTANGLES": false
+        }
+    ],
     "message": [
         {
             "MESSAGE_STYLE": "",
-            "NORMAL_FONT_SIZE_GAP_FOR_SPACES": "4",
             "MESSAGE_COLOR": "#ffffff",
-            "MAX_LENGTH_FOR_NORMAL_FONT_SIZE": "16",
             "DEFAULT_IMAGE": "imagefiles/stLogo28.png",
             "SMALLER_FONT_SIZE": "22",
             "NORMAL_FONT_SIZE_GAP": "20",
@@ -37,7 +47,6 @@
             "MESSAGE_FONT_FACE": "Courier New",
             "MESSAGE_INTERMISSION": ".5",
             "NORMAL_FONT_SIZE": "26",
-            "SMALLER_FONT_SIZE_GAP": "16",
             "MESSAGE_DURATION": "5"
         }
     ]
