@@ -1,8 +1,10 @@
 import webbrowser
-from tkinter import Button, W, Toplevel, Label, LEFT, PhotoImage, Frame, E, SE
+from tkinter import Button, W, Toplevel, Label, LEFT, PhotoImage, Frame, SE
 
-def getAboutWindow():
-    aboutWindow = Toplevel()
+def getAboutWindow(parent):
+    aboutWindow = Toplevel(parent)
+    aboutWindow.wm_attributes("-topmost", 1)
+    aboutWindow.focus_force()
     aboutWindow.iconbitmap("stIcon.ico")
     aboutWindow.title("About")
     aboutWindow.resizable(False, False)
