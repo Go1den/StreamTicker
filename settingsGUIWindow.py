@@ -8,37 +8,38 @@ from frames.okCancelFrame import OkCancelFrame
 from frames.slidingFrame import SlidingFrame
 from settingsGUIFields import SettingsGUIFields
 
-def getSettingsWindow(parent):
-    master = Toplevel(parent)
-    master.wm_attributes("-topmost", 1)
-    master.focus_force()
-    master.wm_title("StreamTicker Settings")
-    master.iconbitmap("stIcon.ico")
-    master.resizable(False, False)
-    master.grab_set()
+class SettingsGUIWindow:
+    def __init__(self, parent):
+        self.master = Toplevel(parent)
+        self.master.wm_attributes("-topmost", 1)
+        self.master.focus_force()
+        self.master.wm_title("StreamTicker Settings")
+        self.master.iconbitmap("stIcon.ico")
+        self.master.resizable(False, False)
+        self.master.grab_set()
 
-    fields = SettingsGUIFields()
+        self.fields = SettingsGUIFields()
 
-    transitionFrame = Frame(master, bd=2, relief=GROOVE)
+        self.transitionFrame = Frame(self.master, bd=2, relief=GROOVE)
 
-    dFrame = DepartureFrame(transitionFrame, fields)
-    dFrame.frame.grid(row=0, column=0, sticky=NSEW)
+        self.dFrame = DepartureFrame(self.transitionFrame, self.fields)
+        self.dFrame.frame.grid(row=0, column=0, sticky=NSEW)
 
-    aFrame = ArrivalFrame(transitionFrame, fields)
-    aFrame.frame.grid(row=0, column=1, sticky=NSEW)
+        self.aFrame = ArrivalFrame(self.transitionFrame, self.fields)
+        self.aFrame.frame.grid(row=0, column=1, sticky=NSEW)
 
-    transitionFrame.grid(row=0, column=0, columnspan=2, sticky=NSEW, padx=4, pady=4)
+        self.transitionFrame.grid(row=0, column=0, columnspan=2, sticky=NSEW, padx=4, pady=4)
 
-    mFrame = MessageFrame(master, fields)
-    mFrame.frame.grid(row=0, column=2, sticky=NSEW, padx=4, pady=4)
+        self.mFrame = MessageFrame(self.master, self.fields)
+        self.mFrame.frame.grid(row=0, column=2, sticky=NSEW, padx=4, pady=4)
 
-    bgFrame = BackgroundFrame(master, fields)
-    bgFrame.frame.grid(row=0, column=3, sticky=NSEW, padx=4, pady=4)
+        self.bgFrame = BackgroundFrame(self.master, self.fields)
+        self.bgFrame.frame.grid(row=0, column=3, sticky=NSEW, padx=4, pady=4)
 
-    sFrame = SlidingFrame(master, fields)
-    sFrame.frame.grid(row=1, column=0, columnspan=4, sticky=NSEW, padx=4, pady=4)
+        self.sFrame = SlidingFrame(self.master, self.fields)
+        self.sFrame.frame.grid(row=1, column=0, columnspan=4, sticky=NSEW, padx=4, pady=4)
 
-    okFrame = OkCancelFrame(master, fields)
-    okFrame.frame.grid(row=2, column=3, sticky=E, padx=4, pady=4)
+        self.okFrame = OkCancelFrame(self.master, self.fields)
+        self.okFrame.frame.grid(row=2, column=3, sticky=E, padx=4, pady=4)
 
-    master.mainloop()
+        self.master.mainloop()

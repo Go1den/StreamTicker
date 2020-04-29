@@ -4,22 +4,26 @@ from frames.messageButtonFrame import MessageButtonFrame
 from frames.messageListFrame import MessageListFrame
 from frames.messageOkCancelFrame import MessageOkCancelFrame
 
-def getMessagesWindow(parent):
-    master = Toplevel(parent)
-    master.wm_attributes("-topmost", 1)
-    master.focus_force()
-    master.wm_title("StreamTicker Message Manager")
-    master.iconbitmap("stIcon.ico")
-    master.resizable(False, False)
-    master.grab_set()
+class MessagesGUIWindow:
+    def __init__(self, parent):
+        self.master = Toplevel(parent)
+        self.master.wm_attributes("-topmost", 1)
+        self.master.focus_force()
+        self.master.wm_title("StreamTicker Message Manager")
+        self.master.iconbitmap("stIcon.ico")
+        self.master.resizable(False, False)
+        self.master.grab_set()
+        self.window = parent
 
-    mlFrame = MessageListFrame(master)
-    mlFrame.frame.grid(row=0, column=1, padx=(4, 4), pady=4)
+        self.messages = sorted(self.window.messages.get("slides"), key=lambda x: x.get("sortOrder"))
 
-    mbFrame = MessageButtonFrame(master, mlFrame)
-    mbFrame.frame.grid(row=0, column=0, padx=(4, 0), pady=4)
+        self.mlFrame = MessageListFrame(self)
+        self.mlFrame.frame.grid(row=0, column=1, padx=(4, 4), pady=4)
 
-    okFrame = MessageOkCancelFrame(master)
-    okFrame.frame.grid(row=1, column=1, padx=4, pady=4, sticky=E)
+        self.mbFrame = MessageButtonFrame(self.master, self.mlFrame)
+        self.mbFrame.frame.grid(row=0, column=0, padx=(4, 0), pady=4)
 
-    master.mainloop()
+        self.okFrame = MessageOkCancelFrame(self)
+        self.okFrame.frame.grid(row=1, column=1, padx=4, pady=4, sticky=E)
+
+        self.master.mainloop()
