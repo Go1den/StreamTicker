@@ -19,7 +19,6 @@ def getMainMenu(win, e):
     messagesMenu.add_command(label="Load", command=lambda: win.loadMessages())
     messagesMenu.add_command(label="Save", command=lambda: win.saveMessages(False))
     messagesMenu.add_command(label="Save as...", command=lambda: win.saveMessages(True))
-    messagesMenu.add_command(label="Erase All", command=lambda: win.clearMessages())
 
     settingsMenu = Menu(rmenu, tearoff=0, takefocus=0)
     settingsMenu.add_command(label="Edit...", command=lambda: SettingsGUIWindow(win))
