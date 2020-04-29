@@ -9,7 +9,6 @@ class MessageListFrame:
         self.scrollbar.grid(row=0, column=1, sticky=NS)
         self.populateListbox(messagesGUIWindow.messages)
         self.window = messagesGUIWindow
-        # print(self.listBox.get(0, index - 1)) #gets all elements in the listbox
 
         self.listBox.grid(row=0, column=0)
 
@@ -23,12 +22,8 @@ class MessageListFrame:
             self.listBox.selection_set(index - 1)
             self.listBox.see(index - 2)
             self.window.messages[index], self.window.messages[index - 1] = self.window.messages[index - 1], self.window.messages[index]
-            self.window.messages[index]["sortOrder"] = self.window.messages[index]["sortOrder"] + 1
-            self.window.messages[index - 1]["sortOrder"] = self.window.messages[index]["sortOrder"] - 1
 
     def moveSelectedDown(self):
-        print("Before:")
-        print(self.window.messages)
         current = self.listBox.curselection()
         if current and current[0] != self.listBox.size() - 1:
             index = current[0]
@@ -38,14 +33,8 @@ class MessageListFrame:
             self.listBox.selection_set(index + 1)
             self.listBox.see(index + 2)
             self.window.messages[index], self.window.messages[index + 1] = self.window.messages[index + 1], self.window.messages[index]
-            self.window.messages[index]["sortOrder"] = self.window.messages[index]["sortOrder"] - 1
-            self.window.messages[index + 1]["sortOrder"] = self.window.messages[index]["sortOrder"] + 1
-            print("After:")
-            print(self.window.messages)
 
     def deleteSelected(self):
-        print("Before:")
-        print(self.window.messages)
         current = self.listBox.curselection()
         if current:
             index = current[0]
@@ -55,8 +44,6 @@ class MessageListFrame:
             del self.window.messages[index]
             for message in self.window.messages:
                 message["sortOrder"] = self.window.messages.index(message) + 1
-            print("After:")
-            print(self.window.messages)
 
     def populateListbox(self, messages):
         index = 1
