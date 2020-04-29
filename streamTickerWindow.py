@@ -57,10 +57,6 @@ class StreamTickerWindow(Tk):
         else:
             return default
 
-    def clearMessages(self):
-        self.messages = {}
-        messagebox.showinfo("Info", "Messages cleared.")
-
     def loadMessages(self):
         fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
         if not fileToLoad or fileToLoad is None:
