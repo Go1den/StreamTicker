@@ -106,3 +106,12 @@ class StreamTickerWindow(Tk):
             messagebox.showinfo("Info", "Messages were saved successfully.")
         else:
             messagebox.showerror("Error", "Failed to save messages!")
+
+    def closeWindow(self):
+        self.streamTickerWindowJSON["messages"] = self.messagesPath
+        self.streamTickerWindowJSON["settings"] = self.settingsPath
+        self.streamTickerWindowJSON["offsetx"] = self.winfo_x()
+        self.streamTickerWindowJSON["offsety"] = self.winfo_y()
+        self.streamTickerWindowJSON["alwaysontop"] = self.alwaysOnTop.get()
+        writeJSON("settings.cfg", self.streamTickerWindowJSON)
+        sys.exit(1)

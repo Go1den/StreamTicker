@@ -38,6 +38,6 @@ def getMainMenu(win, e):
     rmenu.add_separator()
     rmenu.add_checkbutton(label="  Always on Top", variable=win.alwaysOnTop, onvalue=True, offvalue=False, command=lambda: win.updateAlwaysOnTop())
     rmenu.add_command(label='  About StreamTicker', command=lambda: AboutWindow(win))
-    rmenu.add_command(label='  Exit', command=quit)
+    rmenu.add_command(label='  Exit', command=lambda: win.closeWindow())
     rmenu.tk_popup(e.x_root + 74, e.y_root + 11, entry="0")
     return rmenu
