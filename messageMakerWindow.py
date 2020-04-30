@@ -2,25 +2,26 @@ from tkinter import Toplevel
 
 from frames.messageMakerFrame import MessageMakerFrame
 
-def getMessageMakerWindow(parent, values):
-    master = Toplevel(parent)
-    master.geometry('+{x}+{y}'.format(x=parent.winfo_x()+10, y=parent.winfo_y()+10))
-    master.wm_attributes("-topmost", 1)
-    master.focus_force()
-    master.wm_title("StreamTicker Message Maker")
-    master.iconbitmap("stIcon.ico")
-    master.resizable(False, False)
-    master.grab_set()
+class MessageMakerWindow:
+    def __init__(self, parent, values):
+        self.master = Toplevel(parent)
+        self.parent = parent
+        self.master.geometry('+{x}+{y}'.format(x=parent.winfo_x() + 10, y=parent.winfo_y() + 10))
+        self.master.wm_attributes("-topmost", 1)
+        self.master.focus_force()
+        self.master.wm_title("StreamTicker Message Maker")
+        self.master.iconbitmap("stIcon.ico")
+        self.master.resizable(False, False)
+        self.master.grab_set()
+        self.master.protocol("WM_DELETE_WINDOW", self.deleteWindow)
 
-    def _delete_window():
-        master.destroy()
-        parent.lift()
-        parent.wm_attributes("-topmost", 1)
-        parent.grab_set()
+        mmFrame = MessageMakerFrame(self.master, values)
+        mmFrame.frame.grid(row=0, column=0)
 
-    master.protocol("WM_DELETE_WINDOW", _delete_window)
+        self.master.mainloop()
 
-    mmFrame = MessageMakerFrame(master, values)
-    mmFrame.frame.grid(row=0, column=0)
-
-    master.mainloop()
+    def deleteWindow(self):
+        self.master.destroy()
+        self.parent.lift()
+        self.parent.wm_attributes("-topmost", 1)
+        self.parent.grab_set()

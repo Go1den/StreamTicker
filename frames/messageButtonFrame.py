@@ -1,6 +1,6 @@
 from tkinter import Frame, GROOVE, Button
 
-from messageMakerWindow import getMessageMakerWindow
+from messageMakerWindow import MessageMakerWindow
 
 class MessageButtonFrame:
     def __init__(self, master, listFrame):
@@ -26,9 +26,9 @@ class MessageButtonFrame:
         self.deleteButton = Button(self.frame, text="Delete", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.deleteSelected())
         self.deleteButton.grid(row=ROW_DELETE, column=0, pady=4)
 
-        self.addButton = Button(self.frame, text="New", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: getMessageMakerWindow(self.parent, None))
+        self.addButton = Button(self.frame, text="New", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: MessageMakerWindow(self.parent, None))
         self.addButton.grid(row=ROW_ADD, column=0, pady=4)
 
     def getMessageMakerWindowForSelected(self):
         # TODO: Get the current index's record from the json and send values into the message maker window
-        getMessageMakerWindow(self.parent, None)
+        MessageMakerWindow(self.parent, None)
