@@ -11,6 +11,7 @@ from settingsGUIFields import SettingsGUIFields
 class SettingsGUIWindow:
     def __init__(self, parent):
         self.master = Toplevel(parent)
+        self.master.geometry('+{x}+80'.format(x=parent.winfo_x()))
         self.master.wm_attributes("-topmost", 1)
         self.master.focus_force()
         self.master.wm_title("StreamTicker Settings")

@@ -4,6 +4,7 @@ from frames.messageMakerFrame import MessageMakerFrame
 
 def getMessageMakerWindow(parent, values):
     master = Toplevel(parent)
+    master.geometry('+{x}+{y}'.format(x=parent.winfo_x()+10, y=parent.winfo_y()+10))
     master.wm_attributes("-topmost", 1)
     master.focus_force()
     master.wm_title("StreamTicker Message Maker")
@@ -21,3 +22,5 @@ def getMessageMakerWindow(parent, values):
 
     mmFrame = MessageMakerFrame(master, values)
     mmFrame.frame.grid(row=0, column=0)
+
+    master.mainloop()
