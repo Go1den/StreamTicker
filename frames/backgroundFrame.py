@@ -2,7 +2,6 @@ import sys
 from tkinter import Frame, GROOVE, Label, Button, W, E, colorchooser, filedialog, Canvas
 
 from utils import helperMethods
-from utils.createToolTip import CreateToolTip
 
 class BackgroundFrame:
     def __init__(self, master, fields):
@@ -16,14 +15,10 @@ class BackgroundFrame:
         self.LABEL_WINDOW_BG_COLOR = Label(bgColorFrame, textvariable=fields.VAR_LABEL_WINDOW_BG_COLOR_TEXT)
         Label(self.frame, text="Background Settings").grid(row=ROW_BG_SETTINGS, column=0, sticky=W)
         self.BUTTON_WINDOW_BG_COLOR = Button(self.frame, text='Background Color:', command=lambda: self.updateWindowColor(fields))
-        self.TOOLTIP_WINDOW_BG_COLOR = CreateToolTip(self.BUTTON_WINDOW_BG_COLOR,
-                                                     "The background color of the window will show if no background image exists,\nor if the background image does not cover the entire window.")
         self.BUTTON_WINDOW_BG_COLOR.grid(row=ROW_BG_COLOR, column=0, sticky=E, padx=4)
         self.LABEL_WINDOW_BG_COLOR.grid(row=0, column=1, sticky=W)
         self.LABEL_WINDOW_BG_IMAGE = Label(self.frame, textvariable=fields.VAR_DISPLAY_WINDOW_BG_IMAGE, width=20, anchor=W)
         self.BUTTON_WINDOW_BG_IMAGE = Button(self.frame, text='Background Image:', command=lambda: self.selectImageFile(fields))
-        self.TOOLTIP_WINDOW_BG_IMAGE = CreateToolTip(self.BUTTON_WINDOW_BG_IMAGE,
-                                                     "The background image will persist during all messages.\nSet its coordinates with BG X Coord and BG Y Coord.")
         self.BUTTON_WINDOW_BG_IMAGE.grid(row=ROW_BG_IMAGE, column=0, sticky=E, padx=4, pady=4)
         self.LABEL_WINDOW_BG_IMAGE.grid(row=ROW_BG_IMAGE, column=1, sticky=W)
         self.CANVAS_WINDOW_BG_IMAGE = Canvas(bgColorFrame, width=80, height=30)
