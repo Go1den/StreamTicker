@@ -20,15 +20,16 @@ class MessageButtonFrame:
         self.downButton = Button(self.frame, text="Move Down", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.moveSelectedDown())
         self.downButton.grid(row=ROW_DOWN, column=0, pady=4)
 
-        self.editButton = Button(self.frame, text="Edit", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: self.getMessageMakerWindowForSelected())
+        self.editButton = Button(self.frame, text="Edit", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.getMessageMakerWindow(True))
         self.editButton.grid(row=ROW_COPY, column=0, pady=4)
 
         self.deleteButton = Button(self.frame, text="Delete", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.deleteSelected())
         self.deleteButton.grid(row=ROW_DELETE, column=0, pady=4)
 
-        self.addButton = Button(self.frame, text="New", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: MessageMakerWindow(self.parent, None))
+        self.addButton = Button(self.frame, text="New", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.getMessageMakerWindow(False))
         self.addButton.grid(row=ROW_ADD, column=0, pady=4)
 
-    def getMessageMakerWindowForSelected(self):
+    def getMessageMakerWindowForSelected(self, currentSelection):
         # TODO: Get the current index's record from the json and send values into the message maker window
+
         MessageMakerWindow(self.parent, None)

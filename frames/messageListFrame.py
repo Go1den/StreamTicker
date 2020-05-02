@@ -1,5 +1,7 @@
 from tkinter import Frame, Listbox, Scrollbar, NS, VERTICAL
 
+from messageMakerWindow import MessageMakerWindow
+
 class MessageListFrame:
     def __init__(self, messagesGUIWindow):
         self.frame = Frame(messagesGUIWindow.master)
@@ -50,3 +52,17 @@ class MessageListFrame:
         for message in messages:
             self.listBox.insert(index, message.get("nickname") + ": " + message.get("prefixText") + message.get("text") + message.get("suffixText"))
             index += 1
+
+    def getMessageMakerWindow(self, isEditButton):
+        if isEditButton:
+            current = self.listBox.curselection()
+            if current:
+                index = current[0]
+                print(self.window.messages[index])
+                MessageMakerWindow(self.window.master, self.window.messages[index])
+            else:
+                return
+        else:
+            MessageMakerWindow(self.window.master, None)
+            # we should probably store the result somewhere
+

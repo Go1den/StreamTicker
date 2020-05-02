@@ -3,7 +3,7 @@ from tkinter import Toplevel
 from frames.messageMakerFrame import MessageMakerFrame
 
 class MessageMakerWindow:
-    def __init__(self, parent, values):
+    def __init__(self, parent, existingMessage):
         self.master = Toplevel(parent)
         self.parent = parent
         self.master.geometry('+{x}+{y}'.format(x=parent.winfo_x() + 10, y=parent.winfo_y() + 10))
@@ -15,7 +15,7 @@ class MessageMakerWindow:
         self.master.grab_set()
         self.master.protocol("WM_DELETE_WINDOW", self.deleteWindow)
 
-        mmFrame = MessageMakerFrame(self.master, values)
+        mmFrame = MessageMakerFrame(self.master, existingMessage)
         mmFrame.frame.grid(row=0, column=0)
 
         self.master.mainloop()
