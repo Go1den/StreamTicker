@@ -4,6 +4,7 @@ from tkinter import Button, W, Toplevel, Label, LEFT, PhotoImage, Frame, SE
 class AboutWindow:
     def __init__(self, parent):
         self.aboutWindow = Toplevel(parent)
+        self.aboutWindow.withdraw()
         self.aboutWindow.geometry('+{x}+80'.format(x=parent.winfo_x()))
         self.aboutWindow.wm_attributes("-topmost", 1)
         self.aboutWindow.focus_force()
@@ -41,4 +42,5 @@ class AboutWindow:
         self.okButton = Button(self.aboutWindow, text="OK", width=8, command=lambda: self.aboutWindow.destroy())
         self.okButton.grid(row=5, column=0, sticky=SE, pady=4, padx=4)
 
+        self.aboutWindow.deiconify()
         self.aboutWindow.mainloop()

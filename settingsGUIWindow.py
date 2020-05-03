@@ -11,6 +11,7 @@ from settingsGUIFields import SettingsGUIFields
 class SettingsGUIWindow:
     def __init__(self, parent):
         self.master = Toplevel(parent)
+        self.master.withdraw()
         self.master.geometry('+{x}+80'.format(x=parent.winfo_x()))
         self.master.wm_attributes("-topmost", 1)
         self.master.focus_force()
@@ -43,4 +44,5 @@ class SettingsGUIWindow:
         self.okFrame = OkCancelFrame(self.master, self.fields)
         self.okFrame.frame.grid(row=2, column=3, sticky=E, padx=4, pady=4)
 
+        self.master.deiconify()
         self.master.mainloop()

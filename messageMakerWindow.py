@@ -5,6 +5,7 @@ from frames.messageMakerFrame import MessageMakerFrame
 class MessageMakerWindow:
     def __init__(self, parent, existingMessage):
         self.master = Toplevel(parent)
+        self.master.withdraw()
         self.parent = parent
         self.master.geometry('+{x}+{y}'.format(x=parent.winfo_x() + 10, y=parent.winfo_y() + 10))
         self.master.wm_attributes("-topmost", 1)
@@ -18,6 +19,7 @@ class MessageMakerWindow:
         mmFrame = MessageMakerFrame(self.master, existingMessage)
         mmFrame.frame.grid(row=0, column=0)
 
+        self.master.deiconify()
         self.master.mainloop()
 
     def deleteWindow(self):

@@ -7,6 +7,7 @@ from frames.messageOkCancelFrame import MessageOkCancelFrame
 class MessagesGUIWindow:
     def __init__(self, parent):
         self.master = Toplevel(parent)
+        self.master.withdraw()
         self.master.geometry('+{x}+80'.format(x=parent.winfo_x()))
         self.master.wm_attributes("-topmost", 1)
         self.master.focus_force()
@@ -14,6 +15,7 @@ class MessagesGUIWindow:
         self.master.iconbitmap("stIcon.ico")
         self.master.resizable(False, False)
         self.master.grab_set()
+
         self.window = parent
 
         self.messages = sorted(self.window.messages.get("slides"), key=lambda x: x.get("sortOrder"))
@@ -27,4 +29,5 @@ class MessagesGUIWindow:
         self.okFrame = MessageOkCancelFrame(self)
         self.okFrame.frame.grid(row=1, column=1, padx=4, pady=4, sticky=E)
 
+        self.master.deiconify()
         self.master.mainloop()
