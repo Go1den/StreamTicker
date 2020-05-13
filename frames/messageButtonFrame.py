@@ -13,20 +13,21 @@ class MessageButtonFrame:
         ROW_DELETE = 3
         ROW_ADD = 4
         BUTTON_WIDTH = 10
+        BUTTON_BORDER = 2
 
-        self.upButton = Button(self.frame, text="Move Up", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.moveSelectedUp())
+        self.upButton = Button(self.frame, text="Move Up", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: listFrame.moveSelectedUp())
         self.upButton.grid(row=ROW_UP, column=0, pady=4)
 
-        self.downButton = Button(self.frame, text="Move Down", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.moveSelectedDown())
+        self.downButton = Button(self.frame, text="Move Down", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: listFrame.moveSelectedDown())
         self.downButton.grid(row=ROW_DOWN, column=0, pady=4)
 
-        self.editButton = Button(self.frame, text="Edit", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.getMessageMakerWindow(True))
+        self.editButton = Button(self.frame, text="Edit", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: listFrame.getMessageMakerWindow(True))
         self.editButton.grid(row=ROW_COPY, column=0, pady=4)
 
-        self.deleteButton = Button(self.frame, text="Delete", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.deleteSelected())
+        self.deleteButton = Button(self.frame, text="Delete", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: listFrame.deleteSelected())
         self.deleteButton.grid(row=ROW_DELETE, column=0, pady=4)
 
-        self.addButton = Button(self.frame, text="New", width=BUTTON_WIDTH, bd=2, relief=GROOVE, command=lambda: listFrame.getMessageMakerWindow(False))
+        self.addButton = Button(self.frame, text="New", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: listFrame.getMessageMakerWindow(False))
         self.addButton.grid(row=ROW_ADD, column=0, pady=4)
 
     def getMessageMakerWindowForSelected(self, currentSelection):
