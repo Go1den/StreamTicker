@@ -23,7 +23,7 @@ class MessagesGUIWindow:
         self.mlFrame = MessageListFrame(self)
         self.mlFrame.frame.grid(row=0, column=1, padx=(4, 4), pady=4)
 
-        self.mbFrame = MessageButtonFrame(self.master, self.mlFrame)
+        self.mbFrame = MessageButtonFrame(self)
         self.mbFrame.frame.grid(row=0, column=0, padx=(4, 0), pady=4)
 
         self.okFrame = MessageOkCancelFrame(self)
