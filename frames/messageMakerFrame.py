@@ -1,17 +1,20 @@
 from tkinter import Frame, GROOVE, Label, Entry, E, W, Button, StringVar
 
+from utils.helperMethods import getFileNameFromPath
+
 class MessageMakerFrame:
     def __init__(self, master, existingMessage):
         self.frame = Frame(master, bd=2, relief=GROOVE)
         self.message = existingMessage
-        print("Self.message is")
-        print(self.message)
 
         self.nickname = StringVar()
         self.prefix = StringVar()
         self.file = StringVar()
         self.suffix = StringVar()
         self.image = StringVar()
+
+        self.filePath = ""
+        self.imagePath = ""
 
         self.populateFieldsOnLoad()
 
@@ -52,6 +55,8 @@ class MessageMakerFrame:
         if self.message:
             self.nickname.set(self.message.get("nickname"))
             self.prefix.set(self.message.get("prefixText"))
-            self.file.set(self.message.get("filePath"))
+            self.filePath = self.message.get("filePath")
+            self.file.set(getFileNameFromPath(self.filePath))
             self.suffix.set(self.message.get("suffixText"))
-            self.image.set(self.message.get("image"))
+            self.imagePath = self.message.get("image")
+            self.image.set(getFileNameFromPath(self.imagePath))

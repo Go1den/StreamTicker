@@ -59,10 +59,10 @@ class MessageListFrame:
             if current:
                 index = current[0]
                 print(self.window.messages[index])
-                MessageMakerWindow(self.window.master, self.window.messages[index])
+                MessageMakerWindow(self, self.window.messages[index])
             else:
                 return
         else:
-            MessageMakerWindow(self.window.master, None)
+            MessageMakerWindow(self, None)
             # we should probably store the result somewhere
 

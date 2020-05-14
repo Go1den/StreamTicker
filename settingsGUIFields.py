@@ -1,20 +1,11 @@
 import json
-from tkinter import BooleanVar, StringVar, messagebox
+from tkinter import StringVar, messagebox
 
-from utils import helperMethods
 from settings import Settings
+from utils import helperMethods
 
 class SettingsGUIFields():
     def __init__(self):
-        self.VAR_CHECK_SLIDING_RIGHT = BooleanVar()
-        self.VAR_CHECK_SLIDING_LEFT = BooleanVar()
-        self.VAR_CHECK_SLIDING_UP = BooleanVar()
-        self.VAR_CHECK_SLIDING_DOWN = BooleanVar()
-        self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT = BooleanVar()
-        self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT = BooleanVar()
-        self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER = BooleanVar()
-        self.VAR_CHECK_COVERING_WITH_RECTANGLES = BooleanVar()
-
         self.VAR_DEFAULT_IMAGE = StringVar()
         self.VAR_MESSAGE_STYLE = StringVar()
         self.VAR_ENTRY_MESSAGE_DURATION = StringVar()
@@ -29,6 +20,8 @@ class SettingsGUIFields():
         self.VAR_ENTRY_SMALLER_FONT_SIZE = StringVar()
         self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP = StringVar()
         self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES = StringVar()
+        self.VAR_ARRIVAL = StringVar()
+        self.VAR_DEPARTURE = StringVar()
 
         self.VAR_ENTRY_WINDOW_WIDTH = StringVar()
         self.VAR_ENTRY_MESSAGE_X_POS = StringVar()
@@ -45,15 +38,6 @@ class SettingsGUIFields():
 
     def getDefaultValues(self, confirm, mFrame=None, bgFrame=None):
         if not confirm or messagebox.askokcancel("Confirm New Settings", "All changes made will be lost, and the default values will be set. Do you want to continue?"):
-            self.VAR_CHECK_SLIDING_RIGHT.set(True)
-            self.VAR_CHECK_SLIDING_LEFT.set(True)
-            self.VAR_CHECK_SLIDING_UP.set(True)
-            self.VAR_CHECK_SLIDING_DOWN.set(True)
-            self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT.set(True)
-            self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT.set(True)
-            self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER.set(True)
-            self.VAR_CHECK_COVERING_WITH_RECTANGLES.set(False)
-
             self.VAR_DEFAULT_IMAGE.set("imagefiles/stLogo28.png")
             self.VAR_MESSAGE_STYLE.set("")
             self.VAR_ENTRY_MESSAGE_DURATION.set("5")
@@ -68,6 +52,8 @@ class SettingsGUIFields():
             self.VAR_ENTRY_SMALLER_FONT_SIZE.set("22")
             self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP.set("16")
             self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.set("6")
+            self.VAR_ARRIVAL.set("Pick For Me")
+            self.VAR_DEPARTURE.set("Pick For Me")
 
             self.VAR_ENTRY_WINDOW_WIDTH.set("400")
             self.VAR_ENTRY_WINDOW_HEIGHT.set("44")
@@ -89,15 +75,6 @@ class SettingsGUIFields():
             with open(file) as f:
                 data = json.loads(f.read())
             s = Settings(data)
-            self.VAR_CHECK_SLIDING_RIGHT.set(s.ENABLE_DEPARTING_BY_SLIDING_RIGHT)
-
-            self.VAR_CHECK_SLIDING_LEFT.set(s.ENABLE_DEPARTING_BY_SLIDING_LEFT)
-            self.VAR_CHECK_SLIDING_UP.set(s.ENABLE_DEPARTING_BY_SLIDING_UP)
-            self.VAR_CHECK_SLIDING_DOWN.set(s.ENABLE_DEPARTING_BY_SLIDING_DOWN)
-            self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT.set(s.ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT)
-            self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT.set(s.ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT)
-            self.VAR_CHECK_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER.set(s.ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER)
-            self.VAR_CHECK_COVERING_WITH_RECTANGLES.set(s.ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES)
 
             self.VAR_DEFAULT_IMAGE.set(s.DEFAULT_IMAGE)
             self.VAR_MESSAGE_STYLE.set(s.MESSAGE_STYLE)
@@ -113,6 +90,8 @@ class SettingsGUIFields():
             self.VAR_ENTRY_SMALLER_FONT_SIZE.set(s.SMALLER_FONT_SIZE)
             self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP.set(s.SMALLER_FONT_SIZE_GAP)
             self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.set(s.SMALLER_FONT_SIZE_GAP_FOR_SPACES)
+            self.VAR_ARRIVAL.set(s.ARRIVAL)
+            self.VAR_DEPARTURE.set(s.DEPARTURE)
 
             self.VAR_ENTRY_MESSAGE_X_POS.set(s.MESSAGE_X_POS)
             self.VAR_ENTRY_IMAGE_X_POS.set(s.IMAGE_X_POS)

@@ -2,21 +2,6 @@ class Settings:
     def __init__(self, data):
         self.data = data
         self.ACCEPTABLE_STYLES = ['bold', 'normal', 'italic', 'bold italic', 'oblique', 'regular']
-        # Departure settings
-        d = self.data['departure'] if 'departure' in self.data else {}
-        if isinstance(d, list):
-            d = d[0]
-        self.ENABLE_DEPARTING_BY_SLIDING_RIGHT = d['ENABLE_DEPARTING_BY_SLIDING_RIGHT'] if 'ENABLE_DEPARTING_BY_SLIDING_RIGHT' in d else True
-        self.ENABLE_DEPARTING_BY_SLIDING_LEFT = d['ENABLE_DEPARTING_BY_SLIDING_LEFT'] if 'ENABLE_DEPARTING_BY_SLIDING_LEFT' in d else True
-        self.ENABLE_DEPARTING_BY_SLIDING_UP = d['ENABLE_DEPARTING_BY_SLIDING_UP'] if 'ENABLE_DEPARTING_BY_SLIDING_UP' in d else True
-        self.ENABLE_DEPARTING_BY_SLIDING_DOWN = d['ENABLE_DEPARTING_BY_SLIDING_DOWN'] if 'ENABLE_DEPARTING_BY_SLIDING_DOWN' in d else True
-        self.ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT = d[
-            'ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT'] if 'ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_RIGHT_TO_LEFT' in d else True
-        self.ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT = d[
-            'ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT'] if 'ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_WORKING_LEFT_TO_RIGHT' in d else True
-        self.ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER = d[
-            'ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER'] if 'ENABLE_DEPARTING_BY_ALTERNATING_UP_AND_DOWN_IN_RANDOM_ORDER' in d else True
-        self.ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES = d['ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES'] if 'ENABLE_DEPARTING_BY_COVERING_WITH_RECTANGLES' in d else True
 
         # Message settings
         m = self.data['message'] if 'message' in self.data else {}
@@ -35,6 +20,8 @@ class Settings:
         self.SMALLER_FONT_SIZE_GAP = int(m['SMALLER_FONT_SIZE_GAP'] if 'SMALLER_FONT_SIZE_GAP' in m else 16)
         self.SMALLER_FONT_SIZE_GAP_FOR_SPACES = int(m['SMALLER_FONT_SIZE_GAP_FOR_SPACES'] if 'SMALLER_FONT_SIZE_GAP_FOR_SPACES' in m else 6)
         self.DEFAULT_IMAGE = str(m['DEFAULT_IMAGE'] if 'DEFAULT_IMAGE' in m else "imagefiles/stLogo28.png")
+        self.ARRIVAL = str(m['ARRIVAL'] if 'ARRIVAL' in m else "Pick For Me")
+        self.DEPARTURE = str(m['DEPARTURE'] if 'DEPARTURE' in m else "Pick For Me")
 
         # Window settings
         w = self.data['window'] if 'window' in self.data else {}

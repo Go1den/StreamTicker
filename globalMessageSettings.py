@@ -9,3 +9,5 @@ class GlobalMessageSettings:
         self.VAR_LABEL_MESSAGE_COLOR_TEXT = StringVar()
         self.VAR_ENTRY_NORMAL_FONT_SIZE = StringVar()
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY = StringVar()
+        self.VAR_ARRIVAL = StringVar()
+        self.VAR_DEPARTURE = StringVar()
