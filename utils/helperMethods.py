@@ -7,6 +7,13 @@ def isFloat(value):
     except ValueError:
         return False
 
+def readFile(path):
+    try:
+        f = open(path, "r")
+        return f.read()
+    except:
+        return ""
+
 def getFileNameFromPath(path):
     try:
         x = path.split('/')[-1]
