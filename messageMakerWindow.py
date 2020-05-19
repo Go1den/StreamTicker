@@ -4,6 +4,7 @@ from frames.messageFrame import MessageFrame
 from frames.messageMakerFrame import MessageMakerFrame
 from frames.messageMakerOkCancelFrame import MessageMakerOkCancelFrame
 from frames.overrideFrame import OverrideFrame
+from frames.previewFrame import PreviewFrame
 from globalMessageSettings import GlobalMessageSettings
 
 class MessageMakerWindow:
@@ -32,7 +33,7 @@ class MessageMakerWindow:
         self.setGlobalMessageSettings()
 
         self.mmFrame = MessageMakerFrame(self.master, self.message)
-        self.mmFrame.frame.grid(row=0, column=0, columnspan=2, padx=4, pady=4)
+        self.mmFrame.frame.grid(row=0, column=0, sticky=NSEW, columnspan=2, padx=4, pady=4)
 
         self.globalMessageSettingsFrame = MessageFrame(self.master, self.fields)
         self.globalMessageSettingsFrame.frame.grid(row=1, column=1, sticky=NSEW, padx=(0, 4), pady=4)
@@ -42,8 +43,11 @@ class MessageMakerWindow:
 
         self.disableGlobalMessageFields()
 
+        self.previewFrame = PreviewFrame(self)
+        self.previewFrame.frame.grid(row=2, column=0, columnspan=2, padx=4, pady=4, sticky=NSEW)
+
         self.okCancelFrame = MessageMakerOkCancelFrame(self)
-        self.okCancelFrame.frame.grid(row=2, column=0, columnspan=2, padx=4, pady=4, sticky=E)
+        self.okCancelFrame.frame.grid(row=3, column=0, columnspan=2, padx=4, pady=4, sticky=E)
 
         self.master.deiconify()
         self.master.mainloop()
@@ -78,6 +82,6 @@ class MessageMakerWindow:
                     if grandchild.winfo_class() in ('Entry', 'Button', 'TCombobox'):
                         grandchild.configure(state='disable')
 
-    #Todo: Enable fields if the message has the corresponding overrides already stored on it
-    #Todo: Add the OK button functionality to return the message and update the parent window appropriately
-    #Todo: Account for the differences between a new message and an edited one
+    # Todo: Enable fields if the message has the corresponding overrides already stored on it
+    # Todo: Add the OK button functionality to return the message and update the parent window appropriately
+    # Todo: Account for the differences between a new message and an edited one

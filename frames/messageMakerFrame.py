@@ -1,6 +1,6 @@
 from tkinter import Frame, GROOVE, Label, Entry, E, W, Button, StringVar
 
-from utils.helperMethods import getFileNameFromPath
+from utils.helperMethods import getFileNameFromPath, readFile
 
 class MessageMakerFrame:
     def __init__(self, master, existingMessage):
@@ -12,13 +12,14 @@ class MessageMakerFrame:
         self.file = StringVar()
         self.suffix = StringVar()
         self.image = StringVar()
+        self.fullMessage = StringVar()
 
         self.filePath = ""
         self.imagePath = ""
 
         self.populateFieldsOnLoad()
 
-        labelMessageSettings = Label(self.frame, text="Message Settings:")
+        labelMessageSettings = Label(self.frame, text="Message Settings")
         labelMessageSettings.grid(row=0, column=0, sticky=W, padx=1, pady=1)
 
         labelNickname = Label(self.frame, text="Nickname this message:")
@@ -33,7 +34,7 @@ class MessageMakerFrame:
         entryPrefix = Entry(self.frame, textvariable=self.prefix, width=30)
         entryPrefix.grid(row=2, column=1, sticky=W, padx=1, pady=1)
 
-        buttonTextFile = Button(self.frame, text="(Optional) Select Text File")
+        buttonTextFile = Button(self.frame, text="Select Text File")
         buttonTextFile.grid(row=3, column=0, sticky=E, padx=1, pady=1)
 
         labelTextFile = Label(self.frame, textvariable=self.file)
@@ -45,8 +46,8 @@ class MessageMakerFrame:
         entrySuffix = Entry(self.frame, textvariable=self.suffix, width=30)
         entrySuffix.grid(row=4, column=1, sticky=W, padx=1, pady=1)
 
-        buttonImageFile = Button(self.frame, text="(Optional) Select Image File")
-        buttonImageFile.grid(row=5, column=0, sticky=E, padx=1, pady=1)
+        buttonImageFile = Button(self.frame, text="Select Image File")
+        buttonImageFile.grid(row=5, column=0, sticky=E, padx=1, pady=(1, 4))
 
         labelImageFile = Label(self.frame, textvariable=self.image)
         labelImageFile.grid(row=5, column=1, sticky=W, padx=1, pady=1)
@@ -60,3 +61,7 @@ class MessageMakerFrame:
             self.suffix.set(self.message.get("suffixText"))
             self.imagePath = self.message.get("image")
             self.image.set(getFileNameFromPath(self.imagePath))
+            self.fullMessage.set(self.getFullMessage())
+
+    def getFullMessage(self):
+        return self.prefix.get() + readFile(self.filePath) + self.suffix.get()
