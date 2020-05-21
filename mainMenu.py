@@ -25,7 +25,7 @@ def getMainMenu(win, e):
     settingsMenu.add_command(label="Load", command=lambda: win.loadSettings())
     settingsMenu.add_command(label="Save", command=lambda: win.saveSettings(False))
     settingsMenu.add_command(label="Save as...", command=lambda: win.saveSettings(True))
-    settingsMenu.add_command(label="Default")
+    settingsMenu.add_command(label="Default", command=lambda: win.loadDefaultSettings())
 
     issueMenu = Menu(rmenu, tearoff=0, takefocus=0)
     issueMenu.add_command(label="via Discord", command=lambda: webbrowser.open('https://discord.gg/nqWxgHm', new=2))

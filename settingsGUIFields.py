@@ -1,10 +1,8 @@
-import json
 from tkinter import StringVar, messagebox
 
-from settings import Settings
 from utils import helperMethods
 
-class SettingsGUIFields():
+class SettingsGUIFields:
     def __init__(self):
         self.VAR_DEFAULT_IMAGE = StringVar()
         self.VAR_MESSAGE_STYLE = StringVar()
@@ -13,13 +11,7 @@ class SettingsGUIFields():
         self.VAR_LABEL_MESSAGE_COLOR_TEXT = StringVar()
         self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = ""
         self.VAR_FONT_COMBO_BOX = StringVar()
-        self.VAR_ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE = StringVar()
         self.VAR_ENTRY_NORMAL_FONT_SIZE = StringVar()
-        self.VAR_ENTRY_NORMAL_FONT_SIZE_GAP = StringVar()
-        self.VAR_ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES = StringVar()
-        self.VAR_ENTRY_SMALLER_FONT_SIZE = StringVar()
-        self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP = StringVar()
-        self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES = StringVar()
         self.VAR_ARRIVAL = StringVar()
         self.VAR_DEPARTURE = StringVar()
 
@@ -45,13 +37,7 @@ class SettingsGUIFields():
             self.VAR_LABEL_MESSAGE_COLOR_TEXT.set("#ffffff")
             self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = "#ffffff"
             self.VAR_FONT_COMBO_BOX.set("Courier New")
-            self.VAR_ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.set("16")
             self.VAR_ENTRY_NORMAL_FONT_SIZE.set("26")
-            self.VAR_ENTRY_NORMAL_FONT_SIZE_GAP.set("20")
-            self.VAR_ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.set("4")
-            self.VAR_ENTRY_SMALLER_FONT_SIZE.set("22")
-            self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP.set("16")
-            self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.set("6")
             self.VAR_ARRIVAL.set("Pick For Me")
             self.VAR_DEPARTURE.set("Pick For Me")
 
@@ -69,65 +55,40 @@ class SettingsGUIFields():
             if mFrame and bgFrame:
                 self.updateColorBoxes(mFrame, bgFrame)
 
-    def loadJson(self, file, mFrame, bgFrame):
+    def loadSettings(self, parent, mFrame, bgFrame):
         # Todo: backup the current settings so that if load fails, we can revert to those rather than doing a partial load
         try:
-            with open(file) as f:
-                data = json.loads(f.read())
-            s = Settings(data)
+            s = parent.settings
+            if s.get("message"):
+                m = s.get("message")
+                self.VAR_DEFAULT_IMAGE.set(m.get("DEFAULT_IMAGE"))
+                self.VAR_MESSAGE_STYLE.set(m.get("MESSAGE_STYLE"))
+                self.VAR_ENTRY_MESSAGE_DURATION.set(m.get("MESSAGE_DURATION"))
+                self.VAR_ENTRY_MESSAGE_INTERMISSION.set(m.get("MESSAGE_INTERMISSION"))
+                self.VAR_LABEL_MESSAGE_COLOR_TEXT.set(m.get("MESSAGE_COLOR"))
+                self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = m.get("MESSAGE_COLOR")
+                self.VAR_FONT_COMBO_BOX.set(m.get("MESSAGE_FONT_FACE"))
+                self.VAR_ENTRY_NORMAL_FONT_SIZE.set(m.get("NORMAL_FONT_SIZE"))
+                self.VAR_ARRIVAL.set(m.get("ARRIVAL"))
+                self.VAR_DEPARTURE.set(m.get("DEPARTURE"))
 
-            self.VAR_DEFAULT_IMAGE.set(s.DEFAULT_IMAGE)
-            self.VAR_MESSAGE_STYLE.set(s.MESSAGE_STYLE)
-            self.VAR_ENTRY_MESSAGE_DURATION.set(s.MESSAGE_DURATION)
-            self.VAR_ENTRY_MESSAGE_INTERMISSION.set(s.MESSAGE_INTERMISSION)
-            self.VAR_LABEL_MESSAGE_COLOR_TEXT.set(s.MESSAGE_COLOR)
-            self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = s.MESSAGE_COLOR
-            self.VAR_FONT_COMBO_BOX.set(s.MESSAGE_FONT_FACE)
-            self.VAR_ENTRY_MAX_LENGTH_FOR_NORMAL_FONT_SIZE.set(s.MAX_LENGTH_FOR_NORMAL_FONT_SIZE)
-            self.VAR_ENTRY_NORMAL_FONT_SIZE.set(s.NORMAL_FONT_SIZE)
-            self.VAR_ENTRY_NORMAL_FONT_SIZE_GAP.set(s.NORMAL_FONT_SIZE_GAP)
-            self.VAR_ENTRY_NORMAL_FONT_SIZE_GAP_FOR_SPACES.set(s.NORMAL_FONT_SIZE_GAP_FOR_SPACES)
-            self.VAR_ENTRY_SMALLER_FONT_SIZE.set(s.SMALLER_FONT_SIZE)
-            self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP.set(s.SMALLER_FONT_SIZE_GAP)
-            self.VAR_ENTRY_SMALLER_FONT_SIZE_GAP_FOR_SPACES.set(s.SMALLER_FONT_SIZE_GAP_FOR_SPACES)
-            self.VAR_ARRIVAL.set(s.ARRIVAL)
-            self.VAR_DEPARTURE.set(s.DEPARTURE)
-
-            self.VAR_ENTRY_MESSAGE_X_POS.set(s.MESSAGE_X_POS)
-            self.VAR_ENTRY_IMAGE_X_POS.set(s.IMAGE_X_POS)
-            self.VAR_ENTRY_WINDOW_WIDTH.set(s.WINDOW_WIDTH)
-            self.VAR_ENTRY_WINDOW_HEIGHT.set(s.WINDOW_HEIGHT)
-            self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set(s.WINDOW_BG_COLOR)
-            self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = s.WINDOW_BG_COLOR
-            self.VAR_PATH_WINDOW_BG_IMAGE.set(s.WINDOW_BG_IMAGE)
-            self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(s.WINDOW_BG_IMAGE))
-            self.VAR_ENTRY_BACKGROUND_X_POS.set(s.BACKGROUND_X_POS)
-            self.VAR_ENTRY_BACKGROUND_Y_POS.set(s.BACKGROUND_Y_POS)
-            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(self.convertDelayValueToName(float(s.MOVE_ALL_ON_LINE_DELAY)))
-            self.updateColorBoxes(mFrame, bgFrame)
-            messagebox.showinfo("Success", "Settings loaded!")
-            return True
+            if s.get("window"):
+                w = s.get("window")
+                self.VAR_ENTRY_MESSAGE_X_POS.set(w.get("MESSAGE_X_POS"))
+                self.VAR_ENTRY_IMAGE_X_POS.set(w.get("IMAGE_X_POS"))
+                self.VAR_ENTRY_WINDOW_WIDTH.set(w.get("WINDOW_WIDTH"))
+                self.VAR_ENTRY_WINDOW_HEIGHT.set(w.get("WINDOW_HEIGHT"))
+                self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set(w.get("WINDOW_BG_COLOR"))
+                self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = w.get("WINDOW_BG_COLOR")
+                self.VAR_PATH_WINDOW_BG_IMAGE.set(w.get("WINDOW_BG_IMAGE"))
+                self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(w.get("WINDOW_BG_IMAGE")))
+                self.VAR_ENTRY_BACKGROUND_X_POS.set(w.get("BACKGROUND_X_POS"))
+                self.VAR_ENTRY_BACKGROUND_Y_POS.set(w.get("BACKGROUND_Y_POS"))
+                self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.get("MOVE_ALL_ON_LINE_DELAY"))
+                self.updateColorBoxes(mFrame, bgFrame)
         except Exception as e:
             print(e)
             messagebox.showerror("Error", "Unable to load file. Please select a valid layout file.")
-            return False
-
-    def convertDelayNameToValue(self, name):
-        delayDict = {'Fastest': ".002",
-                     'Fast': ".004",
-                     'Normal': ".006",
-                     'Slow': ".008",
-                     'Slowest': ".01"}
-        return delayDict[name] if delayDict[name] else ".004"
-
-    def convertDelayValueToName(self, value):
-        delayDict = {.002: "Fastest",
-                     .004: "Fast",
-                     .006: "Normal",
-                     .008: "Slow",
-                     .01: "Slowest"
-                     }
-        return delayDict[value] if delayDict[value] else "Fast"
 
     def updateColorBoxes(self, mFrame, bgFrame):
         bgFrame.CANVAS_WINDOW_BG_IMAGE.itemconfig(bgFrame.RECTANGLE_WINDOW_BG_IMAGE, fill=self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)

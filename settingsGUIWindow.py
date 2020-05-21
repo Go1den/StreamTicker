@@ -17,6 +17,7 @@ class SettingsGUIWindow:
         self.master.iconbitmap("stIcon.ico")
         self.master.resizable(False, False)
         self.master.grab_set()
+        self.parent = parent
 
         self.fields = SettingsGUIFields()
 
@@ -29,8 +30,10 @@ class SettingsGUIWindow:
         self.sFrame = SlidingFrame(self.master, self.fields)
         self.sFrame.frame.grid(row=1, column=0, columnspan=2, sticky=NSEW, padx=4, pady=4)
 
-        self.okFrame = OkCancelFrame(self.master, self.fields)
+        self.okFrame = OkCancelFrame(self)
         self.okFrame.frame.grid(row=2, column=1, sticky=E, padx=4, pady=4)
+
+        self.fields.loadSettings(self.parent, self.mFrame, self.bgFrame)
 
         self.master.deiconify()
         self.master.mainloop()

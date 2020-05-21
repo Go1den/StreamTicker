@@ -61,16 +61,17 @@ class MessageFrame:
         self.MESSAGE_SPEED_COMBO_BOX = ttk.Combobox(self.frame, values=self.MESSAGE_SPEEDS, textvariable=self.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY, state="readonly")
         self.MESSAGE_SPEED_COMBO_BOX.grid(row=ROW_MESSAGE_SPEED, column=1, sticky=W, pady=1)
 
-        self.MESSAGE_ANIMATIONS = ["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Unzip Forward", "Unzip Backward", "Unzip Randomly"]
+        self.ARRIVAL_ANIMATIONS = ["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"]
+        self.DEPARTURE_ANIMATIONS = ["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Unzip Forward", "Unzip Backward", "Unzip Randomly"]
 
         self.LABEL_ARRIVAL = Label(self.frame, text="Arrival Animation:")
         self.LABEL_ARRIVAL.grid(row=ROW_ARRIVAL, column=0, sticky=E, pady=1)
-        self.ARRIVAL_COMBO_BOX = ttk.Combobox(self.frame, values=self.MESSAGE_ANIMATIONS, textvariable=self.fields.VAR_ARRIVAL, state="readonly")
+        self.ARRIVAL_COMBO_BOX = ttk.Combobox(self.frame, values=self.ARRIVAL_ANIMATIONS, textvariable=self.fields.VAR_ARRIVAL, state="readonly")
         self.ARRIVAL_COMBO_BOX.grid(row=ROW_ARRIVAL, column=1, sticky=W, pady=1, padx=(0,4))
 
         self.LABEL_DEPARTURE = Label(self.frame, text="Departure Animation:")
         self.LABEL_DEPARTURE.grid(row=ROW_DEPARTURE, column=0, sticky=E, pady=1)
-        self.DEPARTURE_COMBO_BOX = ttk.Combobox(self.frame, values=self.MESSAGE_ANIMATIONS, textvariable=self.fields.VAR_DEPARTURE, state="readonly")
+        self.DEPARTURE_COMBO_BOX = ttk.Combobox(self.frame, values=self.DEPARTURE_ANIMATIONS, textvariable=self.fields.VAR_DEPARTURE, state="readonly")
         self.DEPARTURE_COMBO_BOX.grid(row=ROW_DEPARTURE, column=1, sticky=W, pady=(1,4))
 
     # def updateMessageColor(self, fields):

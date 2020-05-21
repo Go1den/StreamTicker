@@ -2,6 +2,7 @@ import json
 import sys
 from tkinter import Tk, filedialog, messagebox, BooleanVar
 
+from defaultSettings import getDefaultSettings
 from mainMenu import getMainMenu
 from utils.helperMethods import readJSON, writeJSON
 
@@ -68,6 +69,10 @@ class StreamTickerWindow(Tk):
                 messagebox.showinfo("Info", "Messages were loaded successfully.")
             except:
                 messagebox.showerror("Error", "Failed to load messages!")
+
+    def loadDefaultSettings(self):
+        if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?"):
+            self.settings = getDefaultSettings()
 
     def loadSettings(self):
         fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])

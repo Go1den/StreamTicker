@@ -1,3 +1,5 @@
+#Unused by new program
+
 class Settings:
     def __init__(self, data):
         self.data = data
