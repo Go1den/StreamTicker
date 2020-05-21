@@ -1,7 +1,6 @@
 {
-    "window": [
-        {
-            "MOVE_ALL_ON_LINE_DELAY": ".004",
+    "window": {
+            "MOVE_ALL_ON_LINE_DELAY": "Fast",
             "WINDOW_BG_IMAGE": "imagefiles/background.png",
             "WINDOW_WIDTH": "400",
             "BACKGROUND_X_POS": "202",
@@ -10,10 +9,8 @@
             "IMAGE_X_POS": "22",
             "WINDOW_BG_COLOR": "#000000",
             "MESSAGE_X_POS": "60"
-        }
-    ],
-    "message": [
-        {
+    },
+    "message": {
             "MESSAGE_STYLE": "",
             "MESSAGE_COLOR": "#ffffff",
             "DEFAULT_IMAGE": "imagefiles/stLogo28.png",
@@ -23,6 +20,5 @@
             "MESSAGE_DURATION": "5",
             "ARRIVAL": "Pick For Me",
             "DEPARTURE": "Pick For Me"
-        }
-    ]
+    }
 }
