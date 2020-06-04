@@ -21,7 +21,7 @@ class OverrideFrame:
         self.checkboxDuration = Checkbutton(self.frame, variable=self.overrideDuration,
                                             command=lambda: self.toggleField(self.overrideDuration, self.gmsFrame.ENTRY_MESSAGE_DURATION,
                                                                              self.gmsFrame.fields.VAR_ENTRY_MESSAGE_DURATION,
-                                                                             self.defaultSettings.get("message")[0].get("MESSAGE_DURATION"),
+                                                                             self.defaultSettings.get("message").get("MESSAGE_DURATION"),
                                                                              NORMAL))
         self.checkboxDuration.grid(row=1, column=1, sticky=E)
 
@@ -31,7 +31,7 @@ class OverrideFrame:
         self.checkboxIntermission = Checkbutton(self.frame, variable=self.overrideIntermission,
                                                 command=lambda: self.toggleField(self.overrideIntermission, self.gmsFrame.ENTRY_MESSAGE_INTERMISSION,
                                                                                  self.gmsFrame.fields.VAR_ENTRY_MESSAGE_INTERMISSION,
-                                                                                 self.defaultSettings.get("message")[0].get("MESSAGE_INTERMISSION"),
+                                                                                 self.defaultSettings.get("message").get("MESSAGE_INTERMISSION"),
                                                                                  NORMAL))
         self.checkboxIntermission.grid(row=2, column=1, sticky=E)
 
@@ -41,7 +41,7 @@ class OverrideFrame:
         self.checkboxScrollSpeed = Checkbutton(self.frame, variable=self.overrideScrollSpeed,
                                                command=lambda: self.toggleField(self.overrideScrollSpeed, self.gmsFrame.MESSAGE_SPEED_COMBO_BOX,
                                                                                 self.gmsFrame.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY,
-                                                                                self.defaultSettings.get("window")[0].get("MOVE_ALL_ON_LINE_DELAY"),
+                                                                                self.defaultSettings.get("window").get("MOVE_ALL_ON_LINE_DELAY"),
                                                                                 "readonly"))
         self.checkboxScrollSpeed.grid(row=3, column=1, sticky=E)
 
@@ -51,7 +51,7 @@ class OverrideFrame:
         self.checkboxFont = Checkbutton(self.frame, variable=self.overrideFont,
                                         command=lambda: self.toggleField(self.overrideFont, self.gmsFrame.FONT_COMBO_BOX,
                                                                          self.gmsFrame.fields.VAR_FONT_COMBO_BOX,
-                                                                         self.defaultSettings.get("message")[0].get("MESSAGE_FONT_FACE"),
+                                                                         self.defaultSettings.get("message").get("MESSAGE_FONT_FACE"),
                                                                          "readonly"))
         self.checkboxFont.grid(row=4, column=1, sticky=E)
 
@@ -61,7 +61,7 @@ class OverrideFrame:
         self.checkboxFontSize = Checkbutton(self.frame, variable=self.overrideFontSize,
                                             command=lambda: self.toggleField(self.overrideFontSize, self.gmsFrame.ENTRY_NORMAL_FONT_SIZE,
                                                                              self.gmsFrame.fields.VAR_ENTRY_NORMAL_FONT_SIZE,
-                                                                             self.defaultSettings.get("message")[0].get("NORMAL_FONT_SIZE"),
+                                                                             self.defaultSettings.get("message").get("NORMAL_FONT_SIZE"),
                                                                              NORMAL))
         self.checkboxFontSize.grid(row=5, column=1, sticky=E)
 
@@ -77,7 +77,7 @@ class OverrideFrame:
         self.checkboxArrival = Checkbutton(self.frame, variable=self.overrideArrival,
                                            command=lambda: self.toggleField(self.overrideArrival, self.gmsFrame.ARRIVAL_COMBO_BOX,
                                                                             self.gmsFrame.fields.VAR_ARRIVAL,
-                                                                            self.defaultSettings.get("message")[0].get("ARRIVAL"),
+                                                                            self.defaultSettings.get("message").get("ARRIVAL"),
                                                                             "readonly"))
         self.checkboxArrival.grid(row=7, column=1, sticky=E)
 
@@ -87,7 +87,7 @@ class OverrideFrame:
         self.checkboxDeparture = Checkbutton(self.frame, variable=self.overrideDeparture,
                                              command=lambda: self.toggleField(self.overrideDeparture, self.gmsFrame.DEPARTURE_COMBO_BOX,
                                                                               self.gmsFrame.fields.VAR_DEPARTURE,
-                                                                              self.defaultSettings.get("message")[0].get("DEPARTURE"),
+                                                                              self.defaultSettings.get("message").get("DEPARTURE"),
                                                                               "readonly"))
         self.checkboxDeparture.grid(row=8, column=1, sticky=E)
 
@@ -106,6 +106,6 @@ class OverrideFrame:
             self.gmsFrame.BUTTON_MESSAGE_COLOR.config(state=NORMAL)
         else:
             self.gmsFrame.BUTTON_MESSAGE_COLOR.config(state=DISABLED)
-            self.gmsFrame.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.set(self.defaultSettings.get("message")[0].get("MESSAGE_COLOR"))
-            self.gmsFrame.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = self.defaultSettings.get("message")[0].get("MESSAGE_COLOR")
+            self.gmsFrame.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.set(self.defaultSettings.get("message").get("MESSAGE_COLOR"))
+            self.gmsFrame.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = self.defaultSettings.get("message").get("MESSAGE_COLOR")
             self.gmsFrame.CANVAS_MESSAGE_COLOR.itemconfig(self.gmsFrame.RECTANGLE_MESSAGE_COLOR, fill=self.gmsFrame.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)

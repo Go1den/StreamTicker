@@ -59,8 +59,8 @@ class MessageMakerWindow:
         self.parent.grab_set()
 
     def setGlobalMessageSettings(self):
-        gmSettings = self.listFrame.window.window.settings.get("message")[0]
-        wSettings = self.listFrame.window.window.settings.get("window")[0]
+        gmSettings = self.listFrame.window.window.settings.get("message")
+        wSettings = self.listFrame.window.window.settings.get("window")
         print(gmSettings)
         print(wSettings)
         self.fields.VAR_ENTRY_MESSAGE_DURATION.set(gmSettings.get("MESSAGE_DURATION"))
