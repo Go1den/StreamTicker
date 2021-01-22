@@ -1,5 +1,6 @@
 import math
-import time
+
+from pause import pause
 
 def moveAll(shapeList, dx, dy):
     """ Move all shapes in shapeList by (dx, dy)."""
@@ -14,7 +15,7 @@ def moveAllOnLine(shapeList, dx, dy, repetitions, delay):
     """
     for i in range(repetitions):
         moveAll(shapeList, dx, dy)
-        time.sleep(delay)
+        pause(delay)
 
 def rollMessageIntoWindow(settings, messageList, repetitions):
     for m in messageList[1:]:

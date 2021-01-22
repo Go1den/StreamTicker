@@ -47,7 +47,7 @@
             "MESSAGE_FONT_FACE": "Courier New",
             "MESSAGE_INTERMISSION": ".5",
             "NORMAL_FONT_SIZE": "26",
-            "MESSAGE_DURATION": "5"
+            "MESSAGE_DURATION": "15"
         }
     ]
 }

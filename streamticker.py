@@ -2,9 +2,10 @@ import json
 import sys
 
 from departure import *
-from utils.graphics import *
 from mover import moveAllOnLine, rollMessageIntoWindow
+from pause import pause
 from slideshow import Slideshow
+from utils.graphics import *
 
 def generateCharacterObjects(slideshow, characters, messageList):
     oddOrEven = False
@@ -46,11 +47,11 @@ def main(slideshow):
             messageList = [currentSlideImage]
             generateCharacterObjects(slideshow, characters, messageList)
             rollMessageIntoWindow(slideshow.settings, messageList, repetitions)
-            time.sleep(slideshow.settings.MESSAGE_DURATION)
+            pause(slideshow.settings.MESSAGE_DURATION)
             chooseDepartureMethodAndDepartFromWindow(slideshow.settings, messageList, repetitions, ENABLED_DEPARTURE_METHODS)
             slideshow.window.delete('all')
             slideshow.drawBackground()
-            time.sleep(slideshow.settings.MESSAGE_INTERMISSION)
+            pause(slideshow.settings.MESSAGE_INTERMISSION)
             idx = incrementIndex(idx, slideshow)
     except Exception as e:
         print(e)
