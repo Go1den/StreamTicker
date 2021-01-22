@@ -1,13 +1,33 @@
 {
     "slides": [
         {
-            "text": "StreamTicker by Go1den",
-            "filePath": "",
-            "suffixText": "",
+            "text": "StreamTicker1 by Go1den",
+            "filePath": "B:/Speedrunning/Text/switchfriendcode.txt",
+            "suffixText": "Suffix",
             "sortOrder": 1,
-            "nickname": "STREAMTICKER",
+            "nickname": "STREAMTICKER1",
             "isBitMessage": "False",
-            "prefixText": "",
+            "prefixText": "Prefix",
+            "image": "imagefiles/stLogo28.png"
+        },
+        {
+            "text": "StreamTicker3 by Go1den",
+            "filePath": "B:/Speedrunning/Text/switchfriendcode.txt",
+            "suffixText": "Suffix",
+            "sortOrder": 3,
+            "nickname": "STREAMTICKER3",
+            "isBitMessage": "False",
+            "prefixText": "Prefix",
+            "image": "imagefiles/stLogo28.png"
+        },
+        {
+            "text": "StreamTicker2 by Go1den",
+            "filePath": "B:/Speedrunning/Text/switchfriendcode.txt",
+            "suffixText": "Suffix",
+            "sortOrder": 2,
+            "nickname": "STREAMTICKER2",
+            "isBitMessage": "False",
+            "prefixText": "Prefix",
             "image": "imagefiles/stLogo28.png"
         }
     ]

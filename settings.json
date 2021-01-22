@@ -2,7 +2,7 @@
     "window": [
         {
             "MOVE_ALL_ON_LINE_DELAY": ".004",
-            "WINDOW_BG_IMAGE": "imagefiles/background1.png",
+            "WINDOW_BG_IMAGE": "imagefiles/background.png",
             "WINDOW_WIDTH": "400",
             "BACKGROUND_X_POS": "202",
             "WINDOW_HEIGHT": "44",
@@ -41,10 +41,7 @@
             "MESSAGE_STYLE": "",
             "MESSAGE_COLOR": "#ffffff",
             "DEFAULT_IMAGE": "imagefiles/stLogo28.png",
-            "SMALLER_FONT_SIZE": "22",
-            "NORMAL_FONT_SIZE_GAP": "20",
-            "SMALLER_FONT_SIZE_GAP_FOR_SPACES": "6",
-            "MESSAGE_FONT_FACE": "Courier New",
+            "MESSAGE_FONT_FACE": "JetBrains Mono",
             "MESSAGE_INTERMISSION": ".5",
             "NORMAL_FONT_SIZE": "26",
             "MESSAGE_DURATION": "15"
