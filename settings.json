@@ -1,7 +1,7 @@
 {
     "window": [
         {
-            "MOVE_ALL_ON_LINE_DELAY": ".004",
+            "MOVE_ALL_ON_LINE_DELAY": ".002",
             "WINDOW_BG_IMAGE": "imagefiles/background.png",
             "WINDOW_WIDTH": "400",
             "BACKGROUND_X_POS": "202",
@@ -44,7 +44,7 @@
             "MESSAGE_FONT_FACE": "JetBrains Mono",
             "MESSAGE_INTERMISSION": ".5",
             "NORMAL_FONT_SIZE": "26",
-            "MESSAGE_DURATION": "15"
+            "MESSAGE_DURATION": "5"
         }
     ]
 }

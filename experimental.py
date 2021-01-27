@@ -18,7 +18,7 @@ for char in testString:
     box = canvas.bbox(canvas.find_withtag("text")[-1])
     x = box[2] - 1
 
-canvas.create_text(4, 22, fill="yellow", text="This is a test", font=("Motion Control", "20", "bold"), tags="text", anchor=W)
+# canvas.create_text(4, 22, fill="yellow", text="This is a test", font=("Motion Control", "20", "bold"), tags="text", anchor=W)
 
 canvas.grid(row=0, column=0)
 mainloop()

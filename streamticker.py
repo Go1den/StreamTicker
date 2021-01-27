@@ -1,4 +1,5 @@
 import json
+import math
 import sys
 
 from departure import *
@@ -38,7 +39,6 @@ def incrementIndex(idx, slideshow):
 def main(slideshow):
     try:
         idx = 0
-        repetitions = math.floor(slideshow.settings.WINDOW_HEIGHT / 4)
         while True:
             currentSlideImage = Image(Point(slideshow.settings.IMAGE_X_POS, FLOOR_YPOS), slideshow.slides[idx].image)
             currentSlideImage.draw(slideshow.window)
@@ -46,9 +46,9 @@ def main(slideshow):
             characters = list(slideshow.slides[idx].getMessageText())
             messageList = [currentSlideImage]
             generateCharacterObjects(slideshow, characters, messageList)
-            rollMessageIntoWindow(slideshow.settings, messageList, repetitions)
+            rollMessageIntoWindow(slideshow.settings, messageList)
             pause(slideshow.settings.MESSAGE_DURATION)
-            chooseDepartureMethodAndDepartFromWindow(slideshow.settings, messageList, repetitions, ENABLED_DEPARTURE_METHODS)
+            chooseDepartureMethodAndDepartFromWindow(slideshow.settings, messageList, ENABLED_DEPARTURE_METHODS)
             slideshow.window.delete('all')
             slideshow.drawBackground()
             pause(slideshow.settings.MESSAGE_INTERMISSION)

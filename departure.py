@@ -1,4 +1,3 @@
-import math
 import random
 
 from mover import moveAllOnLine
@@ -23,7 +22,8 @@ def getEnabledDepartureMethods(settings):
         enabledMethods.append(7)
     return enabledMethods
 
-def chooseDepartureMethodAndDepartFromWindow(settings, messageList, repetitions, enabledMethods):
+def chooseDepartureMethodAndDepartFromWindow(settings, messageList, enabledMethods):
+    repetitions = settings.WINDOW_HEIGHT
     directionToLeave = 4
     methodOfDeparture = random.choice(enabledMethods)
     if methodOfDeparture == 0:
@@ -67,10 +67,10 @@ def departBySlidingUp(settings, messageList, repetitions, directionToLeave):
     moveAllOnLine(messageList, 0, directionToLeave * -1, repetitions, settings.MOVE_ALL_ON_LINE_DELAY)
 
 def departBySlidingRight(settings, messageList, directionToLeave):
-    moveAllOnLine(messageList, directionToLeave, 0, math.ceil(settings.WINDOW_WIDTH / 4), settings.MOVE_ALL_ON_LINE_DELAY)
+    moveAllOnLine(messageList, directionToLeave, 0, settings.WINDOW_WIDTH, settings.MOVE_ALL_ON_LINE_DELAY)
 
 def departBySlidingLeft(settings, messageList, directionToLeave):
-    moveAllOnLine(messageList, directionToLeave * -1, 0, math.ceil(settings.WINDOW_WIDTH / 4), settings.MOVE_ALL_ON_LINE_DELAY)
+    moveAllOnLine(messageList, directionToLeave * -1, 0, settings.WINDOW_WIDTH, settings.MOVE_ALL_ON_LINE_DELAY)
 
 # def departByCoveringWithRectangles(settings, slideshow):  # TODO: Implement later when I figure this out
 #     recList = []

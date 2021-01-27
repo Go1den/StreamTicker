@@ -17,9 +17,9 @@ def moveAllOnLine(shapeList, dx, dy, repetitions, delay):
         moveAll(shapeList, dx, dy)
         pause(delay)
 
-def rollMessageIntoWindow(settings, messageList, repetitions):
+def rollMessageIntoWindow(settings, messageList):
     for m in messageList[1:]:
         if m.getAnchor().getY() == math.ceil(settings.WINDOW_HEIGHT * 1.5):
-            moveAllOnLine([m], 0, -4, repetitions, settings.MOVE_ALL_ON_LINE_DELAY)
+            moveAllOnLine([m], 0, -1, settings.WINDOW_HEIGHT, settings.MOVE_ALL_ON_LINE_DELAY)
         else:
-            moveAllOnLine([m], 0, 4, repetitions, settings.MOVE_ALL_ON_LINE_DELAY)
+            moveAllOnLine([m], 0, 1, settings.WINDOW_HEIGHT, settings.MOVE_ALL_ON_LINE_DELAY)
