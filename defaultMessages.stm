@@ -1,0 +1,110 @@
+[
+    {
+        "nickname": "STREAMTICKER1",
+        "sortOrder": 1,
+        "parts": [
+            {
+                "partType": "text",
+                "sortOrder": 3,
+                "value": "Hello"
+            },
+            {
+                "partType": "image",
+                "sortOrder": 2,
+                "value": "imagefiles/stLogo28.png"
+            },
+            {
+                "partType": "gap",
+                "sortOrder": 1,
+                "value": "10"
+            },
+            {
+                "partType": "file",
+                "sortOrder": 4,
+                "value": "B:/Speedrunning/Text/streamticker.txt"
+            }
+        ],
+        "overrides": {
+            "duration": "",
+            "intermission": "",
+            "scrollSpeed": "",
+            "font": "",
+            "fontSize": "",
+            "fontColor": "",
+            "arrival": "",
+            "departure": ""
+        }
+    },
+    {
+        "nickname": "STREAMTICKER3",
+        "sortOrder": 3,
+        "parts": [
+            {
+                "partType": "text",
+                "sortOrder": 4,
+                "value": "Hello"
+            },
+            {
+                "partType": "image",
+                "sortOrder": 3,
+                "value": "imagefiles/stLogo28.png"
+            },
+            {
+                "partType": "gap",
+                "sortOrder": 2,
+                "value": "10"
+            },
+            {
+                "partType": "file",
+                "sortOrder": 1,
+                "value": "B:/Speedrunning/Text/streamticker.txt"
+            }
+        ],
+        "overrides": {
+            "duration": "",
+            "intermission": "",
+            "scrollSpeed": "",
+            "font": "",
+            "fontSize": "",
+            "fontColor": "",
+            "arrival": "",
+            "departure": ""
+        }
+    },
+    {
+        "nickname": "STREAMTICKER2",
+        "sortOrder": 2,
+        "parts": [
+            {
+                "partType": "text",
+                "sortOrder": 1,
+                "value": "Hello"
+            },
+            {
+                "partType": "image",
+                "sortOrder": 2,
+                "value": "imagefiles/stLogo28.png"
+            },
+            {
+                "partType": "gap",
+                "sortOrder": 3,
+                "value": "10"
+            },
+            {
+                "partType": "file",
+                "sortOrder": 4,
+                "value": "B:/Speedrunning/Text/streamticker.txt"
+            }
+        ],
+        "overrides": {
+            "duration": "",
+            "intermission": "",
+            "scrollSpeed": "",
+            "font": "",
+            "fontSize": "",
+            "fontColor": "",
+            "arrival": "",
+            "departure": ""
+        }
+    }
+]

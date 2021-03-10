@@ -1,0 +1,19 @@
+{
+    "windowSettings": {
+        "moveAllOnLineDelay": "Fast",
+        "bgImage": "imagefiles/background.png",
+        "width": "400",
+        "height": "44",
+        "bgColor": "#000000"
+    },
+    "messageSettings": {
+        "style": "",
+        "color": "#ffffff",
+        "fontFace": "Courier New",
+        "intermission": ".5",
+        "fontSize": "26",
+        "duration": "5",
+        "arrival": "Pick For Me",
+        "departure": "Pick For Me"
+    }
+}
