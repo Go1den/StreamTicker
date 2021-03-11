@@ -49,31 +49,32 @@ class SettingsGUIFields:
         # Todo: backup the current settings so that if load fails, we can revert to those rather than doing a partial load
         try:
             s = parent.settings
-            if s.get("message"):
-                m = s.get("message")
-                self.VAR_MESSAGE_STYLE.set(m.get("MESSAGE_STYLE"))
-                self.VAR_ENTRY_MESSAGE_DURATION.set(m.get("MESSAGE_DURATION"))
-                self.VAR_ENTRY_MESSAGE_INTERMISSION.set(m.get("MESSAGE_INTERMISSION"))
-                self.VAR_LABEL_MESSAGE_COLOR_TEXT.set(m.get("MESSAGE_COLOR"))
-                self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = m.get("MESSAGE_COLOR")
-                self.VAR_FONT_COMBO_BOX.set(m.get("MESSAGE_FONT_FACE"))
-                self.VAR_ENTRY_NORMAL_FONT_SIZE.set(m.get("NORMAL_FONT_SIZE"))
-                self.VAR_ARRIVAL.set(m.get("ARRIVAL"))
-                self.VAR_DEPARTURE.set(m.get("DEPARTURE"))
+            if s.messageSettings:
+                m = s.messageSettings
+                self.VAR_MESSAGE_STYLE.set(m.style)
+                self.VAR_ENTRY_MESSAGE_DURATION.set(m.duration)
+                self.VAR_ENTRY_MESSAGE_INTERMISSION.set(m.intermission)
+                self.VAR_LABEL_MESSAGE_COLOR_TEXT.set(m.color)
+                self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = m.color
+                self.VAR_FONT_COMBO_BOX.set(m.fontFace)
+                self.VAR_ENTRY_NORMAL_FONT_SIZE.set(m.fontSize)
+                self.VAR_ARRIVAL.set(m.arrival)
+                self.VAR_DEPARTURE.set(m.departure)
 
-            if s.get("window"):
-                w = s.get("window")
-                self.VAR_WINDOW_WIDTH.set(w.get("WINDOW_WIDTH"))
-                self.VAR_WINDOW_HEIGHT.set(w.get("WINDOW_HEIGHT"))
-                self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set(w.get("WINDOW_BG_COLOR"))
-                self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = w.get("WINDOW_BG_COLOR")
-                self.VAR_PATH_WINDOW_BG_IMAGE.set(w.get("WINDOW_BG_IMAGE"))
-                self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(w.get("WINDOW_BG_IMAGE")))
-                self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.get("MOVE_ALL_ON_LINE_DELAY"))
+            if s.windowSettings:
+                w = s.windowSettings
+                self.VAR_WINDOW_WIDTH.set(w.width)
+                self.VAR_WINDOW_HEIGHT.set(w.height)
+                self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set(w.bgColor)
+                self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = w.bgColor
+                self.VAR_PATH_WINDOW_BG_IMAGE.set(w.bgImage)
+                self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(w.bgImage))
+                self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.moveAllOnLineDelay)
                 self.updateColorBoxes(mFrame, bgFrame)
         except Exception as e:
             print(e)
-            messagebox.showerror("Error", "Unable to load file. Please select a valid layout file.")
+            messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.")
+            self.getDefaultValues(False, mFrame, bgFrame)
 
     def updateColorBoxes(self, mFrame, bgFrame):
         bgFrame.CANVAS_WINDOW_BG_IMAGE.itemconfig(bgFrame.RECTANGLE_WINDOW_BG_IMAGE, fill=self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)

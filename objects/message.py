@@ -19,6 +19,9 @@ class Message:
             part.print()
         self.overrides.print()
 
+    def sortParts(self):
+        self.parts = sorted(self.parts, key=lambda x: x.sortOrder)
+
 class MessageEncoder(JSONEncoder):
     def default(self, o):
         return o.__dict__

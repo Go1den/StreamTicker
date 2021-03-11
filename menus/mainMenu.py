@@ -2,26 +2,20 @@ import webbrowser
 from tkinter import Menu
 
 from windows.aboutWindow import AboutWindow
-from windows.messagesGUIWindow import MessagesGUIWindow
-from windows.settingsGUIWindow import SettingsGUIWindow
+from windows.messageManagerWindow import MessageManagerWindow
+from windows.settingsWindow import SettingsWindow
 
 def getMainMenu(win, e):
-    print("<------------")
-    print(win.messages)
-    print(win.messagesPath)
-    print(win.settings)
-    print(win.settingsPath)
-    print("------------>")
     rmenu = Menu(e.widget.master, tearoff=0, takefocus=0)
 
     messagesMenu = Menu(rmenu, tearoff=0, takefocus=0)
-    messagesMenu.add_command(label="Edit...", command=lambda: MessagesGUIWindow(win))
+    messagesMenu.add_command(label="Edit...", command=lambda: MessageManagerWindow(win))
     messagesMenu.add_command(label="Load", command=lambda: win.loadMessages())
     messagesMenu.add_command(label="Save", command=lambda: win.saveMessages(False))
     messagesMenu.add_command(label="Save as...", command=lambda: win.saveMessages(True))
 
     settingsMenu = Menu(rmenu, tearoff=0, takefocus=0)
-    settingsMenu.add_command(label="Edit...", command=lambda: SettingsGUIWindow(win))
+    settingsMenu.add_command(label="Edit...", command=lambda: SettingsWindow(win))
     settingsMenu.add_command(label="Load", command=lambda: win.loadSettings())
     settingsMenu.add_command(label="Save", command=lambda: win.saveSettings(False))
     settingsMenu.add_command(label="Save as...", command=lambda: win.saveSettings(True))

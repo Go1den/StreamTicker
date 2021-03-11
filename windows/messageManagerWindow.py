@@ -1,10 +1,11 @@
+from copy import deepcopy
 from tkinter import Toplevel, E
 
 from frames.messageManagerButtonFrame import MessageButtonFrame
 from frames.messageManagerListFrame import MessageManagerListFrame
 from frames.messageOkCancelFrame import MessageOkCancelFrame
 
-class MessagesGUIWindow:
+class MessageManagerWindow:
     def __init__(self, parent):
         self.master = Toplevel(parent)
         self.master.withdraw()
@@ -18,7 +19,8 @@ class MessagesGUIWindow:
 
         self.window = parent
 
-        self.messages = sorted(self.window.messages.get("slides"), key=lambda x: x.get("sortOrder"))
+        self.cancelMessages = deepcopy(self.window.messages)
+        self.messages = sorted(self.window.messages, key=lambda x: x.sortOrder)
 
         self.mlFrame = MessageManagerListFrame(self)
         self.mlFrame.frame.grid(row=0, column=1, padx=(4, 4), pady=4)

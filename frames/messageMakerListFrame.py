@@ -1,16 +1,14 @@
 from tkinter import Frame, Listbox, Scrollbar, NS, VERTICAL, END
 
-from windows.messageMakerWindow import MessageMakerWindow
-
-class MessageManagerListFrame:
-    def __init__(self, messageManagerWindow):
-        self.frame = Frame(messageManagerWindow.master)
+class MessageMakerListFrame:
+    def __init__(self, messageMakerPartFrame):
+        self.frame = Frame(messageMakerPartFrame.frame)
         self.scrollbar = Scrollbar(self.frame, orient=VERTICAL)
         self.listBox = Listbox(self.frame, activestyle="none", width=40, yscrollcommand=self.scrollbar.set)
         self.scrollbar.config(command=self.listBox.yview)
         self.scrollbar.grid(row=0, column=1, sticky=NS)
-        self.populateListbox(messageManagerWindow.messages)
-        self.window = messageManagerWindow
+        self.populateListbox(messageMakerPartFrame.parent.message.parts)
+        self.window = messageMakerPartFrame.parent
 
         self.listBox.grid(row=0, column=0)
 
@@ -23,7 +21,7 @@ class MessageManagerListFrame:
             self.listBox.insert(index - 1, text)
             self.listBox.selection_set(index - 1)
             self.listBox.see(index - 2)
-            self.window.messages[index], self.window.messages[index - 1] = self.window.messages[index - 1], self.window.messages[index]
+            self.window.message.parts[index], self.window.message.parts[index - 1] = self.window.message.parts[index - 1], self.window.message.parts[index]
 
     def moveSelectedDown(self):
         current = self.listBox.curselection()
@@ -34,7 +32,7 @@ class MessageManagerListFrame:
             self.listBox.insert(index + 1, text)
             self.listBox.selection_set(index + 1)
             self.listBox.see(index + 2)
-            self.window.messages[index], self.window.messages[index + 1] = self.window.messages[index + 1], self.window.messages[index]
+            self.window.message.parts[index], self.window.message.parts[index + 1] = self.window.message.parts[index + 1], self.window.message.parts[index]
 
     def deleteSelected(self):
         current = self.listBox.curselection()
@@ -43,27 +41,27 @@ class MessageManagerListFrame:
             self.listBox.delete(index)
             self.listBox.selection_set(index)
             self.listBox.see(index)
-            del self.window.messages[index]
-            for message in self.window.messages:
-                message.sortOrder = self.window.messages.index(message) + 1
+            del self.window.message.parts[index]
+            for part in self.window.message.parts:
+                part.sortOrder = self.window.message.parts.index(part) + 1
 
-    def populateListbox(self, messages):
+    def populateListbox(self, parts):
         self.listBox.delete(0, END)
         index = 1
-        for message in messages:
-            self.listBox.insert(index, message.nickname)
+        for part in parts:
+            self.listBox.insert(index, part.partType + ": " + part.value)
             index += 1
 
-    def getMessageMakerWindow(self, isEditButton):
+    def getMessagePartMakerWindow(self, isEditButton):
         if isEditButton:
             current = self.listBox.curselection()
             if current:
                 index = current[0]
                 print(self.window.messages[index])
-                MessageMakerWindow(self, self.window.messages[index], index)
+                MessagePartMakerWindow(self, self.window.messages[index], index)
             else:
                 return
         else:
-            MessageMakerWindow(self, None, len(self.window.messages) + 1)
+            MessagePartMakerWindow(self, None, len(self.window.messages) + 1)
             # we should probably store the result somewhere
 

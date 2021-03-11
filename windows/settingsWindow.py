@@ -6,7 +6,7 @@ from frames.okCancelFrame import OkCancelFrame
 from frames.settingsWindowFrame import SlidingFrame
 from settingsGUIFields import SettingsGUIFields
 
-class SettingsGUIWindow:
+class SettingsWindow:
     def __init__(self, parent):
         self.master = Toplevel(parent)
         self.master.withdraw()

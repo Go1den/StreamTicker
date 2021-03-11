@@ -1,5 +1,8 @@
 from tkinter import Frame, Button, E, GROOVE
 
+from objects.messageSettings import MessageSettings
+from objects.settings import Settings
+from objects.windowSettings import WindowSettings
 from validations import validateWindowSettings, validateMessageSettings, validateFontSettings
 
 class OkCancelFrame:
@@ -20,25 +23,22 @@ class OkCancelFrame:
 
     def updateCurrentSettings(self):
         if self.validateBeforeSaving():
-            result = {
-                'message': {
-                    'DEFAULT_IMAGE': self.window.fields.VAR_DEFAULT_IMAGE.get(),
-                    'MESSAGE_STYLE': self.window.fields.VAR_MESSAGE_STYLE.get(),
-                    'MESSAGE_DURATION': self.window.fields.VAR_ENTRY_MESSAGE_DURATION.get(),
-                    'MESSAGE_INTERMISSION': self.window.fields.VAR_ENTRY_MESSAGE_INTERMISSION.get(),
-                    'MESSAGE_COLOR': self.window.mFrame.LABEL_MESSAGE_COLOR.cget("text"),
-                    'MESSAGE_FONT_FACE': self.window.fields.VAR_FONT_COMBO_BOX.get(),
-                    'NORMAL_FONT_SIZE': self.window.fields.VAR_ENTRY_NORMAL_FONT_SIZE.get(),
-                    'ARRIVAL': self.window.fields.VAR_ARRIVAL.get(),
-                    'DEPARTURE': self.window.fields.VAR_DEPARTURE.get()
-                },
-                'window': {
-                    'WINDOW_WIDTH': self.window.fields.VAR_WINDOW_WIDTH.get(),
-                    'WINDOW_HEIGHT': self.window.fields.VAR_WINDOW_HEIGHT.get(),
-                    'WINDOW_BG_COLOR': self.window.fields.VAR_LABEL_WINDOW_BG_COLOR_TEXT.get(),
-                    'WINDOW_BG_IMAGE': self.window.fields.VAR_PATH_WINDOW_BG_IMAGE.get(),
-                    'MOVE_ALL_ON_LINE_DELAY': self.window.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.get()
-                }
-            }
-            self.window.parent.settings = result
+            windowSettings = WindowSettings(
+                self.window.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.get(),
+                self.window.fields.VAR_PATH_WINDOW_BG_IMAGE.get(),
+                self.window.fields.VAR_WINDOW_WIDTH.get(),
+                self.window.fields.VAR_WINDOW_HEIGHT.get(),
+                self.window.fields.VAR_LABEL_WINDOW_BG_COLOR_TEXT.get(),
+            )
+            messageSettings = MessageSettings(
+                self.window.fields.VAR_MESSAGE_STYLE.get(),
+                self.window.mFrame.LABEL_MESSAGE_COLOR.cget("text"),
+                self.window.fields.VAR_FONT_COMBO_BOX.get(),
+                self.window.fields.VAR_ENTRY_MESSAGE_INTERMISSION.get(),
+                self.window.fields.VAR_ENTRY_NORMAL_FONT_SIZE.get(),
+                self.window.fields.VAR_ENTRY_MESSAGE_DURATION.get(),
+                self.window.fields.VAR_ARRIVAL.get(),
+                self.window.fields.VAR_DEPARTURE.get()
+            )
+            self.window.parent.settings = Settings(windowSettings, messageSettings)
             self.window.master.destroy()

@@ -1,9 +1,9 @@
 from tkinter import Frame, GROOVE, Button
 
 class MessageButtonFrame:
-    def __init__(self, messagesGUIWindow):
-        self.frame = Frame(messagesGUIWindow.master)
-        self.window = messagesGUIWindow
+    def __init__(self, messageManagerWindow):
+        self.frame = Frame(messageManagerWindow.master)
+        self.window = messageManagerWindow
 
         ROW_UP = 0
         ROW_DOWN = 1
