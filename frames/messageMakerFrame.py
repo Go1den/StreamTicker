@@ -16,7 +16,7 @@ class MessageMakerFrame:
         labelNickname = Label(self.frame, text="Nickname this message:")
         labelNickname.grid(row=1, column=0, sticky=E, padx=1, pady=1)
 
-        entryNickname = Entry(self.frame, textvariable=self.nickname, width=30)
+        entryNickname = Entry(self.frame, textvariable=self.nickname, width=35)
         entryNickname.grid(row=1, column=1, sticky=W, padx=1, pady=1)
 
     def populateFieldsOnLoad(self):

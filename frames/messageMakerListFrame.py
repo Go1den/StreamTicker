@@ -1,5 +1,7 @@
 from tkinter import Frame, Listbox, Scrollbar, NS, VERTICAL, END
 
+from windows.messageComponentWindow import MessageComponentWindow
+
 class MessageMakerListFrame:
     def __init__(self, messageMakerPartFrame):
         self.frame = Frame(messageMakerPartFrame.frame)
@@ -52,16 +54,16 @@ class MessageMakerListFrame:
             self.listBox.insert(index, part.partType + ": " + part.value)
             index += 1
 
-    def getMessagePartMakerWindow(self, isEditButton):
+    def getMessageComponentWindow(self, isEditButton):
         if isEditButton:
             current = self.listBox.curselection()
             if current:
                 index = current[0]
-                print(self.window.messages[index])
-                MessagePartMakerWindow(self, self.window.messages[index], index)
+                print(self.window.message.parts[index])
+                MessageComponentWindow(self, self.window.message.parts[index], index)
             else:
                 return
         else:
-            MessagePartMakerWindow(self, None, len(self.window.messages) + 1)
+            MessageComponentWindow(self, None, len(self.window.message.parts) + 1)
             # we should probably store the result somewhere
 
