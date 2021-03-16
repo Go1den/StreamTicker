@@ -11,6 +11,7 @@ class MessageMakerListFrame:
         self.scrollbar.grid(row=0, column=1, sticky=NS)
         self.populateListbox(messageMakerPartFrame.parent.message.parts)
         self.window = messageMakerPartFrame.parent
+        self.messageMakerPartFrame = messageMakerPartFrame
 
         self.listBox.grid(row=0, column=0)
 

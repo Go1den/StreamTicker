@@ -1,3 +1,4 @@
+from copy import deepcopy
 from tkinter import Toplevel, E, NSEW
 
 from frames.messageMakerFrame import MessageMakerFrame
@@ -16,7 +17,7 @@ class MessageMakerWindow:
         self.listFrame = listFrame
         self.parent = listFrame.window.master
         self.parentWindow = listFrame.window
-        self.message = message
+        self.message = deepcopy(message)
         self.message.sortParts()
         self.index = index
         self.master.geometry('+{x}+{y}'.format(x=self.parent.winfo_x() + 10, y=self.parent.winfo_y() + 10))

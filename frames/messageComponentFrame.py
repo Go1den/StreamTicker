@@ -109,3 +109,13 @@ class MessageComponentFrame:
         if filename:
             self.filePath.set(helperMethods.getFileNameFromPath(filename))
             self.fileValue.set(filename)
+
+    def getValue(self):
+        if self.componentType.get() == "Text":
+            return self.textValue.get()
+        elif self.componentType.get() == "Image":
+            return self.imageValue.get()
+        elif self.componentType.get() == "Text From File":
+            return self.fileValue.get()
+        elif self.componentType.get() == "Pixel Gap":
+            return self.gapValue.get()
