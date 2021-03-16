@@ -13,6 +13,7 @@ def getMainMenu(win, e):
     messagesMenu.add_command(label="Load", command=lambda: win.loadMessages())
     messagesMenu.add_command(label="Save", command=lambda: win.saveMessages(False))
     messagesMenu.add_command(label="Save as...", command=lambda: win.saveMessages(True))
+    messagesMenu.add_command(label="Default", command=lambda: win.loadDefaultMessages())
 
     settingsMenu = Menu(rmenu, tearoff=0, takefocus=0)
     settingsMenu.add_command(label="Edit...", command=lambda: SettingsWindow(win))

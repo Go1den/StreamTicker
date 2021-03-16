@@ -1,6 +1,6 @@
 from tkinter import Frame, GROOVE, Label, W, Entry, E
 
-class SlidingFrame:
+class SettingsWindowFrame:
     def __init__(self, master, fields):
         self.fields = fields
         self.frame = Frame(master, bd=2, relief=GROOVE)

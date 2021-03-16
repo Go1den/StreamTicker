@@ -1,6 +1,6 @@
 from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, font, colorchooser, Canvas
 
-class MessageFrame:
+class SettingsMessageFrame:
     def __init__(self, master, fields):
         self.frame = Frame(master, bd=2, relief=GROOVE)
         self.fields = fields

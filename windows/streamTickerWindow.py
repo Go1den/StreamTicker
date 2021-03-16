@@ -6,6 +6,7 @@ from menus.mainMenu import getMainMenu
 from objects.message import Message
 from objects.messagePart import MessagePart
 from objects.messageSettings import MessageSettings
+from objects.override import Override
 from objects.settings import Settings
 from objects.windowSettings import WindowSettings
 from utils.helperMethods import readJSON, writeJSON, writeSettingsToJSON, writeMessagesToJSON
@@ -42,7 +43,11 @@ class StreamTickerWindow(Tk):
                 partSortOrder = part["sortOrder"]
                 partValue = part["value"]
                 parts.append(MessagePart(partType, partSortOrder, partValue))
-            messages.append(Message(nickname, sortOrder, parts))
+
+            overrides = message["overrides"]
+            override = Override(overrides["duration"], overrides["intermission"], overrides["scrollSpeed"], overrides["font"],
+                                overrides["fontSize"], overrides["fontColor"], overrides["arrival"], overrides["departure"])
+            messages.append(Message(nickname, sortOrder, parts, override))
         return messages
 
     def getSettings(self, path) -> Settings:
@@ -102,6 +107,13 @@ class StreamTickerWindow(Tk):
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?"):
             self.settings = Settings()
+
+    def loadDefaultMessages(self):
+        if messagebox.askokcancel("Restore Default Messages", "Are you sure you want to restore the default messages for StreamTicker?"):
+            self.messages = [Message("StreamTicker", 1, [MessagePart("Pixel Gap", 1, "8"),
+                                                         MessagePart("Image", 2, "imagefiles/stLogo28.png"),
+                                                         MessagePart("Pixel Gap", 3, "8"),
+                                                         MessagePart("Text", 4, "StreamTicker")])]
 
     def loadSettings(self):
         fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])

@@ -1,11 +1,11 @@
 from copy import deepcopy
-from tkinter import Toplevel, E, NSEW
+from tkinter import Toplevel, E, NSEW, NORMAL
 
 from frames.messageMakerFrame import MessageMakerFrame
 from frames.messageMakerOkCancelFrame import MessageMakerOkCancelFrame
 from frames.messageMakerPartFrame import MessageMakerPartFrame
 from frames.overrideFrame import OverrideFrame
-from frames.settingsMessageFrame import MessageFrame
+from frames.settingsMessageFrame import SettingsMessageFrame
 from objects.message import Message
 from objects.override import Override
 from settings.globalMessageSettings import GlobalMessageSettings
@@ -43,7 +43,7 @@ class MessageMakerWindow:
         self.partsFrame = MessageMakerPartFrame(self)
         self.partsFrame.frame.grid(row=1, column=0, sticky=NSEW, columnspan=2, padx=4, pady=4)
 
-        self.globalMessageSettingsFrame = MessageFrame(self.master, self.fields)
+        self.globalMessageSettingsFrame = SettingsMessageFrame(self.master, self.fields)
         self.globalMessageSettingsFrame.frame.grid(row=2, column=1, sticky=NSEW, padx=(0, 4), pady=4)
 
         self.overrideFrame = OverrideFrame(self.master, self.globalMessageSettingsFrame, self.listFrame.window.window.settings)
@@ -54,6 +54,7 @@ class MessageMakerWindow:
         self.okCancelFrame = MessageMakerOkCancelFrame(self)
         self.okCancelFrame.frame.grid(row=3, column=0, columnspan=2, padx=4, pady=4, sticky=E)
 
+        self.applyOverrides()
         self.master.deiconify()
         self.master.mainloop()
 
@@ -62,6 +63,46 @@ class MessageMakerWindow:
         self.parent.lift()
         self.parent.wm_attributes("-topmost", 1)
         self.parent.grab_set()
+
+    def applyOverrides(self):
+        overrides = self.message.overrides
+        print("overrides:")
+        overrides.print()
+        if overrides:
+            if overrides.duration:
+                self.fields.VAR_ENTRY_MESSAGE_DURATION.set(overrides.duration)
+                self.overrideFrame.overrideDuration.set(True)
+                self.overrideFrame.gmsFrame.ENTRY_MESSAGE_DURATION.configure(state=NORMAL)
+            if overrides.intermission:
+                self.fields.VAR_ENTRY_MESSAGE_INTERMISSION.set(overrides.intermission)
+                self.overrideFrame.overrideIntermission.set(True)
+                self.overrideFrame.gmsFrame.ENTRY_MESSAGE_INTERMISSION.configure(state=NORMAL)
+            if overrides.scrollSpeed:
+                self.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(overrides.scrollSpeed)
+                self.overrideFrame.overrideScrollSpeed.set(True)
+                self.overrideFrame.gmsFrame.MESSAGE_SPEED_COMBO_BOX.configure(state="readonly")
+            if overrides.font:
+                self.fields.VAR_FONT_COMBO_BOX.set(overrides.font)
+                self.overrideFrame.overrideFont.set(True)
+                self.overrideFrame.gmsFrame.FONT_COMBO_BOX.configure(state="readonly")
+            if overrides.fontColor:
+                self.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = overrides.fontColor
+                self.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.set(overrides.fontColor)
+                self.overrideFrame.overrideFontColor.set(True)
+                self.overrideFrame.gmsFrame.BUTTON_MESSAGE_COLOR.config(state=NORMAL)
+                self.globalMessageSettingsFrame.CANVAS_MESSAGE_COLOR.itemconfig(self.globalMessageSettingsFrame.RECTANGLE_MESSAGE_COLOR, fill=self.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)
+            if overrides.fontSize:
+                self.fields.VAR_ENTRY_NORMAL_FONT_SIZE.set(overrides.fontSize)
+                self.overrideFrame.overrideFontSize.set(True)
+                self.overrideFrame.gmsFrame.ENTRY_NORMAL_FONT_SIZE.configure(state=NORMAL)
+            if overrides.arrival:
+                self.fields.VAR_ARRIVAL.set(overrides.arrival)
+                self.overrideFrame.overrideArrival.set(True)
+                self.overrideFrame.gmsFrame.ARRIVAL_COMBO_BOX.config(state="readonly")
+            if overrides.departure:
+                self.fields.VAR_DEPARTURE.set(overrides.departure)
+                self.overrideFrame.overrideDeparture.set(True)
+                self.overrideFrame.gmsFrame.DEPARTURE_COMBO_BOX.config(state="readonly")
 
     def setGlobalMessageSettings(self):
         gmSettings = self.listFrame.window.window.settings.messageSettings
@@ -94,17 +135,17 @@ class MessageMakerWindow:
         if self.overrideFrame.overrideIntermission.get():
             override.intermission = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MESSAGE_INTERMISSION.get()
         if self.overrideFrame.overrideScrollSpeed.get():
-            override.intermission = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.get()
+            override.scrollSpeed = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.get()
         if self.overrideFrame.overrideFont.get():
-            override.intermission = self.globalMessageSettingsFrame.fields.VAR_FONT_COMBO_BOX.get()
+            override.font = self.globalMessageSettingsFrame.fields.VAR_FONT_COMBO_BOX.get()
         if self.overrideFrame.overrideFontSize.get():
-            override.intermission = self.globalMessageSettingsFrame.fields.VAR_ENTRY_NORMAL_FONT_SIZE.get()
+            override.fontSize = self.globalMessageSettingsFrame.fields.VAR_ENTRY_NORMAL_FONT_SIZE.get()
         if self.overrideFrame.overrideFontColor.get():
-            override.intermission = self.globalMessageSettingsFrame.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.get()
+            override.fontColor = self.globalMessageSettingsFrame.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.get()
         if self.overrideFrame.overrideArrival.get():
-            override.intermission = self.globalMessageSettingsFrame.fields.VAR_ARRIVAL.get()
+            override.arrival = self.globalMessageSettingsFrame.fields.VAR_ARRIVAL.get()
         if self.overrideFrame.overrideDeparture.get():
-            override.intermission = self.globalMessageSettingsFrame.fields.VAR_DEPARTURE.get()
+            override.departure = self.globalMessageSettingsFrame.fields.VAR_DEPARTURE.get()
 
         for part in self.message.parts:
             part.sortOrder = self.message.parts.index(part) + 1

@@ -1,9 +1,9 @@
 from tkinter import Toplevel, NSEW, E
 
 from frames.settingsBackgroundFrame import BackgroundFrame
-from frames.settingsMessageFrame import MessageFrame
+from frames.settingsMessageFrame import SettingsMessageFrame
 from frames.okCancelFrame import OkCancelFrame
-from frames.settingsWindowFrame import SlidingFrame
+from frames.settingsWindowFrame import SettingsWindowFrame
 from settingsGUIFields import SettingsGUIFields
 
 class SettingsWindow:
@@ -21,13 +21,13 @@ class SettingsWindow:
 
         self.fields = SettingsGUIFields()
 
-        self.mFrame = MessageFrame(self.master, self.fields)
+        self.mFrame = SettingsMessageFrame(self.master, self.fields)
         self.mFrame.frame.grid(row=0, column=0, rowspan=2, sticky=NSEW, padx=4, pady=4)
 
         self.bgFrame = BackgroundFrame(self.master, self.fields)
         self.bgFrame.frame.grid(row=0, column=1, sticky=NSEW, padx=4, pady=4)
 
-        self.sFrame = SlidingFrame(self.master, self.fields)
+        self.sFrame = SettingsWindowFrame(self.master, self.fields)
         self.sFrame.frame.grid(row=1, column=1, sticky=NSEW, padx=4, pady=4)
 
         self.okFrame = OkCancelFrame(self)
