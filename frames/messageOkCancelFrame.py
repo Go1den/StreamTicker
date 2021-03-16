@@ -1,4 +1,4 @@
-from tkinter import Frame, Button, E, GROOVE
+from tkinter import Frame, Button, E, GROOVE, messagebox
 
 class MessageOkCancelFrame:
     def __init__(self, messageManagerWindow):
@@ -15,6 +15,8 @@ class MessageOkCancelFrame:
         for message in self.window.messages:
             message.sortOrder = self.window.messages.index(message) + 1
         self.window.window.messages = self.window.messages
+        if messagebox.askyesno("Save Changes", "Do you want to save these changes to the currently loaded messages file? If you select no, you can save them later from the right-click menu."):
+            self.window.window.saveMessages(False)
         self.window.master.destroy()
 
     def cancel(self):

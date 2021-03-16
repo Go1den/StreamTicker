@@ -1,4 +1,4 @@
-from tkinter import Frame, Button, E, GROOVE
+from tkinter import Frame, Button, E, GROOVE, messagebox
 
 from objects.messageSettings import MessageSettings
 from objects.settings import Settings
@@ -41,4 +41,7 @@ class OkCancelFrame:
                 self.window.fields.VAR_DEPARTURE.get()
             )
             self.window.parent.settings = Settings(windowSettings, messageSettings)
+            if messagebox.askyesno("Save Changes",
+                                   "Do you want to save these changes to the currently loaded settings file? If you select no, you can save them later from the right-click menu."):
+                self.window.parent.saveSettings(False)
             self.window.master.destroy()
