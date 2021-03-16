@@ -4,7 +4,7 @@ from objects.messagePart import MessagePart
 from objects.override import Override
 
 class Message:
-    def __init__(self, nickname: str, sortOrder: int, parts: list[MessagePart], overrides: Override = Override()):
+    def __init__(self, nickname: str = "My New Message", sortOrder: int = 1, parts: list[MessagePart] = [], overrides: Override = Override()):
         self.nickname = nickname
         self.sortOrder = sortOrder
         self.parts = parts

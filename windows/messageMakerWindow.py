@@ -18,6 +18,11 @@ class MessageMakerWindow:
         self.parent = listFrame.window.master
         self.parentWindow = listFrame.window
         self.message = deepcopy(message)
+        if not self.message:
+            self.isNewMessage = True
+            self.message = Message()
+        else:
+            self.isNewMessage = False
         self.message.sortParts()
         self.index = index
         self.master.geometry('+{x}+{y}'.format(x=self.parent.winfo_x() + 10, y=self.parent.winfo_y() + 10))
@@ -151,7 +156,7 @@ class MessageMakerWindow:
             part.sortOrder = self.message.parts.index(part) + 1
 
         newMessage = Message(self.mmFrame.nickname.get(), self.index, self.message.parts, override)
-        if self.message:
+        if not self.isNewMessage:
             self.parentWindow.messages[self.index] = newMessage
         else:
             self.parentWindow.messages.append(newMessage)

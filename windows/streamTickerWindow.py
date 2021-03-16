@@ -1,6 +1,8 @@
 import json
 import sys
-from tkinter import Tk, filedialog, messagebox, BooleanVar
+import time
+from threading import Thread
+from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, PhotoImage, NW, W
 
 from menus.mainMenu import getMainMenu
 from objects.message import Message
@@ -9,7 +11,7 @@ from objects.messageSettings import MessageSettings
 from objects.override import Override
 from objects.settings import Settings
 from objects.windowSettings import WindowSettings
-from utils.helperMethods import readJSON, writeJSON, writeSettingsToJSON, writeMessagesToJSON
+from utils.helperMethods import readJSON, writeJSON, writeSettingsToJSON, writeMessagesToJSON, readFile
 
 class StreamTickerWindow(Tk):
 
@@ -25,11 +27,72 @@ class StreamTickerWindow(Tk):
         self._offsety = self.getOnStartup("offsety", 0)
         self.geometry('+{x}+{y}'.format(x=self._offsetx, y=self._offsety))
         self.messages = self.getMessages(self.messagesPath)
+        self.currentIndex = 0
+        self.xCoord = 0
         self.settings = self.getSettings(self.settingsPath)
         self.alwaysOnTop = BooleanVar()
         self.alwaysOnTop.set(self.getOnStartup("alwaysontop", False))
         self.iconbitmap('stIcon.ico')
         self.updateAlwaysOnTop()
+
+        self.canvas = Canvas(self, width=self.settings.windowSettings.width, height=self.settings.windowSettings.height, bd=0, highlightthickness=0,
+                             background=self.settings.windowSettings.bgColor)
+        self.canvas.bind('<Button-3>', self.rightClickMenu)
+
+        self.bgImage = PhotoImage(file=self.settings.windowSettings.bgImage)
+        self.canvas.create_image(0, 0, anchor=NW, image=self.bgImage)
+
+        self.canvas.grid(row=0, column=0)
+
+        Thread(target=self.displayNextMessage).start()
+        self.mainloop()
+
+    def moveAllLetters(self):
+        for x in range(10):
+            for text in self.canvas.find_withtag("text"):
+                self.canvas.move(text, 0, 1)
+            self.update()
+            time.sleep(0.03)
+
+    # print (canvas.find_withtag("all")) FINDS ALL ELEMENTS CURRENTLY ON THE CANVAS
+
+    # for t in canvas.find_withtag("all"):
+    #     print(canvas.bbox(t))
+
+    # print(canvas.bbox(canvas.find_withtag("all")[0])) #Prints the bounding box coordinates of the first element in the canvas
+    # print (canvas.find_withtag("tagName")) FINDS ALL ELEMENTS WITH tags="tagName", can have multiple tags per element
+
+    def displayNextMessage(self):
+        # TODO add arrival and departure animations
+        currentMessage = self.messages[self.currentIndex]
+        font = currentMessage.overrides.font if currentMessage.overrides.font else self.settings.messageSettings.fontFace
+        fontSize = currentMessage.overrides.fontSize if currentMessage.overrides.fontSize else self.settings.messageSettings.fontSize
+        fontColor = currentMessage.overrides.fontColor if currentMessage.overrides.fontColor else self.settings.messageSettings.color
+        duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
+        intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
+        for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):
+            if part.partType == "Pixel Gap":
+                self.xCoord += int(part.value)
+            elif part.partType == "Text":
+                for char in part.value:
+                    # TODO replace this hard coded Y coordinate, and add font style option instead of bold
+                    self.canvas.create_text(self.xCoord, 22, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
+                    box = self.canvas.bbox(self.canvas.find_withtag("text")[-1])
+                    self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
+            elif part.partType == "Text From File":
+                fileText = readFile(part.value)
+                for char in fileText:
+                    # TODO replace this hard coded Y coordinate, and add font style option instead of bold
+                    self.canvas.create_text(self.xCoord, 22, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
+                    box = self.canvas.bbox(self.canvas.find_withtag("text")[-1])
+                    self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
+        self.update()
+        time.sleep(duration)
+        self.canvas.delete("text")
+        self.xCoord = 0
+        self.currentIndex = (self.currentIndex + 1) % len(self.messages)
+        time.sleep(intermission)
+        self.displayNextMessage()
 
     def getMessages(self, path) -> list[Message]:
         messagesAsJSON = readJSON(path)
@@ -107,6 +170,7 @@ class StreamTickerWindow(Tk):
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?"):
             self.settings = Settings()
+            self.applyCurrentWindowSettings()
 
     def loadDefaultMessages(self):
         if messagebox.askokcancel("Restore Default Messages", "Are you sure you want to restore the default messages for StreamTicker?"):
@@ -123,6 +187,7 @@ class StreamTickerWindow(Tk):
             try:
                 self.settings = self.getSettings(fileToLoad)
                 self.settingsPath = fileToLoad
+                self.applyCurrentWindowSettings()
                 messagebox.showinfo("Info", "Settings were loaded successfully.")
             except:
                 messagebox.showerror("Error", "Failed to load settings!")
@@ -152,6 +217,12 @@ class StreamTickerWindow(Tk):
             messagebox.showinfo("Info", "Messages were saved successfully.")
         else:
             messagebox.showerror("Error", "Failed to save messages!")
+
+    def applyCurrentWindowSettings(self):
+        self.canvas.delete("all")
+        self.canvas.configure(width=self.settings.windowSettings.width, height=self.settings.windowSettings.height, background=self.settings.windowSettings.bgColor)
+        self.bgImage = PhotoImage(file=self.settings.windowSettings.bgImage)
+        self.canvas.create_image(0, 0, anchor=NW, image=self.bgImage)
 
     def closeWindow(self):
         self.streamTickerWindowJSON["messages"] = self.messagesPath

@@ -1,7 +1,7 @@
 {
     "windowSettings": {
         "moveAllOnLineDelay": "Fast",
-        "bgImage": "imagefiles/background.png",
+        "bgImage": "imagefiles/testBG.png",
         "width": "400",
         "height": "44",
         "bgColor": "#000000"

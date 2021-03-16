@@ -3,21 +3,21 @@ import json
 from objects.message import Message, MessageEncoder
 from objects.settings import Settings, SettingsEncoder
 
-def isFloat(value):
+def isFloat(value) -> bool:
     try:
         float(value)
         return True
     except ValueError:
         return False
 
-def readFile(path):
+def readFile(path) -> str:
     try:
         f = open(path, "r")
         return f.read()
     except:
         return ""
 
-def getFileNameFromPath(path):
+def getFileNameFromPath(path) -> str:
     try:
         x = path.split('/')[-1]
         y = path.split('\\')[-1]
@@ -25,14 +25,14 @@ def getFileNameFromPath(path):
     except:
         return path
 
-def readJSON(path):
+def readJSON(path) -> dict:
     try:
         with open(path) as f:
             return json.load(f)
     except:
         return {}
 
-def writeJSON(path, data):
+def writeJSON(path, data) -> bool:
     try:
         print(data)
         with open(path, 'w') as f:
@@ -41,7 +41,7 @@ def writeJSON(path, data):
     except:
         return False
 
-def writeMessagesToJSON(path, messages: list[Message]):
+def writeMessagesToJSON(path, messages: list[Message]) -> bool:
     try:
         with open(path, 'w') as f:
             json.dump(messages, f, indent=4, cls=MessageEncoder)
@@ -50,7 +50,7 @@ def writeMessagesToJSON(path, messages: list[Message]):
         print(e)
         return False
 
-def writeSettingsToJSON(path, settings: Settings):
+def writeSettingsToJSON(path, settings: Settings) -> bool:
     try:
         with open(path, 'w') as f:
             json.dump(settings, f, indent=4, cls=SettingsEncoder)
