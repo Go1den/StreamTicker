@@ -27,6 +27,7 @@ class StreamTickerWindow(Tk):
         self.settings = self.getSettings(self.settingsPath)
         self.alwaysOnTop = BooleanVar()
         self.alwaysOnTop.set(self.getOnStartup("alwaysontop", False))
+        self.iconbitmap('stIcon.ico')
         self.updateAlwaysOnTop()
 
     def getMessages(self, path) -> list[Message]:
