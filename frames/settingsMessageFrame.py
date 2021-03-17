@@ -1,19 +1,22 @@
-from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, font, colorchooser, Canvas
+from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, font, colorchooser, Canvas, EW
 
 class SettingsMessageFrame:
     def __init__(self, master, fields):
         self.frame = Frame(master, bd=2, relief=GROOVE)
         self.fields = fields
 
+        self.fields.VAR_FONT_COMBO_BOX.trace('w', self.updateFontPreview)
+
         ROW_MESSAGE_SETTINGS = 0
         ROW_MESSAGE_DURATION = 1
         ROW_MESSAGE_INTERMISSION = 2
-        ROW_FONT = 4
-        ROW_MESSAGE_COLOR = 6
-        ROW_NORMAL_FONT_SIZE = 5
         ROW_MESSAGE_SPEED = 3
+        ROW_FONT = 4
+        ROW_NORMAL_FONT_SIZE = 5
+        ROW_MESSAGE_COLOR = 6
         ROW_ARRIVAL = 7
         ROW_DEPARTURE = 8
+        ROW_FONT_PREVIEW = 9
 
         Label(self.frame, text="Global Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
         self.LABEL_MESSAGE_DURATION = Label(self.frame, text="Message Duration:")
@@ -38,7 +41,9 @@ class SettingsMessageFrame:
         self.FONT_COMBO_BOX = ttk.Combobox(self.frame, values=self.FONT_FAMILIES, textvariable=self.fields.VAR_FONT_COMBO_BOX, state="readonly")
         self.FONT_COMBO_BOX.grid(row=ROW_FONT, column=1, sticky=W, pady=1)
 
-        # self.BUTTON_MESSAGE_COLOR = Button(self.frame, text='Message Color:', command=lambda: self.updateMessageColor(self.fields))
+        self.LABEL_FONT_PREVIEW = Label(self.frame, text="Font Preview, Size 12", font=self.fields.VAR_FONT_COMBO_BOX, borderwidth=2, relief=GROOVE)
+        self.LABEL_FONT_PREVIEW.grid(row=ROW_FONT_PREVIEW, column=0, columnspan=2, sticky=EW, pady=(1,0))
+
         self.BUTTON_MESSAGE_COLOR = Button(self.frame, text='Font Color:', command=lambda: self.updateMessageColor())
         self.BUTTON_MESSAGE_COLOR.grid(row=ROW_MESSAGE_COLOR, column=0, sticky=E, padx=4, pady=1)
 
@@ -74,10 +79,13 @@ class SettingsMessageFrame:
         self.DEPARTURE_COMBO_BOX = ttk.Combobox(self.frame, values=self.DEPARTURE_ANIMATIONS, textvariable=self.fields.VAR_DEPARTURE, state="readonly")
         self.DEPARTURE_COMBO_BOX.grid(row=ROW_DEPARTURE, column=1, sticky=W, pady=(1,4))
 
-    # def updateMessageColor(self, fields):
     def updateMessageColor(self):
         color = colorchooser.askcolor(title="Select color")
         if color[1]:
             self.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.set(color[1])
             self.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = color[1]
             self.CANVAS_MESSAGE_COLOR.itemconfig(self.RECTANGLE_MESSAGE_COLOR, fill=self.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)
+
+    def updateFontPreview(self, a, b, c):
+        print(self.fields.VAR_FONT_COMBO_BOX.get())
+        self.LABEL_FONT_PREVIEW.config(font=(self.fields.VAR_FONT_COMBO_BOX.get(), 12))
