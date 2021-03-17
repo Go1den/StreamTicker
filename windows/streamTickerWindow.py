@@ -86,9 +86,18 @@ class StreamTickerWindow(Tk):
                     self.canvas.create_text(self.xCoord, 22, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("text")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
+            elif part.partType == "Image":
+                try:
+                    img = PhotoImage(file=part.value)
+                    self.canvas.create_image(self.xCoord, 22, image=img, anchor=W, tags="image")
+                    box = self.canvas.bbox(self.canvas.find_withtag("image")[-1])
+                    self.xCoord = box[2] - 1
+                except Exception as e:
+                    print("Error loading image: " + str(e))
+
         self.update()
         time.sleep(duration)
-        self.canvas.delete("text")
+        self.canvas.delete("text", "image")
         self.xCoord = 0
         self.currentIndex = (self.currentIndex + 1) % len(self.messages)
         time.sleep(intermission)
