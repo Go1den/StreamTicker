@@ -87,5 +87,4 @@ class SettingsMessageFrame:
             self.CANVAS_MESSAGE_COLOR.itemconfig(self.RECTANGLE_MESSAGE_COLOR, fill=self.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)
 
     def updateFontPreview(self, a, b, c):
-        print(self.fields.VAR_FONT_COMBO_BOX.get())
         self.LABEL_FONT_PREVIEW.config(font=(self.fields.VAR_FONT_COMBO_BOX.get(), 12))

@@ -34,11 +34,6 @@ class MessageMakerWindow:
         self.master.grab_set()
         self.master.protocol("WM_DELETE_WINDOW", self.deleteWindow)
 
-        print("Message list from the list frame:")
-        print(self.listFrame.window.messages)
-        print("Global settings can be found at:")
-        print(self.listFrame.window.window.settings)
-
         self.fields = GlobalMessageSettings()
         self.setGlobalMessageSettings()
 

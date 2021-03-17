@@ -70,26 +70,27 @@ class StreamTickerWindow(Tk):
         fontColor = currentMessage.overrides.fontColor if currentMessage.overrides.fontColor else self.settings.messageSettings.color
         duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
         intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
+        yCoord = 22
         for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):
             if part.partType == "Pixel Gap":
                 self.xCoord += int(part.value)
             elif part.partType == "Text":
                 for char in part.value:
                     # TODO replace this hard coded Y coordinate, and add font style option instead of bold
-                    self.canvas.create_text(self.xCoord, 22, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
+                    self.canvas.create_text(self.xCoord, yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("text")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
             elif part.partType == "Text From File":
                 fileText = readFile(part.value)
                 for char in fileText:
                     # TODO replace this hard coded Y coordinate, and add font style option instead of bold
-                    self.canvas.create_text(self.xCoord, 22, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
+                    self.canvas.create_text(self.xCoord, yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("text")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
             elif part.partType == "Image":
                 try:
                     img = PhotoImage(file=part.value)
-                    self.canvas.create_image(self.xCoord, 22, image=img, anchor=W, tags="image")
+                    self.canvas.create_image(self.xCoord, yCoord, image=img, anchor=W, tags="image")
                     box = self.canvas.bbox(self.canvas.find_withtag("image")[-1])
                     self.xCoord = box[2] - 1
                 except Exception as e:
