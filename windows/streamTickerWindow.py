@@ -11,7 +11,8 @@ from objects.messageSettings import MessageSettings
 from objects.override import Override
 from objects.settings import Settings
 from objects.windowSettings import WindowSettings
-from utils.helperMethods import readJSON, writeJSON, writeSettingsToJSON, writeMessagesToJSON, readFile
+from utils.arrivalAnimations import getWidthAndHeight, getStartingXYCoordinates
+from utils.helperMethods import readJSON, writeJSON, writeSettingsToJSON, writeMessagesToJSON, readFile, getScrollSpeedFloat, pause
 
 class StreamTickerWindow(Tk):
 
@@ -29,6 +30,8 @@ class StreamTickerWindow(Tk):
         self.messages = self.getMessages(self.messagesPath)
         self.currentIndex = 0
         self.xCoord = 0
+        self.yCoord = 0
+        self.images = []
         self.settings = self.getSettings(self.settingsPath)
         self.alwaysOnTop = BooleanVar()
         self.alwaysOnTop.set(self.getOnStartup("alwaysontop", False))
@@ -70,39 +73,57 @@ class StreamTickerWindow(Tk):
         fontColor = currentMessage.overrides.fontColor if currentMessage.overrides.fontColor else self.settings.messageSettings.color
         duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
         intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
-        yCoord = 22
+        scrollSpeed = getScrollSpeedFloat(currentMessage.overrides.scrollSpeed) if currentMessage.overrides.scrollSpeed else getScrollSpeedFloat(self.settings.windowSettings.moveAllOnLineDelay)
+        arrival = currentMessage.overrides.arrival if currentMessage.overrides.arrival else self.settings.messageSettings.arrival
+        departure = currentMessage.overrides.departure if currentMessage.overrides.departure else self.settings.messageSettings.departure
+        width, height = getWidthAndHeight(currentMessage, self.settings)
+        self.xCoord, self.yCoord = getStartingXYCoordinates(width, height, currentMessage, arrival, self.settings)
+        self.setupCanvas(currentMessage, font, fontColor, fontSize)
+        self.slideLeft(scrollSpeed)
+        time.sleep(duration)
+        self.clearCanvasAndResetVariables(intermission)
+        self.displayNextMessage()
+
+    def clearCanvasAndResetVariables(self, intermission):
+        self.canvas.delete("text", "image")
+        self.images = []
+        self.xCoord = 0
+        self.yCoord = 0
+        self.currentIndex = (self.currentIndex + 1) % len(self.messages)
+        time.sleep(intermission)
+
+    def slideLeft(self, scrollSpeed: float):
+        for x in range(int(self.settings.windowSettings.width)):
+            for elem in self.canvas.find_withtag("text") + self.canvas.find_withtag("image"):
+                self.canvas.move(elem, -1, 0)
+            pause(scrollSpeed)
+
+    def setupCanvas(self, currentMessage: Message, font: str, fontColor: str, fontSize: str):
         for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):
             if part.partType == "Pixel Gap":
                 self.xCoord += int(part.value)
             elif part.partType == "Text":
                 for char in part.value:
                     # TODO replace this hard coded Y coordinate, and add font style option instead of bold
-                    self.canvas.create_text(self.xCoord, yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
+                    self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("text")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
             elif part.partType == "Text From File":
                 fileText = readFile(part.value)
                 for char in fileText:
                     # TODO replace this hard coded Y coordinate, and add font style option instead of bold
-                    self.canvas.create_text(self.xCoord, yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
+                    self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="text", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("text")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
             elif part.partType == "Image":
                 try:
                     img = PhotoImage(file=part.value)
-                    self.canvas.create_image(self.xCoord, yCoord, image=img, anchor=W, tags="image")
+                    self.images.append(img)
+                    self.canvas.create_image(self.xCoord, self.yCoord, image=img, anchor=W, tags="image")
                     box = self.canvas.bbox(self.canvas.find_withtag("image")[-1])
                     self.xCoord = box[2] - 1
                 except Exception as e:
                     print("Error loading image: " + str(e))
-
-        self.update()
-        time.sleep(duration)
-        self.canvas.delete("text", "image")
-        self.xCoord = 0
-        self.currentIndex = (self.currentIndex + 1) % len(self.messages)
-        time.sleep(intermission)
-        self.displayNextMessage()
 
     def getMessages(self, path) -> list[Message]:
         messagesAsJSON = readJSON(path)

@@ -13,7 +13,7 @@
         "intermission": ".5",
         "fontSize": "26",
         "duration": "5",
-        "arrival": "Pick For Me",
-        "departure": "Pick For Me"
+        "arrival": "Slide Left",
+        "departure": "Slide Left"
     }
 }

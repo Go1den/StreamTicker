@@ -1,4 +1,5 @@
 import json
+import time
 
 from objects.message import Message, MessageEncoder
 from objects.settings import Settings, SettingsEncoder
@@ -58,3 +59,22 @@ def writeSettingsToJSON(path, settings: Settings) -> bool:
     except Exception as e:
         print(e)
         return False
+
+def getScrollSpeedFloat(speedString: str) -> float:
+    if speedString == "Fastest":
+        return float(0.001)
+    if speedString == "Fast":
+        return float(0.002)
+    if speedString == "Normal":
+        return float(0.003)
+    if speedString == "Slow":
+        return float(0.004)
+    if speedString == "Slowest":
+        return float(0.005)
+    return float(0.003)
+
+def pause(delay: float):
+    t = time.time()
+    while True:
+        if t + delay <= time.time():
+            break
