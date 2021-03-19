@@ -1,8 +1,9 @@
+import random
 from tkinter import Canvas, PhotoImage, W
 
 from objects.message import Message
 from objects.settings import Settings
-from utils.helperMethods import readFile
+from utils.helperMethods import readFile, pause
 
 def getWidthAndHeight(currentMessage: Message, settings: Settings) -> (int, int):
     font = currentMessage.overrides.font if currentMessage.overrides.font else settings.messageSettings.fontFace
@@ -47,6 +48,9 @@ def getWidthAndHeight(currentMessage: Message, settings: Settings) -> (int, int)
     canvas.delete("all")
     return width, height
 
+def pickArrival() -> str:
+    return random.choice(["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"])
+
 def getStartingXYCoordinates(width: int, height: int, currentMessage: Message, arrival: str, settings: Settings) -> (int, int):
     xCoord = 0
     yCoord = int(int(settings.windowSettings.height) / 2)
@@ -59,3 +63,27 @@ def getStartingXYCoordinates(width: int, height: int, currentMessage: Message, a
     if arrival == "Slide Down":
         yCoord = -1 * height
     return xCoord, yCoord
+
+def slideLeft(settings: Settings, canvas: Canvas, scrollSpeed: float):
+    for x in range(int(settings.windowSettings.width)):
+        for elem in canvas.find_withtag("text") + canvas.find_withtag("image"):
+            canvas.move(elem, -1, 0)
+        pause(scrollSpeed)
+
+def slideRight(width: int, canvas: Canvas, scrollSpeed: float):
+    for x in range(width):
+        for elem in canvas.find_withtag("text") + canvas.find_withtag("image"):
+            canvas.move(elem, 1, 0)
+        pause(scrollSpeed)
+
+def slideUp(height: int, settings: Settings, canvas: Canvas, scrollSpeed: float):
+    for x in range(height + int(int(settings.windowSettings.height) / 2)):
+        for elem in canvas.find_withtag("text") + canvas.find_withtag("image"):
+            canvas.move(elem, 0, -1)
+        pause(scrollSpeed)
+
+def slideDown(height: int, settings: Settings, canvas: Canvas, scrollSpeed: float):
+    for x in range(height + int(int(settings.windowSettings.height) / 2)):
+        for elem in canvas.find_withtag("text") + canvas.find_withtag("image"):
+            canvas.move(elem, 0, 1)
+        pause(scrollSpeed)

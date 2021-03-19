@@ -11,7 +11,7 @@ from objects.messageSettings import MessageSettings
 from objects.override import Override
 from objects.settings import Settings
 from objects.windowSettings import WindowSettings
-from utils.arrivalAnimations import getWidthAndHeight, getStartingXYCoordinates
+from utils.arrivalAnimations import getWidthAndHeight, getStartingXYCoordinates, slideLeft, slideRight, slideUp, slideDown, pickArrival
 from utils.helperMethods import readJSON, writeJSON, writeSettingsToJSON, writeMessagesToJSON, readFile, getScrollSpeedFloat, pause
 
 class StreamTickerWindow(Tk):
@@ -47,7 +47,7 @@ class StreamTickerWindow(Tk):
 
         self.canvas.grid(row=0, column=0)
 
-        Thread(target=self.displayNextMessage).start()
+        Thread(target=self.displayNextMessage, daemon=True).start()
         self.mainloop()
 
     def moveAllLetters(self):
@@ -56,14 +56,6 @@ class StreamTickerWindow(Tk):
                 self.canvas.move(text, 0, 1)
             self.update()
             time.sleep(0.03)
-
-    # print (canvas.find_withtag("all")) FINDS ALL ELEMENTS CURRENTLY ON THE CANVAS
-
-    # for t in canvas.find_withtag("all"):
-    #     print(canvas.bbox(t))
-
-    # print(canvas.bbox(canvas.find_withtag("all")[0])) #Prints the bounding box coordinates of the first element in the canvas
-    # print (canvas.find_withtag("tagName")) FINDS ALL ELEMENTS WITH tags="tagName", can have multiple tags per element
 
     def displayNextMessage(self):
         # TODO add arrival and departure animations
@@ -75,11 +67,24 @@ class StreamTickerWindow(Tk):
         intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
         scrollSpeed = getScrollSpeedFloat(currentMessage.overrides.scrollSpeed) if currentMessage.overrides.scrollSpeed else getScrollSpeedFloat(self.settings.windowSettings.moveAllOnLineDelay)
         arrival = currentMessage.overrides.arrival if currentMessage.overrides.arrival else self.settings.messageSettings.arrival
+        if arrival == "Pick For Me":
+            arrival = pickArrival()
         departure = currentMessage.overrides.departure if currentMessage.overrides.departure else self.settings.messageSettings.departure
         width, height = getWidthAndHeight(currentMessage, self.settings)
         self.xCoord, self.yCoord = getStartingXYCoordinates(width, height, currentMessage, arrival, self.settings)
         self.setupCanvas(currentMessage, font, fontColor, fontSize)
-        self.slideLeft(scrollSpeed)
+        print("xCoord is " + str(self.xCoord))
+        print("yCoord is " + str(self.yCoord))
+        print("height is " + str(height))
+        print("width is " + str(width))
+        if arrival == "Slide Left":
+            slideLeft(self.settings, self.canvas, scrollSpeed)
+        if arrival == "Slide Right":
+            slideRight(width, self.canvas, scrollSpeed)
+        if arrival == "Slide Up":
+            slideUp(height, self.settings, self.canvas, scrollSpeed)
+        if arrival == "Slide Down":
+            slideDown(height, self.settings, self.canvas, scrollSpeed)
         time.sleep(duration)
         self.clearCanvasAndResetVariables(intermission)
         self.displayNextMessage()
@@ -91,12 +96,6 @@ class StreamTickerWindow(Tk):
         self.yCoord = 0
         self.currentIndex = (self.currentIndex + 1) % len(self.messages)
         time.sleep(intermission)
-
-    def slideLeft(self, scrollSpeed: float):
-        for x in range(int(self.settings.windowSettings.width)):
-            for elem in self.canvas.find_withtag("text") + self.canvas.find_withtag("image"):
-                self.canvas.move(elem, -1, 0)
-            pause(scrollSpeed)
 
     def setupCanvas(self, currentMessage: Message, font: str, fontColor: str, fontSize: str):
         for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):

@@ -1,3 +1,4 @@
+from copy import deepcopy
 from tkinter import Frame, Listbox, Scrollbar, NS, VERTICAL, END
 
 from windows.messageMakerWindow import MessageMakerWindow
@@ -6,7 +7,7 @@ class MessageManagerListFrame:
     def __init__(self, messageManagerWindow):
         self.frame = Frame(messageManagerWindow.master)
         self.scrollbar = Scrollbar(self.frame, orient=VERTICAL)
-        self.listBox = Listbox(self.frame, activestyle="none", width=40, yscrollcommand=self.scrollbar.set)
+        self.listBox = Listbox(self.frame, activestyle="none", width=40, height=12, yscrollcommand=self.scrollbar.set)
         self.scrollbar.config(command=self.listBox.yview)
         self.scrollbar.grid(row=0, column=1, sticky=NS)
         self.populateListbox(messageManagerWindow.messages)
@@ -46,6 +47,18 @@ class MessageManagerListFrame:
             del self.window.messages[index]
             for message in self.window.messages:
                 message.sortOrder = self.window.messages.index(message) + 1
+
+    def copySelected(self):
+        current = self.listBox.curselection()
+        if current:
+            index = current[0]
+            copiedMessage = deepcopy(self.window.messages[index])
+            copiedMessage.sortOrder = len(self.window.messages)
+            self.window.messages.append(copiedMessage)
+            self.listBox.select_clear(0, END)
+            self.listBox.insert(END, copiedMessage.nickname)
+            self.listBox.selection_set(END)
+            self.listBox.see(END)
 
     def populateListbox(self, messages):
         self.listBox.delete(0, END)

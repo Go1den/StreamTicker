@@ -64,14 +64,14 @@ def getScrollSpeedFloat(speedString: str) -> float:
     if speedString == "Fastest":
         return float(0.001)
     if speedString == "Fast":
-        return float(0.002)
+        return float(0.007)
     if speedString == "Normal":
-        return float(0.003)
+        return float(0.013)
     if speedString == "Slow":
-        return float(0.004)
+        return float(0.019)
     if speedString == "Slowest":
-        return float(0.005)
-    return float(0.003)
+        return float(0.025)
+    return float(0.013)
 
 def pause(delay: float):
     t = time.time()
