@@ -108,7 +108,7 @@ def slideDown(height: int, settings: Settings, canvas: Canvas, scrollSpeed: floa
 def zipForward(height: int, settings: Settings, canvas: Canvas, scrollSpeed: float):
     deltaY = 1
     for elem in canvas.find_withtag("currentMessage"):
-        for x in range(height + int(int(settings.windowSettings.height) / 2)):
+        while int((canvas.bbox(elem)[3] + canvas.bbox(elem)[1]) / 2) != int(int(settings.windowSettings.height)/2):
             canvas.move(elem, 0, deltaY)
             pause(scrollSpeed)
         deltaY = deltaY * -1
@@ -118,7 +118,7 @@ def zipBackward(height: int, settings: Settings, canvas: Canvas, scrollSpeed: fl
     if len(canvas.find_withtag("currentMessage")) % 2 == 0:
         deltaY = -1
     for elem in reversed(canvas.find_withtag("currentMessage")):
-        for x in range(height + int(int(settings.windowSettings.height) / 2)):
+        while int((canvas.bbox(elem)[3] + canvas.bbox(elem)[1]) / 2) != int(int(settings.windowSettings.height)/2):
             canvas.move(elem, 0, deltaY)
             pause(scrollSpeed)
         deltaY = deltaY * -1
