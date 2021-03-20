@@ -1,7 +1,7 @@
 from tkinter import Toplevel, NSEW, SE
 
 from frames.okCancelFrame import OkCancelFrame
-from frames.settingsBackgroundFrame import BackgroundFrame
+from frames.settingsBackgroundFrame import SettingsBackgroundFrame
 from frames.settingsMessageFrame import SettingsMessageFrame
 from frames.settingsWindowFrame import SettingsWindowFrame
 from settingsGUIFields import SettingsGUIFields
@@ -24,7 +24,7 @@ class SettingsWindow:
         self.mFrame = SettingsMessageFrame(self.master, self.fields)
         self.mFrame.frame.grid(row=0, column=0, rowspan=3, sticky=NSEW, padx=4, pady=4)
 
-        self.bgFrame = BackgroundFrame(self.master, self.fields)
+        self.bgFrame = SettingsBackgroundFrame(self, self.fields)
         self.bgFrame.frame.grid(row=0, column=1, sticky=NSEW, padx=4, pady=4)
 
         self.sFrame = SettingsWindowFrame(self.master, self.fields)
