@@ -15,9 +15,9 @@ def selectArrivalAnimation(canvas: Canvas, settings: Settings, yCoord: int, yCoo
     if arrival == "Slide Down":
         slideDown(height, settings, canvas, scrollSpeed)
     if arrival == "Zip Forward":
-        zipForward(height, settings, canvas, scrollSpeed)
+        zipForward(settings, canvas, scrollSpeed)
     if arrival == "Zip Backward":
-        zipBackward(height, settings, canvas, scrollSpeed)
+        zipBackward(settings, canvas, scrollSpeed)
     if arrival == "Zip Randomly":
         zipRandomly(yCoord, yCoord2, settings, canvas, scrollSpeed)
 
@@ -105,7 +105,7 @@ def slideDown(height: int, settings: Settings, canvas: Canvas, scrollSpeed: floa
             canvas.move(elem, 0, 1)
         pause(scrollSpeed)
 
-def zipForward(height: int, settings: Settings, canvas: Canvas, scrollSpeed: float):
+def zipForward(settings: Settings, canvas: Canvas, scrollSpeed: float):
     deltaY = 1
     for elem in canvas.find_withtag("currentMessage"):
         while int((canvas.bbox(elem)[3] + canvas.bbox(elem)[1]) / 2) != int(int(settings.windowSettings.height)/2):
@@ -113,7 +113,7 @@ def zipForward(height: int, settings: Settings, canvas: Canvas, scrollSpeed: flo
             pause(scrollSpeed)
         deltaY = deltaY * -1
 
-def zipBackward(height: int, settings: Settings, canvas: Canvas, scrollSpeed: float):
+def zipBackward(settings: Settings, canvas: Canvas, scrollSpeed: float):
     deltaY = 1
     if len(canvas.find_withtag("currentMessage")) % 2 == 0:
         deltaY = -1
