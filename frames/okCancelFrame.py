@@ -44,4 +44,5 @@ class OkCancelFrame:
             if messagebox.askyesno("Save Changes",
                                    "Do you want to save these changes to the currently loaded settings file? If you select no, you can save them later from the right-click menu."):
                 self.window.parent.saveSettings(False)
+            self.window.parent.applyCurrentWindowSettings()
             self.window.master.destroy()
