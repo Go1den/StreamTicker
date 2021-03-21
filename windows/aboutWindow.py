@@ -16,31 +16,30 @@ class AboutWindow:
         self.frameTop = Frame(self.aboutWindow)
 
         self.aboutImage = PhotoImage(file="imagefiles/stLogo64.png")
-        self.aboutImageLabel = Label(self.frameTop, image=self.aboutImage)
+        self.aboutImageLabel = Label(self.frameTop, image=self.aboutImage, cursor="hand2")
+        self.aboutImageLabel.bind("<Button-1>", lambda x: webbrowser.open('https://www.go1den.com/streamticker', new=2))
         self.aboutImageLabel.grid(row=0, column=0, padx=4, pady=4)
 
-        self.aboutLabel = Label(self.frameTop, text="StreamTicker\n\nVersion 2.0\n\nReleased: 4/20/2021", justify=LEFT)
+        self.aboutLabel = Label(self.frameTop, text="StreamTicker\n\nVersion 2.0.0\n\nReleased: 3/21/2021", justify=LEFT)
         self.aboutLabel.grid(row=0, column=1, sticky=W, pady=4)
 
         self.frameTop.grid(row=0, column=0, sticky=W)
 
         self.aboutSupportLabel = Label(self.aboutWindow,
-                                       text="Hello. I'm Go1den. I developed StreamTicker.\nI do not plan to charge for this program ever.\nIf you would like to support me:",
+                                       text="Hello. I'm Go1den. I developed StreamTicker.\nThis program is available to use for free.\nThat being said, I devoted many hours to it.\n\nPlease consider supporting me if you enjoy it:",
                                        justify=LEFT)
         self.aboutSupportLabel.grid(row=1, column=0, sticky=W, padx=4, columnspan=2)
 
-        self.mySubscribeButton = Button(self.aboutWindow, text="Subscribe to my Twitch channel!", width=25,
-                                        command=lambda: webbrowser.open('https://www.twitch.tv/products/go1den', new=2))
-        self.mySubscribeButton.grid(row=2, column=0, columnspan=2, pady=4, padx=4)
-
-        self.myWebsiteButton = Button(self.aboutWindow, text="Visit my website!", width=25, command=lambda: webbrowser.open('https://www.go1den.com', new=2))
-        self.myWebsiteButton.grid(row=3, column=0, columnspan=2, pady=4, padx=4)
+        self.myPaypalImage = PhotoImage(file="imagefiles/donate.png")
+        self.myPaypalButton = Label(self.aboutWindow, image=self.myPaypalImage, cursor="hand2")
+        self.myPaypalButton.bind("<Button-1>", lambda x: webbrowser.open('https://www.paypal.com/donate/?hosted_button_id=LXMBXT59KL578', new=2))
+        self.myPaypalButton.grid(row=2, column=0, columnspan=2, pady=4, padx=4)
 
         self.aboutThanksLabel = Label(self.aboutWindow, text="Thank you so much for trying my program!\nIf you enjoy it, please tell others about it.", justify=LEFT)
-        self.aboutThanksLabel.grid(row=4, column=0, sticky=W, pady=4, padx=4)
+        self.aboutThanksLabel.grid(row=3, column=0, sticky=W, pady=4, padx=4)
 
         self.okButton = Button(self.aboutWindow, text="OK", width=8, command=lambda: self.aboutWindow.destroy())
-        self.okButton.grid(row=5, column=0, sticky=SE, pady=4, padx=4)
+        self.okButton.grid(row=4, column=0, sticky=SE, pady=4)
 
         self.aboutWindow.deiconify()
         self.aboutWindow.mainloop()
