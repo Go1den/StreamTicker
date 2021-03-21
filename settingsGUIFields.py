@@ -40,8 +40,8 @@ class SettingsGUIFields:
             self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = "#000000"
             self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set("#000000")
             self.VAR_PATH_WINDOW_BG_IMAGE.set("imagefiles/background.png")
-            self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background1.png")
-            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("Fast")
+            self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background.png")
+            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("99")
             if mFrame and bgFrame:
                 self.updateColorBoxes(mFrame, bgFrame)
 
@@ -71,8 +71,7 @@ class SettingsGUIFields:
                 self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(w.bgImage))
                 self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.moveAllOnLineDelay)
                 self.updateColorBoxes(mFrame, bgFrame)
-        except Exception as e:
-            print(e)
+        except Exception:
             messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.")
             self.getDefaultValues(False, mFrame, bgFrame)
 
