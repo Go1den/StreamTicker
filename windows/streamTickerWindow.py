@@ -53,7 +53,6 @@ class StreamTickerWindow(Tk):
         self.mainloop()
 
     def displayNextMessage(self):
-        # TODO add arrival and departure animations
         currentMessage = self.messages[self.currentIndex]
         font = currentMessage.overrides.font if currentMessage.overrides.font else self.settings.messageSettings.fontFace
         fontSize = currentMessage.overrides.fontSize if currentMessage.overrides.fontSize else self.settings.messageSettings.fontSize
@@ -91,7 +90,7 @@ class StreamTickerWindow(Tk):
                 self.xCoord += int(part.value)
             elif part.partType == "Text":
                 for char in part.value:
-                    # TODO replace this hard coded Y coordinate, and add font style option instead of bold
+                    # TODO add font style option instead of bold
                     self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="currentMessage", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
@@ -99,7 +98,7 @@ class StreamTickerWindow(Tk):
             elif part.partType == "Text From File":
                 fileText = readFile(part.value)
                 for char in fileText:
-                    # TODO replace this hard coded Y coordinate, and add font style option instead of bold
+                    # TODO add font style option instead of bold
                     self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="currentMessage", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
