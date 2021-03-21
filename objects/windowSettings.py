@@ -1,5 +1,5 @@
 class WindowSettings:
-    def __init__(self, moveAllOnLineDelay="Fast", bgImage="imagefiles/testBG.png", width="400", height="44", bgColor="#000000"):
+    def __init__(self, moveAllOnLineDelay="99", bgImage="imagefiles/background.png", width="400", height="44", bgColor="#000000"):
         self.moveAllOnLineDelay = moveAllOnLineDelay
         self.bgImage = bgImage
         self.width = width
