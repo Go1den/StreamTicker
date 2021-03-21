@@ -61,20 +61,11 @@ def writeSettingsToJSON(path, settings: Settings) -> bool:
         return False
 
 def getScrollSpeedFloat(speedString: str) -> float:
-    if speedString == "Fastest":
-        return float(0.001)
-    if speedString == "Fast":
-        return float(0.007)
-    if speedString == "Normal":
-        return float(0.013)
-    if speedString == "Slow":
-        return float(0.019)
-    if speedString == "Slowest":
-        return float(0.025)
-    return float(0.013)
+    return float((100 - float(speedString)) / 1000)
 
 def pause(delay: float):
-    t = time.time()
-    while True:
-        if t + delay <= time.time():
-            break
+    if delay > 0:
+        t = time.time()
+        while True:
+            if t + delay <= time.time():
+                break

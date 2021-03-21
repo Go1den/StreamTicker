@@ -62,9 +62,11 @@ class SettingsMessageFrame:
 
         self.LABEL_MOVE_ALL_ON_LINE_DELAY = Label(self.frame, text="Message Scroll Speed:")
         self.LABEL_MOVE_ALL_ON_LINE_DELAY.grid(row=ROW_MESSAGE_SPEED, column=0, sticky=E, pady=1)
-        self.MESSAGE_SPEEDS = ["Fastest", "Fast", "Normal", "Slow", "Slowest"]
-        self.MESSAGE_SPEED_COMBO_BOX = ttk.Combobox(self.frame, values=self.MESSAGE_SPEEDS, textvariable=self.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY, state="readonly")
-        self.MESSAGE_SPEED_COMBO_BOX.grid(row=ROW_MESSAGE_SPEED, column=1, sticky=W, pady=1)
+        moveAllOnLineDelayFrame = Frame(self.frame)
+        self.entryMoveAllOnLineDelay = Entry(moveAllOnLineDelayFrame, textvariable=self.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY, width=4)
+        self.entryMoveAllOnLineDelay.grid(row=ROW_MESSAGE_SPEED, column=0, sticky=W, pady=1)
+        Label(moveAllOnLineDelayFrame, text="(1-100)").grid(row=ROW_MESSAGE_SPEED, column=1, sticky=W, pady=1)
+        moveAllOnLineDelayFrame.grid(row=ROW_MESSAGE_SPEED, column=1, sticky=W, pady=1)
 
         self.ARRIVAL_ANIMATIONS = ["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"]
         self.DEPARTURE_ANIMATIONS = ["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Unzip Forward", "Unzip Backward", "Unzip Randomly"]

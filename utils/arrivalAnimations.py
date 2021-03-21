@@ -59,6 +59,7 @@ def getWidthAndHeight(currentMessage: Message, settings: Settings) -> (int, int)
         box = canvas.bbox(elem)
         height = max(height, box[3] - box[1])
     canvas.delete("all")
+    del canvas
     return width, height
 
 def pickArrival() -> str:

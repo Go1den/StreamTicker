@@ -4,8 +4,6 @@ class MessageMakerFrame:
     def __init__(self, master, existingMessage):
         self.frame = Frame(master, bd=2, relief=GROOVE)
         self.message = existingMessage
-        print("Current message:")
-        print(self.message)
 
         self.nickname = StringVar()
         self.populateFieldsOnLoad()
