@@ -78,5 +78,6 @@ class SettingsBackgroundFrame:
 
     def selectImageFile(self, fields):
         filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("png files", "*.png")])
-        fields.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(filename))
-        fields.VAR_PATH_WINDOW_BG_IMAGE.set(filename)
+        if filename:
+            fields.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(filename))
+            fields.VAR_PATH_WINDOW_BG_IMAGE.set(filename)
