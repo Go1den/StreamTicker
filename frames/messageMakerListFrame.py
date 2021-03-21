@@ -73,11 +73,8 @@ class MessageMakerListFrame:
             current = self.listBox.curselection()
             if current:
                 index = current[0]
-                print(self.window.message.parts[index])
                 MessageComponentWindow(self, self.window.message.parts[index], index)
             else:
                 return
         else:
             MessageComponentWindow(self, None, len(self.window.message.parts) + 1)
-            # we should probably store the result somewhere
-
