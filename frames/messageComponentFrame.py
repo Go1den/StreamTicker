@@ -69,6 +69,8 @@ class MessageComponentFrame:
                 self.fileValue.set(mp.value)
             elif mp.partType == "Pixel Gap":
                 self.gapValue.set(mp.value)
+        else:
+            self.comboboxComponentType.set("Text")
 
     def hideAllDropdownDependentFields(self):
         self.labelTextToDisplay.grid_remove()

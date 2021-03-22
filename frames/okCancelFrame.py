@@ -17,9 +17,9 @@ class OkCancelFrame:
         self.cancelButton.grid(row=0, column=1, sticky=E)
 
     def validateBeforeSaving(self):
-        return validateWindowSettings.validate(self.window.fields) \
-               and validateMessageSettings.validate(self.window.fields) \
-               and validateFontSettings.validate(self.window.fields)
+        return validateWindowSettings.validate(self.window.fields, self.window.master) \
+               and validateMessageSettings.validate(self.window.fields, self.window.master) \
+               and validateFontSettings.validate(self.window.fields, self.window.master)
 
     def updateCurrentSettings(self):
         if self.validateBeforeSaving():

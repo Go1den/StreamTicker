@@ -40,7 +40,7 @@ class MessageComponentWindow:
         self.parentWindow.grab_set()
 
     def returnMessageComponent(self):
-        if validate(self.componentFrame):
+        if validate(self.componentFrame, self.master):
             if self.existingMessagePart:
                 self.parent.messageMakerPartFrame.parent.message.parts[self.index] = MessagePart(self.componentFrame.componentType.get(), self.index, self.componentFrame.getValue())
             else:

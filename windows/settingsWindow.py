@@ -33,7 +33,7 @@ class SettingsWindow:
         self.okFrame = OkCancelFrame(self)
         self.okFrame.frame.grid(row=2, column=1, sticky=SE, padx=4, pady=4)
 
-        self.fields.loadSettings(self.parent, self.mFrame, self.bgFrame)
+        self.fields.loadSettings(self.master, self.parent, self.mFrame, self.bgFrame)
 
         self.master.deiconify()
         self.master.mainloop()

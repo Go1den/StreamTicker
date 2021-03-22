@@ -23,34 +23,32 @@ class SettingsGUIFields:
         self.VAR_DISPLAY_WINDOW_BG_IMAGE = StringVar()
         self.VAR_PATH_WINDOW_BG_IMAGE = StringVar()
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY = StringVar()
-        self.getDefaultValues(False)
+        self.getDefaultValues()
 
-    def getDefaultValues(self, confirm, mFrame=None, bgFrame=None):
-        if not confirm or messagebox.askokcancel("Confirm New Settings", "All changes made will be lost, and the default values will be set. Do you want to continue?"):
-            self.VAR_MESSAGE_STYLE.set("")
-            self.VAR_ENTRY_MESSAGE_DURATION.set("5")
-            self.VAR_ENTRY_MESSAGE_INTERMISSION.set("0.5")
-            self.VAR_LABEL_MESSAGE_COLOR_TEXT.set("#ffffff")
-            self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = "#ffffff"
-            self.VAR_FONT_COMBO_BOX.set("Courier New")
-            self.VAR_ENTRY_NORMAL_FONT_SIZE.set("26")
-            self.VAR_ARRIVAL.set("Pick For Me")
-            self.VAR_DEPARTURE.set("Pick For Me")
-            self.VAR_FONT_IS_BOLD.set(False)
-            self.VAR_FONT_IS_OVERSTRIKE.set(False)
+    def getDefaultValues(self, mFrame=None, bgFrame=None):
+        self.VAR_MESSAGE_STYLE.set("")
+        self.VAR_ENTRY_MESSAGE_DURATION.set("5")
+        self.VAR_ENTRY_MESSAGE_INTERMISSION.set("0.5")
+        self.VAR_LABEL_MESSAGE_COLOR_TEXT.set("#ffffff")
+        self.VAR_LABEL_MESSAGE_COLOR_FOREGROUND = "#ffffff"
+        self.VAR_FONT_COMBO_BOX.set("Courier New")
+        self.VAR_ENTRY_NORMAL_FONT_SIZE.set("26")
+        self.VAR_ARRIVAL.set("Pick For Me")
+        self.VAR_DEPARTURE.set("Pick For Me")
+        self.VAR_FONT_IS_BOLD.set(False)
+        self.VAR_FONT_IS_OVERSTRIKE.set(False)
 
-            self.VAR_WINDOW_WIDTH.set("400")
-            self.VAR_WINDOW_HEIGHT.set("44")
-            self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = "#000000"
-            self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set("#000000")
-            self.VAR_PATH_WINDOW_BG_IMAGE.set("imagefiles/background.png")
-            self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background.png")
-            self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("99")
-            if mFrame and bgFrame:
-                self.updateColorBoxes(mFrame, bgFrame)
+        self.VAR_WINDOW_WIDTH.set("400")
+        self.VAR_WINDOW_HEIGHT.set("44")
+        self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = "#000000"
+        self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set("#000000")
+        self.VAR_PATH_WINDOW_BG_IMAGE.set("imagefiles/background.png")
+        self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background.png")
+        self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("99")
+        if mFrame and bgFrame:
+            self.updateColorBoxes(mFrame, bgFrame)
 
-    def loadSettings(self, parent, mFrame, bgFrame):
-        # Todo: backup the current settings so that if load fails, we can revert to those rather than doing a partial load
+    def loadSettings(self, master, parent, mFrame, bgFrame):
         try:
             s = parent.settings
             if s.messageSettings:
@@ -79,8 +77,8 @@ class SettingsGUIFields:
                 self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.moveAllOnLineDelay)
                 self.updateColorBoxes(mFrame, bgFrame)
         except Exception:
-            messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.")
-            self.getDefaultValues(False, mFrame, bgFrame)
+            messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.", parent=master)
+            self.getDefaultValues(mFrame, bgFrame)
 
     def updateColorBoxes(self, mFrame, bgFrame):
         bgFrame.CANVAS_WINDOW_BG_IMAGE.itemconfig(bgFrame.RECTANGLE_WINDOW_BG_IMAGE, fill=self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)

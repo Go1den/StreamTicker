@@ -204,17 +204,17 @@ class StreamTickerWindow(Tk):
             try:
                 self.messages = self.getMessages(fileToLoad)
                 self.messagesPath = fileToLoad
-                messagebox.showinfo("Info", "Messages were loaded successfully.")
+                messagebox.showinfo("Info", "Messages were loaded successfully.", parent=self)
             except:
-                messagebox.showerror("Error", "Failed to load messages!")
+                messagebox.showerror("Error", "Failed to load messages!", parent=self)
 
     def loadDefaultSettings(self):
-        if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?"):
+        if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?", parent=self):
             self.settings = Settings()
             self.applyCurrentWindowSettings()
 
     def loadDefaultMessages(self):
-        if messagebox.askokcancel("Restore Default Messages", "Are you sure you want to restore the default messages for StreamTicker?"):
+        if messagebox.askokcancel("Restore Default Messages", "Are you sure you want to restore the default messages for StreamTicker?", parent=self):
             self.messages = [Message("StreamTicker", 1, [MessagePart("Pixel Gap", 1, "8"),
                                                          MessagePart("Image", 2, "imagefiles/stLogo28.png"),
                                                          MessagePart("Pixel Gap", 3, "8"),
@@ -229,9 +229,9 @@ class StreamTickerWindow(Tk):
                 self.settings = self.getSettings(fileToLoad)
                 self.settingsPath = fileToLoad
                 self.applyCurrentWindowSettings()
-                messagebox.showinfo("Info", "Settings were loaded successfully.")
+                messagebox.showinfo("Info", "Settings were loaded successfully.", parent=self)
             except:
-                messagebox.showerror("Error", "Failed to load settings!")
+                messagebox.showerror("Error", "Failed to load settings!", parent=self)
 
     def saveSettings(self, saveAs):
         if self.settingsPath == "" or saveAs:
@@ -242,9 +242,9 @@ class StreamTickerWindow(Tk):
             return
         if writeSettingsToJSON(saveFile, self.settings):
             self.settingsPath = saveFile
-            messagebox.showinfo("Info", "Settings were saved successfully.")
+            messagebox.showinfo("Info", "Settings were saved successfully.", parent=self)
         else:
-            messagebox.showerror("Error", "Failed to save settings!")
+            messagebox.showerror("Error", "Failed to save settings!", parent=self)
 
     def saveMessages(self, saveAs):
         if self.messagesPath == "" or saveAs:
@@ -255,9 +255,9 @@ class StreamTickerWindow(Tk):
             return
         if writeMessagesToJSON(saveFile, self.messages):
             self.messagesPath = saveFile
-            messagebox.showinfo("Info", "Messages were saved successfully.")
+            messagebox.showinfo("Info", "Messages were saved successfully.", parent=self)
         else:
-            messagebox.showerror("Error", "Failed to save messages!")
+            messagebox.showerror("Error", "Failed to save messages!", parent=self)
 
     def applyCurrentWindowSettings(self):
         self.canvas.delete("all")

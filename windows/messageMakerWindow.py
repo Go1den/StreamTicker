@@ -146,7 +146,7 @@ class MessageMakerWindow:
                         grandchild.configure(state='disable')
 
     def updateMessage(self):
-        if validateMessageMessageMaker(self.fields) and validateFontsMessageMaker(self.fields):
+        if validateMessageMessageMaker(self.fields, self.master) and validateFontsMessageMaker(self.fields, self.master):
             override = Override()
             if self.overrideFrame.overrideDuration.get():
                 override.duration = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MESSAGE_DURATION.get()
