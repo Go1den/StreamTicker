@@ -68,10 +68,10 @@ class OverrideFrame:
                                                                                     self.defaultSettings.messageSettings.italic,
                                                                                     self.defaultSettings.messageSettings.overstrike],
                                                                                    NORMAL))
-        self.checkboxFontStyle.grid(row=6, column=1, sticky=E, pady=(0, 40))
+        self.checkboxFontStyle.grid(row=6, column=1, sticky=E, pady=(0, 52))
 
         self.checkboxFontColor = Checkbutton(self.frame, borderwidth=0, variable=self.overrideFontColor, command=lambda: self.toggleColors())
-        self.checkboxFontColor.grid(row=7, column=1, sticky=E, pady=(0, 10))
+        self.checkboxFontColor.grid(row=7, column=1, sticky=E, pady=(0, 9))
 
         self.checkboxArrival = Checkbutton(self.frame, borderwidth=0, variable=self.overrideArrival,
                                            command=lambda: self.toggleField(self.overrideArrival, self.gmsFrame.ARRIVAL_COMBO_BOX,
