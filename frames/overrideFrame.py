@@ -26,56 +26,59 @@ class OverrideFrame:
                                                                              self.gmsFrame.fields.VAR_ENTRY_MESSAGE_DURATION,
                                                                              self.defaultSettings.messageSettings.duration,
                                                                              NORMAL))
-        self.checkboxDuration.grid(row=1, column=1, sticky=E, pady=(0,4))
+        self.checkboxDuration.grid(row=1, column=1, sticky=E, pady=(0, 4))
 
         self.checkboxIntermission = Checkbutton(self.frame, borderwidth=0, variable=self.overrideIntermission,
                                                 command=lambda: self.toggleField(self.overrideIntermission, self.gmsFrame.ENTRY_MESSAGE_INTERMISSION,
                                                                                  self.gmsFrame.fields.VAR_ENTRY_MESSAGE_INTERMISSION,
                                                                                  self.defaultSettings.messageSettings.intermission,
                                                                                  NORMAL))
-        self.checkboxIntermission.grid(row=2, column=1, sticky=E, pady=(0,4))
+        self.checkboxIntermission.grid(row=2, column=1, sticky=E, pady=(0, 4))
 
         self.checkboxScrollSpeed = Checkbutton(self.frame, borderwidth=0, variable=self.overrideScrollSpeed,
                                                command=lambda: self.toggleField(self.overrideScrollSpeed, self.gmsFrame.entryMoveAllOnLineDelay,
                                                                                 self.gmsFrame.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY,
                                                                                 self.defaultSettings.windowSettings.moveAllOnLineDelay,
                                                                                 NORMAL))
-        self.checkboxScrollSpeed.grid(row=3, column=1, sticky=E, pady=(0,3))
+        self.checkboxScrollSpeed.grid(row=3, column=1, sticky=E, pady=(0, 3))
 
         self.checkboxFont = Checkbutton(self.frame, borderwidth=0, variable=self.overrideFont,
                                         command=lambda: self.toggleField(self.overrideFont, self.gmsFrame.FONT_COMBO_BOX,
                                                                          self.gmsFrame.fields.VAR_FONT_COMBO_BOX,
                                                                          self.defaultSettings.messageSettings.fontFace,
                                                                          "readonly"))
-        self.checkboxFont.grid(row=4, column=1, sticky=E, pady=(0,2))
+        self.checkboxFont.grid(row=4, column=1, sticky=E, pady=(0, 2))
 
         self.checkboxFontSize = Checkbutton(self.frame, borderwidth=0, variable=self.overrideFontSize,
                                             command=lambda: self.toggleField(self.overrideFontSize, self.gmsFrame.ENTRY_NORMAL_FONT_SIZE,
                                                                              self.gmsFrame.fields.VAR_ENTRY_NORMAL_FONT_SIZE,
                                                                              self.defaultSettings.messageSettings.fontSize,
                                                                              NORMAL))
-        self.checkboxFontSize.grid(row=5, column=1, sticky=E, pady=(0,2))
+        self.checkboxFontSize.grid(row=5, column=1, sticky=E, pady=(0, 2))
 
         self.checkboxFontStyle = Checkbutton(self.frame, borderwidth=0, variable=self.overrideFontStyle,
                                              command=lambda: self.toggleFontFields(self.overrideFontStyle,
                                                                                    [self.gmsFrame.checkButtonBold,
+                                                                                    self.gmsFrame.checkButtonItalic,
                                                                                     self.gmsFrame.checkButtonOverstrike],
                                                                                    [self.gmsFrame.fields.VAR_FONT_IS_BOLD,
+                                                                                    self.gmsFrame.fields.VAR_FONT_IS_ITALIC,
                                                                                     self.gmsFrame.fields.VAR_FONT_IS_OVERSTRIKE],
                                                                                    [self.defaultSettings.messageSettings.bold,
+                                                                                    self.defaultSettings.messageSettings.italic,
                                                                                     self.defaultSettings.messageSettings.overstrike],
                                                                                    NORMAL))
-        self.checkboxFontStyle.grid(row=6, column=1, sticky=E, pady=(0,30))
+        self.checkboxFontStyle.grid(row=6, column=1, sticky=E, pady=(0, 40))
 
         self.checkboxFontColor = Checkbutton(self.frame, borderwidth=0, variable=self.overrideFontColor, command=lambda: self.toggleColors())
-        self.checkboxFontColor.grid(row=7, column=1, sticky=E, pady=(0,10))
+        self.checkboxFontColor.grid(row=7, column=1, sticky=E, pady=(0, 10))
 
         self.checkboxArrival = Checkbutton(self.frame, borderwidth=0, variable=self.overrideArrival,
                                            command=lambda: self.toggleField(self.overrideArrival, self.gmsFrame.ARRIVAL_COMBO_BOX,
                                                                             self.gmsFrame.fields.VAR_ARRIVAL,
                                                                             self.defaultSettings.messageSettings.arrival,
                                                                             "readonly"))
-        self.checkboxArrival.grid(row=8, column=1, sticky=E, pady=(0,4))
+        self.checkboxArrival.grid(row=8, column=1, sticky=E, pady=(0, 4))
 
         self.checkboxDeparture = Checkbutton(self.frame, borderwidth=0, variable=self.overrideDeparture,
                                              command=lambda: self.toggleField(self.overrideDeparture, self.gmsFrame.DEPARTURE_COMBO_BOX,

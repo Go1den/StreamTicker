@@ -65,9 +65,11 @@ class SettingsMessageFrame:
         self.fontStyleFrame = Frame(self.frame)
         self.checkButtonBold = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Bold", variable=self.fields.VAR_FONT_IS_BOLD, command=lambda: self.updateFontPreview(None, None, None))
         self.checkButtonBold.grid(row=0, padx=1, sticky=W)
+        self.checkButtonItalic = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Italic", variable=self.fields.VAR_FONT_IS_ITALIC, command=lambda: self.updateFontPreview(None, None, None))
+        self.checkButtonItalic.grid(row=1, padx=1, sticky=W)
         self.checkButtonOverstrike = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Strikethrough", variable=self.fields.VAR_FONT_IS_OVERSTRIKE,
                                                  command=lambda: self.updateFontPreview(None, None, None))
-        self.checkButtonOverstrike.grid(row=1, padx=1, sticky=W)
+        self.checkButtonOverstrike.grid(row=2, padx=1, sticky=W)
         self.fontStyleFrame.grid(row=ROW_FONT_STYLE, column=1, sticky=W, pady=1)
 
         self.LABEL_MOVE_ALL_ON_LINE_DELAY = Label(self.frame, text="Message Scroll Speed:")
@@ -104,6 +106,7 @@ class SettingsMessageFrame:
 
     def updateFontPreview(self, a, b, c):
         bold = "bold" if self.fields.VAR_FONT_IS_BOLD.get() else "normal"
+        italic = "italic" if self.fields.VAR_FONT_IS_ITALIC.get() else "roman"
         overstrike = 1 if self.fields.VAR_FONT_IS_OVERSTRIKE.get() else 0
-        newFont = Font(family=self.fields.VAR_FONT_COMBO_BOX.get(), size=12, weight=bold, overstrike=overstrike)
+        newFont = Font(family=self.fields.VAR_FONT_COMBO_BOX.get(), size=12, weight=bold, overstrike=overstrike, slant=italic)
         self.LABEL_FONT_PREVIEW.config(font=newFont)

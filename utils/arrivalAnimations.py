@@ -62,7 +62,9 @@ def getWidthAndHeight(currentMessage: Message, settings: Settings, font: Font) -
     del canvas
     return width, height
 
-def pickArrival() -> str:
+def pickArrival(italic: str) -> str:
+    if italic == "italic":
+        return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down"])
     return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"])
 
 def getStartingXYCoordinates(width: int, height: int, arrival: str, settings: Settings) -> (int, int):

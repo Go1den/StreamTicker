@@ -110,6 +110,10 @@ class MessageMakerWindow:
                 self.fields.VAR_FONT_IS_BOLD.set(overrides.bold)
                 self.overrideFrame.overrideFontStyle.set(True)
                 self.configureFontStyleFields()
+            if overrides.italic:
+                self.fields.VAR_FONT_IS_ITALIC.set(overrides.italic)
+                self.overrideFrame.overrideFontStyle.set(True)
+                self.configureFontStyleFields()
             if overrides.overstrike:
                 self.fields.VAR_FONT_IS_OVERSTRIKE.set(overrides.overstrike)
                 self.overrideFrame.overrideFontStyle.set(True)
@@ -117,6 +121,7 @@ class MessageMakerWindow:
 
     def configureFontStyleFields(self):
         self.overrideFrame.gmsFrame.checkButtonBold.config(state=NORMAL)
+        self.overrideFrame.gmsFrame.checkButtonItalic.config(state=NORMAL)
         self.overrideFrame.gmsFrame.checkButtonOverstrike.config(state=NORMAL)
 
     def setGlobalMessageSettings(self):
@@ -134,6 +139,7 @@ class MessageMakerWindow:
         self.fields.VAR_ARRIVAL.set(gmSettings.arrival)
         self.fields.VAR_DEPARTURE.set(gmSettings.departure)
         self.fields.VAR_FONT_IS_BOLD.set(gmSettings.bold)
+        self.fields.VAR_FONT_IS_ITALIC.set(gmSettings.italic)
         self.fields.VAR_FONT_IS_OVERSTRIKE.set(gmSettings.overstrike)
 
     def disableGlobalMessageFields(self):
@@ -166,6 +172,7 @@ class MessageMakerWindow:
                 override.departure = self.globalMessageSettingsFrame.fields.VAR_DEPARTURE.get()
             if self.overrideFrame.overrideFontStyle.get():
                 override.bold = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_BOLD.get()
+                override.italic = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_ITALIC.get()
                 override.overstrike = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_OVERSTRIKE.get()
 
             for part in self.message.parts:

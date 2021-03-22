@@ -14,8 +14,9 @@
         "fontSize": "26",
         "duration": "5",
         "arrival": "Zip Randomly",
-        "departure": "Zip Randomly",
+        "departure": "Unzip Randomly",
         "bold": true,
+        "italic": false,
         "overstrike": false
     }
 }

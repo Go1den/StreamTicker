@@ -34,6 +34,7 @@
             "arrival": "",
             "departure": "",
             "bold": false,
+            "italic": false,
             "overstrike": false
         }
     },
@@ -72,6 +73,7 @@
             "arrival": "",
             "departure": "",
             "bold": false,
+            "italic": false,
             "overstrike": false
         }
     },
@@ -110,6 +112,7 @@
             "arrival": "",
             "departure": "",
             "bold": false,
+            "italic": false,
             "overstrike": false
         }
     }

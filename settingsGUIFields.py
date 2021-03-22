@@ -14,6 +14,7 @@ class SettingsGUIFields:
         self.VAR_ARRIVAL = StringVar()
         self.VAR_DEPARTURE = StringVar()
         self.VAR_FONT_IS_BOLD = BooleanVar()
+        self.VAR_FONT_IS_ITALIC = BooleanVar()
         self.VAR_FONT_IS_OVERSTRIKE = BooleanVar()
 
         self.VAR_WINDOW_WIDTH = StringVar()
@@ -36,6 +37,7 @@ class SettingsGUIFields:
         self.VAR_ARRIVAL.set("Pick For Me")
         self.VAR_DEPARTURE.set("Pick For Me")
         self.VAR_FONT_IS_BOLD.set(False)
+        self.VAR_FONT_IS_ITALIC.set(False)
         self.VAR_FONT_IS_OVERSTRIKE.set(False)
 
         self.VAR_WINDOW_WIDTH.set("400")
@@ -63,6 +65,7 @@ class SettingsGUIFields:
                 self.VAR_ARRIVAL.set(m.arrival)
                 self.VAR_DEPARTURE.set(m.departure)
                 self.VAR_FONT_IS_BOLD.set(m.bold)
+                self.VAR_FONT_IS_ITALIC.set(m.italic)
                 self.VAR_FONT_IS_OVERSTRIKE.set(m.overstrike)
                 mFrame.updateFontPreview(None, None, None)
 

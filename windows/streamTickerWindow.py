@@ -67,6 +67,8 @@ class StreamTickerWindow(Tk):
         fontColor = currentMessage.overrides.fontColor if currentMessage.overrides.fontColor else self.settings.messageSettings.color
         bold = currentMessage.overrides.bold if currentMessage.overrides.bold else self.settings.messageSettings.bold
         bold = "bold" if bold else "normal"
+        italic = currentMessage.overrides.italic if currentMessage.overrides.italic else self.settings.messageSettings.italic
+        italic = "italic" if italic else "roman"
         overstrike = currentMessage.overrides.overstrike if currentMessage.overrides.overstrike else self.settings.messageSettings.overstrike
         overstrike = 1 if overstrike else 0
         duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
@@ -75,11 +77,11 @@ class StreamTickerWindow(Tk):
             self.settings.windowSettings.moveAllOnLineDelay)
         arrival = currentMessage.overrides.arrival if currentMessage.overrides.arrival else self.settings.messageSettings.arrival
         if arrival == "Pick For Me":
-            arrival = pickArrival()
+            arrival = pickArrival(italic)
         departure = currentMessage.overrides.departure if currentMessage.overrides.departure else self.settings.messageSettings.departure
         if departure == "Pick For Me":
-            departure = pickDeparture()
-        font = Font(family=fontFamily, size=fontSize, weight=bold, overstrike=overstrike)
+            departure = pickDeparture(italic)
+        font = Font(family=fontFamily, size=fontSize, weight=bold, overstrike=overstrike, slant=italic)
         width, height = getWidthAndHeight(currentMessage, self.settings, font)
         self.xCoord, self.yCoord, self.yCoord2 = getStartingXYCoordinates(width, height, arrival, self.settings)
         self.setupCanvas(arrival, currentMessage, font, fontColor)
@@ -150,7 +152,7 @@ class StreamTickerWindow(Tk):
             overrides = message["overrides"]
             override = Override(overrides["duration"], overrides["intermission"], overrides["scrollSpeed"], overrides["font"],
                                 overrides["fontSize"], overrides["fontColor"], overrides["arrival"], overrides["departure"],
-                                overrides["bold"], overrides["overstrike"])
+                                overrides["bold"], overrides["italic"], overrides["overstrike"])
             messages.append(Message(nickname, sortOrder, parts, override))
         return messages
 
@@ -160,7 +162,7 @@ class StreamTickerWindow(Tk):
         windowSettings = WindowSettings(w['moveAllOnLineDelay'], w['bgImage'], w['width'], w['height'], w['bgColor'])
         m = s["messageSettings"]
         messageSettings = MessageSettings(m['style'], m['color'], m['fontFace'], m['intermission'], m['fontSize'], m['duration'],
-                                          m['arrival'], m['departure'], m['bold'], m['overstrike'])
+                                          m['arrival'], m['departure'], m['bold'], m['italic'], m['overstrike'])
         return Settings(windowSettings, messageSettings)
 
     def updateAlwaysOnTop(self):

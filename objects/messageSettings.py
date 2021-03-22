@@ -1,6 +1,6 @@
 class MessageSettings:
     def __init__(self, style: str = "", color: str = "#ffffff", fontFace: str = "Courier New", intermission: str = ".5", fontSize: str = "26", duration: str = "10",
-                 arrival: str = "Pick For Me", departure: str = "Pick For Me", bold: bool = False, overstrike: bool = False):
+                 arrival: str = "Pick For Me", departure: str = "Pick For Me", bold: bool = False, italic: bool = False, overstrike: bool = False):
         self.style = style
         self.color = color
         self.fontFace = fontFace
@@ -10,6 +10,7 @@ class MessageSettings:
         self.arrival = arrival
         self.departure = departure
         self.bold = bold
+        self.italic = italic
         self.overstrike = overstrike
 
     def print(self):
@@ -23,4 +24,5 @@ class MessageSettings:
         print("Arrival: " + self.arrival)
         print("Departure: " + self.departure)
         print("Bold: " + str(self.bold))
+        print("Italic: " + str(self.italic))
         print("Overstrike: " + str(self.overstrike))
