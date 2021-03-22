@@ -48,7 +48,10 @@ class StreamTickerWindow(Tk):
                              background=self.settings.windowSettings.bgColor)
         self.canvas.bind('<Button-3>', self.rightClickMenu)
 
-        self.bgImage = PhotoImage(file=self.settings.windowSettings.bgImage)
+        try:
+            self.bgImage = PhotoImage(file=self.settings.windowSettings.bgImage)
+        except Exception:
+            self.bgImage = None
         self.canvas.create_image(0, 0, anchor=NW, image=self.bgImage)
 
         self.canvas.grid(row=0, column=0)
@@ -264,7 +267,10 @@ class StreamTickerWindow(Tk):
     def applyCurrentWindowSettings(self):
         self.canvas.delete("all")
         self.canvas.configure(width=self.settings.windowSettings.width, height=self.settings.windowSettings.height, background=self.settings.windowSettings.bgColor)
-        self.bgImage = PhotoImage(file=self.settings.windowSettings.bgImage)
+        try:
+            self.bgImage = PhotoImage(file=self.settings.windowSettings.bgImage)
+        except Exception:
+            self.bgImage = None
         self.canvas.create_image(0, 0, anchor=NW, image=self.bgImage)
 
     def closeWindow(self):

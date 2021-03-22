@@ -1,5 +1,5 @@
 import webbrowser
-from tkinter import Button, W, Toplevel, Label, LEFT, PhotoImage, Frame, SE
+from tkinter import Button, W, Toplevel, Label, LEFT, PhotoImage, Frame, SE, GROOVE
 
 class AboutWindow:
     def __init__(self, parent):
@@ -38,7 +38,7 @@ class AboutWindow:
         self.aboutThanksLabel = Label(self.aboutWindow, text="Thank you so much for trying my program!\nIf you enjoy it, please tell others about it.", justify=LEFT)
         self.aboutThanksLabel.grid(row=3, column=0, sticky=W, pady=4, padx=4)
 
-        self.okButton = Button(self.aboutWindow, text="OK", width=8, command=lambda: self.aboutWindow.destroy())
+        self.okButton = Button(self.aboutWindow, text="OK", width=10, bd=2, relief=GROOVE, command=lambda: self.aboutWindow.destroy())
         self.okButton.grid(row=4, column=0, sticky=SE, pady=4)
 
         self.aboutWindow.deiconify()
