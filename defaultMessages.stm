@@ -1,12 +1,12 @@
 [
     {
-        "nickname": "STREAMTICKER1",
+        "nickname": "StreamTicker",
         "sortOrder": 1,
         "parts": [
             {
-                "partType": "Text",
-                "sortOrder": 3,
-                "value": "Hello"
+                "partType": "Pixel Gap",
+                "sortOrder": 1,
+                "value": "8"
             },
             {
                 "partType": "Image",
@@ -15,13 +15,13 @@
             },
             {
                 "partType": "Pixel Gap",
-                "sortOrder": 1,
-                "value": "10"
+                "sortOrder": 3,
+                "value": "8"
             },
             {
-                "partType": "Text From File",
+                "partType": "Text",
                 "sortOrder": 4,
-                "value": "B:/Speedrunning/Text/streamticker.txt"
+                "value": "StreamTicker"
             }
         ],
         "overrides": {
@@ -39,52 +39,13 @@
         }
     },
     {
-        "nickname": "STREAMTICKER3",
-        "sortOrder": 3,
-        "parts": [
-            {
-                "partType": "Text",
-                "sortOrder": 4,
-                "value": "Hello"
-            },
-            {
-                "partType": "Image",
-                "sortOrder": 3,
-                "value": "imagefiles/stLogo28.png"
-            },
-            {
-                "partType": "Pixel Gap",
-                "sortOrder": 2,
-                "value": "10"
-            },
-            {
-                "partType": "Text From File",
-                "sortOrder": 1,
-                "value": "B:/Speedrunning/Text/streamticker.txt"
-            }
-        ],
-        "overrides": {
-            "duration": "",
-            "intermission": "",
-            "scrollSpeed": "",
-            "font": "",
-            "fontSize": "",
-            "fontColor": "",
-            "arrival": "",
-            "departure": "",
-            "bold": false,
-            "italic": false,
-            "overstrike": false
-        }
-    },
-    {
-        "nickname": "STREAMTICKER2",
+        "nickname": "Made by Go1den",
         "sortOrder": 2,
         "parts": [
             {
-                "partType": "Text",
+                "partType": "Pixel Gap",
                 "sortOrder": 1,
-                "value": "Hello"
+                "value": "8"
             },
             {
                 "partType": "Image",
@@ -94,12 +55,12 @@
             {
                 "partType": "Pixel Gap",
                 "sortOrder": 3,
-                "value": "10"
+                "value": "8"
             },
             {
-                "partType": "Text From File",
+                "partType": "Text",
                 "sortOrder": 4,
-                "value": "B:/Speedrunning/Text/streamticker.txt"
+                "value": "Made by Go1den"
             }
         ],
         "overrides": {

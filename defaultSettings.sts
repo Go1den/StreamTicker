@@ -7,15 +7,14 @@
         "bgColor": "#000000"
     },
     "messageSettings": {
-        "style": "",
         "color": "#ffffff",
         "fontFace": "Courier New",
         "intermission": ".5",
         "fontSize": "26",
-        "duration": "5",
-        "arrival": "Zip Randomly",
-        "departure": "Unzip Randomly",
-        "bold": true,
+        "duration": "10",
+        "arrival": "Pick For Me",
+        "departure": "Pick For Me",
+        "bold": false,
         "italic": false,
         "overstrike": false
     }
