@@ -4,7 +4,6 @@ from utils import helperMethods
 
 class SettingsGUIFields:
     def __init__(self):
-        self.VAR_MESSAGE_STYLE = StringVar()
         self.VAR_ENTRY_MESSAGE_DURATION = StringVar()
         self.VAR_ENTRY_MESSAGE_INTERMISSION = StringVar()
         self.VAR_LABEL_MESSAGE_COLOR_TEXT = StringVar()
@@ -27,7 +26,6 @@ class SettingsGUIFields:
         self.getDefaultValues()
 
     def getDefaultValues(self, mFrame=None, bgFrame=None):
-        self.VAR_MESSAGE_STYLE.set("")
         self.VAR_ENTRY_MESSAGE_DURATION.set("5")
         self.VAR_ENTRY_MESSAGE_INTERMISSION.set("0.5")
         self.VAR_LABEL_MESSAGE_COLOR_TEXT.set("#ffffff")
@@ -55,7 +53,6 @@ class SettingsGUIFields:
             s = parent.settings
             if s.messageSettings:
                 m = s.messageSettings
-                self.VAR_MESSAGE_STYLE.set(m.style)
                 self.VAR_ENTRY_MESSAGE_DURATION.set(m.duration)
                 self.VAR_ENTRY_MESSAGE_INTERMISSION.set(m.intermission)
                 self.VAR_LABEL_MESSAGE_COLOR_TEXT.set(m.color)

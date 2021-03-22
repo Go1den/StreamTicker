@@ -32,7 +32,6 @@ class OkCancelFrame:
                 self.window.fields.VAR_LABEL_WINDOW_BG_COLOR_TEXT.get(),
             )
             messageSettings = MessageSettings(
-                self.window.fields.VAR_MESSAGE_STYLE.get(),
                 self.window.mFrame.LABEL_MESSAGE_COLOR.cget("text"),
                 self.window.fields.VAR_FONT_COMBO_BOX.get(),
                 self.window.fields.VAR_ENTRY_MESSAGE_INTERMISSION.get(),

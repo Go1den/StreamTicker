@@ -164,7 +164,7 @@ class StreamTickerWindow(Tk):
         w = s["windowSettings"]
         windowSettings = WindowSettings(w['moveAllOnLineDelay'], w['bgImage'], w['width'], w['height'], w['bgColor'])
         m = s["messageSettings"]
-        messageSettings = MessageSettings(m['style'], m['color'], m['fontFace'], m['intermission'], m['fontSize'], m['duration'],
+        messageSettings = MessageSettings(m['color'], m['fontFace'], m['intermission'], m['fontSize'], m['duration'],
                                           m['arrival'], m['departure'], m['bold'], m['italic'], m['overstrike'])
         return Settings(windowSettings, messageSettings)
 
@@ -223,7 +223,11 @@ class StreamTickerWindow(Tk):
             self.messages = [Message("StreamTicker", 1, [MessagePart("Pixel Gap", 1, "8"),
                                                          MessagePart("Image", 2, "imagefiles/stLogo28.png"),
                                                          MessagePart("Pixel Gap", 3, "8"),
-                                                         MessagePart("Text", 4, "StreamTicker")])]
+                                                         MessagePart("Text", 4, "StreamTicker")]),
+                             Message("StreamTicker", 2, [MessagePart("Pixel Gap", 1, "8"),
+                                                         MessagePart("Image", 2, "imagefiles/stLogo28.png"),
+                                                         MessagePart("Pixel Gap", 3, "8"),
+                                                         MessagePart("Text", 4, "Made by Go1den")])]
 
     def loadSettings(self):
         fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])

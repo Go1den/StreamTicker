@@ -11,7 +11,6 @@ class GlobalMessageSettings:
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY = StringVar()
         self.VAR_ARRIVAL = StringVar()
         self.VAR_DEPARTURE = StringVar()
-        self.VAR_ENTRY_FONT_STYLE = StringVar()
         self.VAR_FONT_IS_BOLD = BooleanVar()
         self.VAR_FONT_IS_ITALIC = BooleanVar()
         self.VAR_FONT_IS_OVERSTRIKE = BooleanVar()
