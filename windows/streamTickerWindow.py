@@ -1,9 +1,12 @@
 import json
 import sys
 import time
+import urllib.request
+import webbrowser
 from threading import Thread
 from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
 from tkinter.font import Font
+from urllib.error import HTTPError
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
@@ -212,6 +215,18 @@ class StreamTickerWindow(Tk):
                 messagebox.showinfo("Info", "Messages were loaded successfully.", parent=self)
             except:
                 messagebox.showerror("Error", "Failed to load messages!", parent=self)
+
+    def checkForUpdates(self):
+        currentVersion = "2.0.0"
+        try:
+            f = urllib.request.urlopen('https://go1den.com/streamtickerversion/version.txt')
+            if currentVersion == f.read().decode():
+                messagebox.showinfo("Info", "You have the latest version of StreamTicker.", parent=self)
+            else:
+                if messagebox.askyesno("New Version Available", "A new version of StreamTicker is available. Would you like to open a browser now?", parent=self):
+                    webbrowser.open('https://www.go1den.com/streamticker/', new=2)
+        except HTTPError:
+            messagebox.showerror("Error", "Unable to connect to the web.", parent=self)
 
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?", parent=self):
