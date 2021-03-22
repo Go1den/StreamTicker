@@ -1,7 +1,7 @@
 from tkinter import messagebox
 
 from settings.globalMessageSettings import GlobalMessageSettings
-from settingsGUIFields import SettingsGUIFields
+from objects.settingsGUIFields import SettingsGUIFields
 from utils import helperMethods
 
 def validate(fields: SettingsGUIFields, window) -> bool:

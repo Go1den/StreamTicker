@@ -4,7 +4,7 @@ from frames.okCancelFrame import OkCancelFrame
 from frames.settingsBackgroundFrame import SettingsBackgroundFrame
 from frames.settingsMessageFrame import SettingsMessageFrame
 from frames.settingsWindowFrame import SettingsWindowFrame
-from settingsGUIFields import SettingsGUIFields
+from objects.settingsGUIFields import SettingsGUIFields
 
 class SettingsWindow:
     def __init__(self, parent):
@@ -14,7 +14,7 @@ class SettingsWindow:
         self.master.wm_attributes("-topmost", 1)
         self.master.focus_force()
         self.master.wm_title("StreamTicker Settings")
-        self.master.iconbitmap("stIcon.ico")
+        self.master.iconbitmap("imagefiles/stIcon.ico")
         self.master.resizable(False, False)
         self.master.grab_set()
         self.parent = parent

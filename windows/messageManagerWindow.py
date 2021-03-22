@@ -13,7 +13,7 @@ class MessageManagerWindow:
         self.master.wm_attributes("-topmost", 1)
         self.master.focus_force()
         self.master.wm_title("StreamTicker Message Manager")
-        self.master.iconbitmap("stIcon.ico")
+        self.master.iconbitmap("imagefiles/stIcon.ico")
         self.master.resizable(False, False)
         self.master.grab_set()
 

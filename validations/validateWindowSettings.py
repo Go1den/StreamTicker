@@ -1,6 +1,6 @@
 from tkinter import messagebox
 
-from settingsGUIFields import SettingsGUIFields
+from objects.settingsGUIFields import SettingsGUIFields
 
 def validate(fields: SettingsGUIFields, window) -> bool:
     if not fields.VAR_WINDOW_WIDTH.get().isnumeric() or int(fields.VAR_WINDOW_WIDTH.get()) < 200 or int(fields.VAR_WINDOW_WIDTH.get()) > 1920:
