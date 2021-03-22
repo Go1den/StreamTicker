@@ -41,7 +41,7 @@ class StreamTickerWindow(Tk):
         self.settings = self.getSettings(self.settingsPath)
         self.alwaysOnTop = BooleanVar()
         self.alwaysOnTop.set(self.getOnStartup("alwaysontop", False))
-        self.iconbitmap('stIcon.ico')
+        self.iconbitmap('imagefiles/stIcon.ico')
         self.updateAlwaysOnTop()
 
         self.canvas = Canvas(self, width=self.settings.windowSettings.width, height=self.settings.windowSettings.height, bd=0, highlightthickness=0,

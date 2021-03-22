@@ -10,7 +10,7 @@ class AboutWindow:
         self.aboutWindow.geometry('+{x}+80'.format(x=parent.winfo_x()))
         self.aboutWindow.wm_attributes("-topmost", 1)
         self.aboutWindow.focus_force()
-        self.aboutWindow.iconbitmap("stIcon.ico")
+        self.aboutWindow.iconbitmap("imagefiles/stIcon.ico")
         self.aboutWindow.title("About")
         self.aboutWindow.resizable(False, False)
         self.aboutWindow.grab_set()

@@ -14,7 +14,7 @@ class SettingsWindow:
         self.master.wm_attributes("-topmost", 1)
         self.master.focus_force()
         self.master.wm_title("StreamTicker Settings")
-        self.master.iconbitmap("stIcon.ico")
+        self.master.iconbitmap("imagefiles/stIcon.ico")
         self.master.resizable(False, False)
         self.master.grab_set()
         self.parent = parent
