@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 import time
 import urllib.request
@@ -205,7 +206,7 @@ class StreamTickerWindow(Tk):
             return default
 
     def loadMessages(self):
-        fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
+        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd()+"/messages", title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
         if not fileToLoad or fileToLoad is None:
             return
         else:
@@ -245,7 +246,7 @@ class StreamTickerWindow(Tk):
                                                          MessagePart("Text", 4, "Made by Go1den")])]
 
     def loadSettings(self):
-        fileToLoad = filedialog.askopenfilename(initialdir=sys.argv[0], title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])
+        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd()+"/settings", title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])
         if not fileToLoad or fileToLoad is None:
             return
         else:
@@ -259,7 +260,7 @@ class StreamTickerWindow(Tk):
 
     def saveSettings(self, saveAs):
         if self.settingsPath == "" or saveAs:
-            saveFile = filedialog.asksaveasfilename(initialdir=sys.argv[0], title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")], defaultextension='.sts')
+            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd()+"/settings", title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")], defaultextension='.sts')
         else:
             saveFile = self.settingsPath
         if not saveFile or saveFile is None:
@@ -272,7 +273,7 @@ class StreamTickerWindow(Tk):
 
     def saveMessages(self, saveAs):
         if self.messagesPath == "" or saveAs:
-            saveFile = filedialog.asksaveasfilename(initialdir=sys.argv[0], title="Save as...", filetypes=[("StreamTicker Messages", "*.stm")], defaultextension='.stm')
+            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd()+"/messages", title="Save as...", filetypes=[("StreamTicker Messages", "*.stm")], defaultextension='.stm')
         else:
             saveFile = self.messagesPath
         if not saveFile or saveFile is None:

@@ -1,4 +1,4 @@
-import sys
+import os
 from tkinter import Frame, GROOVE, Label, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE
 
 from PIL import Image
@@ -53,7 +53,7 @@ class SettingsBackgroundFrame:
         self.fitWindowFrame.grid(row=ROW_SET_DIMENSIONS, column=0, columnspan=2, padx=4, pady=4, sticky=W)
 
         self.buttonClearImage = HoverButton(self.frame, text='Remove Image', width=15, command=lambda: self.updateBackgroundImage())
-        self.buttonClearImage.grid(row=ROW_DO_NOT_USE_BG, column=0, columnspan=3, sticky=SE, padx=4, pady=(0,4))
+        self.buttonClearImage.grid(row=ROW_DO_NOT_USE_BG, column=0, columnspan=3, sticky=SE, padx=4, pady=(0, 4))
 
         self.CANVAS_WINDOW_BG_IMAGE.grid(row=0, column=0, sticky=W)
         bgColorFrame.grid(row=ROW_BG_COLOR, column=1, sticky=W)
@@ -87,7 +87,8 @@ class SettingsBackgroundFrame:
             self.CANVAS_WINDOW_BG_IMAGE.itemconfig(self.RECTANGLE_WINDOW_BG_IMAGE, fill=fields.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)
 
     def selectImageFile(self, fields):
-        filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg; *.jpeg; *.jpe; *.jfif")])
+        filename = filedialog.askopenfilename(initialdir=os.getcwd() + "/imagefiles", title="Select image file",
+                                              filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg; *.jpeg; *.jpe; *.jfif")])
         if filename:
             fields.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(filename))
             fields.VAR_PATH_WINDOW_BG_IMAGE.set(filename)

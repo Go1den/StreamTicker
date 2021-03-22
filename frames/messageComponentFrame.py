@@ -1,4 +1,4 @@
-import sys
+import os
 from tkinter import Frame, GROOVE, Label, W, StringVar, E, Entry, filedialog
 from tkinter.ttk import Combobox
 
@@ -102,13 +102,14 @@ class MessageComponentFrame:
         self.displayCurrentComponentTypeDependencies()
 
     def selectImageFile(self):
-        filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg; *.jpeg; *.jpe; *.jfif")])
+        filename = filedialog.askopenfilename(initialdir=os.getcwd() + "/imagefiles", title="Select image file",
+                                              filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg; *.jpeg; *.jpe; *.jfif")])
         if filename:
             self.imagePath.set(helperMethods.getFileNameFromPath(filename))
             self.imageValue.set(filename)
 
     def selectTextFile(self):
-        filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select text file", filetypes=[("txt files", "*.txt")])
+        filename = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select text file", filetypes=[("txt files", "*.txt")])
         if filename:
             self.filePath.set(helperMethods.getFileNameFromPath(filename))
             self.fileValue.set(filename)
