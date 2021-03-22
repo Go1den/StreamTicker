@@ -1,0 +1,80 @@
+[
+    {
+        "nickname": "StreamTicker",
+        "sortOrder": 1,
+        "parts": [
+            {
+                "partType": "Pixel Gap",
+                "sortOrder": 1,
+                "value": "8"
+            },
+            {
+                "partType": "Image",
+                "sortOrder": 2,
+                "value": "imagefiles/stLogo28.png"
+            },
+            {
+                "partType": "Pixel Gap",
+                "sortOrder": 3,
+                "value": "8"
+            },
+            {
+                "partType": "Text",
+                "sortOrder": 4,
+                "value": "StreamTicker"
+            }
+        ],
+        "overrides": {
+            "duration": "",
+            "intermission": "",
+            "scrollSpeed": "",
+            "font": "",
+            "fontSize": "",
+            "fontColor": "",
+            "arrival": "",
+            "departure": "",
+            "bold": false,
+            "italic": false,
+            "overstrike": false
+        }
+    },
+    {
+        "nickname": "Made by Go1den",
+        "sortOrder": 2,
+        "parts": [
+            {
+                "partType": "Pixel Gap",
+                "sortOrder": 1,
+                "value": "8"
+            },
+            {
+                "partType": "Image",
+                "sortOrder": 2,
+                "value": "imagefiles/stLogo28.png"
+            },
+            {
+                "partType": "Pixel Gap",
+                "sortOrder": 3,
+                "value": "8"
+            },
+            {
+                "partType": "Text",
+                "sortOrder": 4,
+                "value": "Made by Go1den"
+            }
+        ],
+        "overrides": {
+            "duration": "",
+            "intermission": "",
+            "scrollSpeed": "",
+            "font": "",
+            "fontSize": "",
+            "fontColor": "",
+            "arrival": "",
+            "departure": "",
+            "bold": false,
+            "italic": false,
+            "overstrike": false
+        }
+    }
+]
