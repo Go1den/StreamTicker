@@ -4,7 +4,7 @@ from frames.okCancelFrame import OkCancelFrame
 from frames.settingsBackgroundFrame import SettingsBackgroundFrame
 from frames.settingsMessageFrame import SettingsMessageFrame
 from frames.settingsWindowFrame import SettingsWindowFrame
-from settingsGUIFields import SettingsGUIFields
+from objects.settingsGUIFields import SettingsGUIFields
 
 class SettingsWindow:
     def __init__(self, parent):

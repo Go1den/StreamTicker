@@ -1,9 +1,9 @@
 import sys
-from tkinter import Frame, GROOVE, Label, Button, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE
+from tkinter import Frame, GROOVE, Label, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE
 
 from PIL import Image
 
-from settingsGUIFields import SettingsGUIFields
+from objects.settingsGUIFields import SettingsGUIFields
 from utils import helperMethods
 from utils.hoverButton import HoverButton
 
