@@ -10,6 +10,7 @@ from objects.message import Message
 from objects.override import Override
 from settings.globalMessageSettings import GlobalMessageSettings
 from validations.validateFontSettings import validateFontsMessageMaker
+from validations.validateMessage import validate
 from validations.validateMessageSettings import validateMessageMessageMaker
 
 class MessageMakerWindow:
@@ -152,7 +153,7 @@ class MessageMakerWindow:
                         grandchild.configure(state='disable')
 
     def updateMessage(self):
-        if validateMessageMessageMaker(self.fields, self.master) and validateFontsMessageMaker(self.fields, self.master):
+        if validateMessageMessageMaker(self.fields, self.master) and validateFontsMessageMaker(self.fields, self.master) and validate(self):
             override = Override()
             if self.overrideFrame.overrideDuration.get():
                 override.duration = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MESSAGE_DURATION.get()
