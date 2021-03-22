@@ -1,1 +1,3 @@
-# new-stream-ticker
+# StreamTicker
+
+StreamTicker is the best program ever written.
