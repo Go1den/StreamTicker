@@ -9,6 +9,8 @@ from frames.settingsMessageFrame import SettingsMessageFrame
 from objects.message import Message
 from objects.override import Override
 from settings.globalMessageSettings import GlobalMessageSettings
+from validations.validateFontSettings import validateFontsMessageMaker
+from validations.validateMessageSettings import validateMessageMessageMaker
 
 class MessageMakerWindow:
     def __init__(self, listFrame, message: Message, index: int):
@@ -80,7 +82,7 @@ class MessageMakerWindow:
             if overrides.scrollSpeed:
                 self.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(overrides.scrollSpeed)
                 self.overrideFrame.overrideScrollSpeed.set(True)
-                self.overrideFrame.gmsFrame.MESSAGE_SPEED_COMBO_BOX.configure(state="readonly")
+                self.overrideFrame.gmsFrame.entryMoveAllOnLineDelay.configure(state=NORMAL)
             if overrides.font:
                 self.fields.VAR_FONT_COMBO_BOX.set(overrides.font)
                 self.overrideFrame.overrideFont.set(True)
@@ -90,7 +92,8 @@ class MessageMakerWindow:
                 self.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.set(overrides.fontColor)
                 self.overrideFrame.overrideFontColor.set(True)
                 self.overrideFrame.gmsFrame.BUTTON_MESSAGE_COLOR.config(state=NORMAL)
-                self.globalMessageSettingsFrame.CANVAS_MESSAGE_COLOR.itemconfig(self.globalMessageSettingsFrame.RECTANGLE_MESSAGE_COLOR, fill=self.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)
+                self.globalMessageSettingsFrame.CANVAS_MESSAGE_COLOR.itemconfig(self.globalMessageSettingsFrame.RECTANGLE_MESSAGE_COLOR,
+                                                                                fill=self.fields.VAR_LABEL_MESSAGE_COLOR_FOREGROUND)
             if overrides.fontSize:
                 self.fields.VAR_ENTRY_NORMAL_FONT_SIZE.set(overrides.fontSize)
                 self.overrideFrame.overrideFontSize.set(True)
@@ -103,6 +106,18 @@ class MessageMakerWindow:
                 self.fields.VAR_DEPARTURE.set(overrides.departure)
                 self.overrideFrame.overrideDeparture.set(True)
                 self.overrideFrame.gmsFrame.DEPARTURE_COMBO_BOX.config(state="readonly")
+            if overrides.bold:
+                self.fields.VAR_FONT_IS_BOLD.set(overrides.bold)
+                self.overrideFrame.overrideFontStyle.set(True)
+                self.configureFontStyleFields()
+            if overrides.overstrike:
+                self.fields.VAR_FONT_IS_OVERSTRIKE.set(overrides.overstrike)
+                self.overrideFrame.overrideFontStyle.set(True)
+                self.configureFontStyleFields()
+
+    def configureFontStyleFields(self):
+        self.overrideFrame.gmsFrame.checkButtonBold.config(state=NORMAL)
+        self.overrideFrame.gmsFrame.checkButtonOverstrike.config(state=NORMAL)
 
     def setGlobalMessageSettings(self):
         gmSettings = self.listFrame.window.window.settings.messageSettings
@@ -118,44 +133,48 @@ class MessageMakerWindow:
         self.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(wSettings.moveAllOnLineDelay)
         self.fields.VAR_ARRIVAL.set(gmSettings.arrival)
         self.fields.VAR_DEPARTURE.set(gmSettings.departure)
+        self.fields.VAR_FONT_IS_BOLD.set(gmSettings.bold)
+        self.fields.VAR_FONT_IS_OVERSTRIKE.set(gmSettings.overstrike)
 
     def disableGlobalMessageFields(self):
         for child in self.globalMessageSettingsFrame.frame.winfo_children():
-            if child.winfo_class() in ('Entry', 'Button', 'TCombobox'):
+            if child.winfo_class() in ('Entry', 'Button', 'TCombobox', 'Checkbutton'):
                 child.configure(state='disable')
             if child.winfo_class() == 'Frame':
                 for grandchild in child.winfo_children():
-                    if grandchild.winfo_class() in ('Entry', 'Button', 'TCombobox'):
+                    if grandchild.winfo_class() in ('Entry', 'Button', 'TCombobox', 'Checkbutton'):
                         grandchild.configure(state='disable')
 
     def updateMessage(self):
-        override = Override()
-        if self.overrideFrame.overrideDuration.get():
-            override.duration = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MESSAGE_DURATION.get()
-        if self.overrideFrame.overrideIntermission.get():
-            override.intermission = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MESSAGE_INTERMISSION.get()
-        if self.overrideFrame.overrideScrollSpeed.get():
-            override.scrollSpeed = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.get()
-        if self.overrideFrame.overrideFont.get():
-            override.font = self.globalMessageSettingsFrame.fields.VAR_FONT_COMBO_BOX.get()
-        if self.overrideFrame.overrideFontSize.get():
-            override.fontSize = self.globalMessageSettingsFrame.fields.VAR_ENTRY_NORMAL_FONT_SIZE.get()
-        if self.overrideFrame.overrideFontColor.get():
-            override.fontColor = self.globalMessageSettingsFrame.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.get()
-        if self.overrideFrame.overrideArrival.get():
-            override.arrival = self.globalMessageSettingsFrame.fields.VAR_ARRIVAL.get()
-        if self.overrideFrame.overrideDeparture.get():
-            override.departure = self.globalMessageSettingsFrame.fields.VAR_DEPARTURE.get()
+        if validateMessageMessageMaker(self.fields) and validateFontsMessageMaker(self.fields):
+            override = Override()
+            if self.overrideFrame.overrideDuration.get():
+                override.duration = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MESSAGE_DURATION.get()
+            if self.overrideFrame.overrideIntermission.get():
+                override.intermission = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MESSAGE_INTERMISSION.get()
+            if self.overrideFrame.overrideScrollSpeed.get():
+                override.scrollSpeed = self.globalMessageSettingsFrame.fields.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.get()
+            if self.overrideFrame.overrideFont.get():
+                override.font = self.globalMessageSettingsFrame.fields.VAR_FONT_COMBO_BOX.get()
+            if self.overrideFrame.overrideFontSize.get():
+                override.fontSize = self.globalMessageSettingsFrame.fields.VAR_ENTRY_NORMAL_FONT_SIZE.get()
+            if self.overrideFrame.overrideFontColor.get():
+                override.fontColor = self.globalMessageSettingsFrame.fields.VAR_LABEL_MESSAGE_COLOR_TEXT.get()
+            if self.overrideFrame.overrideArrival.get():
+                override.arrival = self.globalMessageSettingsFrame.fields.VAR_ARRIVAL.get()
+            if self.overrideFrame.overrideDeparture.get():
+                override.departure = self.globalMessageSettingsFrame.fields.VAR_DEPARTURE.get()
+            if self.overrideFrame.overrideFontStyle.get():
+                override.bold = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_BOLD.get()
+                override.overstrike = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_OVERSTRIKE.get()
 
-        for part in self.message.parts:
-            part.sortOrder = self.message.parts.index(part) + 1
+            for part in self.message.parts:
+                part.sortOrder = self.message.parts.index(part) + 1
 
-        newMessage = Message(self.mmFrame.nickname.get(), self.index, self.message.parts, override)
-        if not self.isNewMessage:
-            self.parentWindow.messages[self.index] = newMessage
-        else:
-            self.parentWindow.messages.append(newMessage)
-        self.parentWindow.mlFrame.populateListbox(self.parentWindow.messages)
-        self.master.destroy()
-
-# Todo: Enable fields if the message has the corresponding overrides already stored on it
+            newMessage = Message(self.mmFrame.nickname.get(), self.index, self.message.parts, override)
+            if not self.isNewMessage:
+                self.parentWindow.messages[self.index] = newMessage
+            else:
+                self.parentWindow.messages.append(newMessage)
+            self.parentWindow.mlFrame.populateListbox(self.parentWindow.messages)
+            self.master.destroy()

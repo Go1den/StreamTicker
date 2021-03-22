@@ -1,5 +1,5 @@
 import sys
-from tkinter import Frame, GROOVE, Label, Button, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED
+from tkinter import Frame, GROOVE, Label, Button, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE
 
 from PIL import Image
 
@@ -13,11 +13,16 @@ class SettingsBackgroundFrame:
         self.fields = fields
 
         self.dimensionCheckbutton = BooleanVar()
+        self.doNotUseBgCheckbutton = BooleanVar()
+
+        if self.fields.VAR_PATH_WINDOW_BG_IMAGE == "":
+            self.doNotUseBgCheckbutton.set(True)
 
         ROW_BG_SETTINGS = 0
         ROW_BG_COLOR = 1
         ROW_BG_IMAGE = 2
         ROW_SET_DIMENSIONS = 3
+        ROW_DO_NOT_USE_BG = 4
 
         bgColorFrame = Frame(self.frame)
 
@@ -40,19 +45,21 @@ class SettingsBackgroundFrame:
 
         self.RECTANGLE_WINDOW_BG_IMAGE = self.CANVAS_WINDOW_BG_IMAGE.create_rectangle(80, 4, 0, 30, fill=fields.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND, outline="")
 
-        self.checkbuttonFrame = Frame(self.frame)
-
-        self.checkbuttonSetDimensions = Checkbutton(self.checkbuttonFrame, variable=self.dimensionCheckbutton,
+        self.fitWindowFrame = Frame(self.frame)
+        self.checkbuttonSetDimensions = Checkbutton(self.fitWindowFrame, text="Fit window to background image", variable=self.dimensionCheckbutton,
                                                     command=lambda: self.updateWindowDimensions())
         self.checkbuttonSetDimensions.grid(row=0, column=0, sticky=W)
+        self.fitWindowFrame.grid(row=ROW_SET_DIMENSIONS, column=0, columnspan=2, padx=4, pady=4, sticky=W)
 
-        self.labelSetDimensions = Label(self.checkbuttonFrame, text="Fit window to background image", anchor=W)
-        self.labelSetDimensions.grid(row=0, column=1, sticky=W)
-
-        self.checkbuttonFrame.grid(row=ROW_SET_DIMENSIONS, column=0, columnspan=2, padx=4, pady=4, sticky=W)
+        self.buttonClearImage = Button(self.frame, text='Remove Image', width=15, command=lambda: self.updateBackgroundImage())
+        self.buttonClearImage.grid(row=ROW_DO_NOT_USE_BG, column=0, columnspan=3, sticky=SE, padx=4, pady=(0,4))
 
         self.CANVAS_WINDOW_BG_IMAGE.grid(row=0, column=0, sticky=W)
         bgColorFrame.grid(row=ROW_BG_COLOR, column=1, sticky=W)
+
+    def updateBackgroundImage(self):
+        self.fields.VAR_DISPLAY_WINDOW_BG_IMAGE.set("")
+        self.fields.VAR_PATH_WINDOW_BG_IMAGE.set("")
 
     def updateWindowDimensions(self):
         if self.dimensionCheckbutton.get():
@@ -61,10 +68,12 @@ class SettingsBackgroundFrame:
                 img = Image.open(filename)
                 self.fields.VAR_WINDOW_WIDTH.set(img.size[0])
                 self.fields.VAR_WINDOW_HEIGHT.set(img.size[1])
-                self.parent.sFrame.ENTRY_WINDOW_WIDTH.configure(state=DISABLED)
-                self.parent.sFrame.ENTRY_WINDOW_HEIGHT.configure(state=DISABLED)
+
             except Exception:
-                pass
+                self.fields.VAR_WINDOW_WIDTH.set(0)
+                self.fields.VAR_WINDOW_HEIGHT.set(0)
+            self.parent.sFrame.ENTRY_WINDOW_WIDTH.configure(state=DISABLED)
+            self.parent.sFrame.ENTRY_WINDOW_HEIGHT.configure(state=DISABLED)
         else:
             self.parent.sFrame.ENTRY_WINDOW_WIDTH.configure(state=NORMAL)
             self.parent.sFrame.ENTRY_WINDOW_HEIGHT.configure(state=NORMAL)
@@ -77,7 +86,8 @@ class SettingsBackgroundFrame:
             self.CANVAS_WINDOW_BG_IMAGE.itemconfig(self.RECTANGLE_WINDOW_BG_IMAGE, fill=fields.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)
 
     def selectImageFile(self, fields):
-        filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("png files", "*.png")])
+        filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg; *.jpeg; *.jpe; *.jfif")])
         if filename:
             fields.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(filename))
             fields.VAR_PATH_WINDOW_BG_IMAGE.set(filename)
+            self.updateWindowDimensions()

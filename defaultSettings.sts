@@ -1,7 +1,7 @@
 {
     "windowSettings": {
-        "moveAllOnLineDelay": "Fastest",
-        "bgImage": "imagefiles/testBG.png",
+        "moveAllOnLineDelay": "99",
+        "bgImage": "imagefiles/background.png",
         "width": "400",
         "height": "44",
         "bgColor": "#000000"
@@ -13,7 +13,9 @@
         "intermission": ".5",
         "fontSize": "26",
         "duration": "5",
-        "arrival": "Pick For Me",
-        "departure": "Pick For Me"
+        "arrival": "Zip Randomly",
+        "departure": "Zip Randomly",
+        "bold": true,
+        "overstrike": false
     }
 }

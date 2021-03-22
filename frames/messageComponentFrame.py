@@ -99,7 +99,7 @@ class MessageComponentFrame:
         self.displayCurrentComponentTypeDependencies()
 
     def selectImageFile(self):
-        filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("png files", "*.png")])
+        filename = filedialog.askopenfilename(initialdir=sys.argv[0], title="Select image file", filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg; *.jpeg; *.jpe; *.jfif")])
         if filename:
             self.imagePath.set(helperMethods.getFileNameFromPath(filename))
             self.imageValue.set(filename)

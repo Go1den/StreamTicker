@@ -1,4 +1,4 @@
-from tkinter import StringVar, messagebox
+from tkinter import StringVar, messagebox, BooleanVar
 
 from utils import helperMethods
 
@@ -13,6 +13,8 @@ class SettingsGUIFields:
         self.VAR_ENTRY_NORMAL_FONT_SIZE = StringVar()
         self.VAR_ARRIVAL = StringVar()
         self.VAR_DEPARTURE = StringVar()
+        self.VAR_FONT_IS_BOLD = BooleanVar()
+        self.VAR_FONT_IS_OVERSTRIKE = BooleanVar()
 
         self.VAR_WINDOW_WIDTH = StringVar()
         self.VAR_WINDOW_HEIGHT = StringVar()
@@ -34,6 +36,8 @@ class SettingsGUIFields:
             self.VAR_ENTRY_NORMAL_FONT_SIZE.set("26")
             self.VAR_ARRIVAL.set("Pick For Me")
             self.VAR_DEPARTURE.set("Pick For Me")
+            self.VAR_FONT_IS_BOLD.set(False)
+            self.VAR_FONT_IS_OVERSTRIKE.set(False)
 
             self.VAR_WINDOW_WIDTH.set("400")
             self.VAR_WINDOW_HEIGHT.set("44")
@@ -60,6 +64,9 @@ class SettingsGUIFields:
                 self.VAR_ENTRY_NORMAL_FONT_SIZE.set(m.fontSize)
                 self.VAR_ARRIVAL.set(m.arrival)
                 self.VAR_DEPARTURE.set(m.departure)
+                self.VAR_FONT_IS_BOLD.set(m.bold)
+                self.VAR_FONT_IS_OVERSTRIKE.set(m.overstrike)
+                mFrame.updateFontPreview(None, None, None)
 
             if s.windowSettings:
                 w = s.windowSettings

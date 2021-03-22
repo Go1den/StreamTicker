@@ -2,7 +2,11 @@ import json
 import sys
 import time
 from threading import Thread
-from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, PhotoImage, NW, W
+from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
+from tkinter.font import Font
+
+from PIL import Image
+from PIL.ImageTk import PhotoImage
 
 from menus.mainMenu import getMainMenu
 from objects.message import Message
@@ -49,14 +53,22 @@ class StreamTickerWindow(Tk):
 
         self.canvas.grid(row=0, column=0)
 
-        Thread(target=self.displayNextMessage, daemon=True).start()
+        self.thread = Thread(target=self.displayNextMessage, daemon=True).start()
         self.mainloop()
 
     def displayNextMessage(self):
-        currentMessage = self.messages[self.currentIndex]
-        font = currentMessage.overrides.font if currentMessage.overrides.font else self.settings.messageSettings.fontFace
+        try:
+            currentMessage = self.messages[self.currentIndex]
+        except IndexError:
+            self.clearCanvasAndResetVariables(5)
+            self.displayNextMessage()
+        fontFamily = currentMessage.overrides.font if currentMessage.overrides.font else self.settings.messageSettings.fontFace
         fontSize = currentMessage.overrides.fontSize if currentMessage.overrides.fontSize else self.settings.messageSettings.fontSize
         fontColor = currentMessage.overrides.fontColor if currentMessage.overrides.fontColor else self.settings.messageSettings.color
+        bold = currentMessage.overrides.bold if currentMessage.overrides.bold else self.settings.messageSettings.bold
+        bold = "bold" if bold else "normal"
+        overstrike = currentMessage.overrides.overstrike if currentMessage.overrides.overstrike else self.settings.messageSettings.overstrike
+        overstrike = 1 if overstrike else 0
         duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
         intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
         scrollSpeed = getScrollSpeedFloat(currentMessage.overrides.scrollSpeed) if currentMessage.overrides.scrollSpeed else getScrollSpeedFloat(
@@ -67,10 +79,11 @@ class StreamTickerWindow(Tk):
         departure = currentMessage.overrides.departure if currentMessage.overrides.departure else self.settings.messageSettings.departure
         if departure == "Pick For Me":
             departure = pickDeparture()
-        width, height = getWidthAndHeight(currentMessage, self.settings)
+        font = Font(family=fontFamily, size=fontSize, weight=bold, overstrike=overstrike)
+        width, height = getWidthAndHeight(currentMessage, self.settings, font)
         self.xCoord, self.yCoord, self.yCoord2 = getStartingXYCoordinates(width, height, arrival, self.settings)
-        self.setupCanvas(arrival, currentMessage, font, fontColor, fontSize)
-        selectArrivalAnimation(self.canvas, self.settings, self.yCoord, self.yCoord2, arrival, height, scrollSpeed, width)
+        self.setupCanvas(arrival, currentMessage, font, fontColor)
+        selectArrivalAnimation(self.canvas, self.settings, arrival, height, scrollSpeed, width)
         time.sleep(duration)
         selectDepartureAnimation(self.canvas, self.settings, departure, height, scrollSpeed, width)
         self.clearCanvasAndResetVariables(intermission)
@@ -81,31 +94,32 @@ class StreamTickerWindow(Tk):
         self.images = []
         self.xCoord = 0
         self.yCoord = 0
-        self.currentIndex = (self.currentIndex + 1) % len(self.messages)
+        if len(self.messages) > 0:
+            self.currentIndex = (self.currentIndex + 1) % len(self.messages)
+        else:
+            self.currentIndex = 0
         time.sleep(intermission)
 
-    def setupCanvas(self, arrival: str, currentMessage: Message, font: str, fontColor: str, fontSize: str):
+    def setupCanvas(self, arrival: str, currentMessage: Message, font: Font, fontColor: str):
         for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):
             if part.partType == "Pixel Gap":
                 self.xCoord += int(part.value)
             elif part.partType == "Text":
                 for char in part.value:
-                    # TODO add font style option instead of bold
-                    self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="currentMessage", anchor=W)
+                    self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=font, tags="currentMessage", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
                     self.swapYCoords(arrival)
             elif part.partType == "Text From File":
                 fileText = readFile(part.value)
                 for char in fileText:
-                    # TODO add font style option instead of bold
-                    self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=(font, fontSize, "bold"), tags="currentMessage", anchor=W)
+                    self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=font, tags="currentMessage", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
                     self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
                     self.swapYCoords(arrival)
             elif part.partType == "Image":
                 try:
-                    img = PhotoImage(file=part.value)
+                    img = PhotoImage(Image.open(part.value))
                     self.images.append(img)
                     self.canvas.create_image(self.xCoord, self.yCoord, image=img, anchor=W, tags="currentMessage")
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
@@ -135,7 +149,8 @@ class StreamTickerWindow(Tk):
 
             overrides = message["overrides"]
             override = Override(overrides["duration"], overrides["intermission"], overrides["scrollSpeed"], overrides["font"],
-                                overrides["fontSize"], overrides["fontColor"], overrides["arrival"], overrides["departure"])
+                                overrides["fontSize"], overrides["fontColor"], overrides["arrival"], overrides["departure"],
+                                overrides["bold"], overrides["overstrike"])
             messages.append(Message(nickname, sortOrder, parts, override))
         return messages
 
@@ -145,7 +160,7 @@ class StreamTickerWindow(Tk):
         windowSettings = WindowSettings(w['moveAllOnLineDelay'], w['bgImage'], w['width'], w['height'], w['bgColor'])
         m = s["messageSettings"]
         messageSettings = MessageSettings(m['style'], m['color'], m['fontFace'], m['intermission'], m['fontSize'], m['duration'],
-                                          m['arrival'], m['departure'])
+                                          m['arrival'], m['departure'], m['bold'], m['overstrike'])
         return Settings(windowSettings, messageSettings)
 
     def updateAlwaysOnTop(self):

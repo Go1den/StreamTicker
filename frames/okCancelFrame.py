@@ -38,11 +38,10 @@ class OkCancelFrame:
                 self.window.fields.VAR_ENTRY_NORMAL_FONT_SIZE.get(),
                 self.window.fields.VAR_ENTRY_MESSAGE_DURATION.get(),
                 self.window.fields.VAR_ARRIVAL.get(),
-                self.window.fields.VAR_DEPARTURE.get()
+                self.window.fields.VAR_DEPARTURE.get(),
+                self.window.fields.VAR_FONT_IS_BOLD.get(),
+                self.window.fields.VAR_FONT_IS_OVERSTRIKE.get(),
             )
             self.window.parent.settings = Settings(windowSettings, messageSettings)
-            if messagebox.askyesno("Save Changes",
-                                   "Do you want to save these changes to the currently loaded settings file? If you select no, you can save them later from the right-click menu."):
-                self.window.parent.saveSettings(False)
             self.window.parent.applyCurrentWindowSettings()
             self.window.master.destroy()
