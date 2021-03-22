@@ -1,4 +1,6 @@
-from tkinter import Frame, GROOVE, Button
+from tkinter import Frame, GROOVE
+
+from utils.hoverButton import HoverButton
 
 class MessageButtonFrame:
     def __init__(self, messageManagerWindow):
@@ -16,22 +18,22 @@ class MessageButtonFrame:
         COLUMN = 0
         PADY = 4
 
-        self.upButton = Button(self.frame, text="Move Up", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.moveSelectedUp())
+        self.upButton = HoverButton(self.frame, text="Move Up", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.moveSelectedUp())
         self.upButton.grid(row=ROW_UP, column=COLUMN, pady=PADY)
 
-        self.downButton = Button(self.frame, text="Move Down", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.moveSelectedDown())
+        self.downButton = HoverButton(self.frame, text="Move Down", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.moveSelectedDown())
         self.downButton.grid(row=ROW_DOWN, column=COLUMN, pady=PADY)
 
-        self.addButton = Button(self.frame, text="New", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.getMessageMakerWindow(False))
+        self.addButton = HoverButton(self.frame, text="New", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.getMessageMakerWindow(False))
         self.addButton.grid(row=ROW_ADD, column=COLUMN, pady=PADY)
 
-        self.editButton = Button(self.frame, text="Edit", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.getMessageMakerWindow(True))
+        self.editButton = HoverButton(self.frame, text="Edit", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.getMessageMakerWindow(True))
         self.editButton.grid(row=ROW_EDIT, column=COLUMN, pady=PADY)
 
-        self.copyButton = Button(self.frame, text="Copy", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.copySelected())
+        self.copyButton = HoverButton(self.frame, text="Copy", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.copySelected())
         self.copyButton.grid(row=ROW_COPY, column=COLUMN, pady=PADY)
 
-        self.deleteButton = Button(self.frame, text="Delete", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.deleteSelected())
+        self.deleteButton = HoverButton(self.frame, text="Delete", width=BUTTON_WIDTH, bd=BUTTON_BORDER, relief=GROOVE, command=lambda: self.window.mlFrame.deleteSelected())
         self.deleteButton.grid(row=ROW_DELETE, column=COLUMN, pady=PADY)
 
 

@@ -3,6 +3,7 @@ from tkinter import Frame, Button, E, GROOVE, messagebox
 from objects.messageSettings import MessageSettings
 from objects.settings import Settings
 from objects.windowSettings import WindowSettings
+from utils.hoverButton import HoverButton
 from validations import validateWindowSettings, validateMessageSettings, validateFontSettings
 
 class OkCancelFrame:
@@ -10,10 +11,10 @@ class OkCancelFrame:
         self.window = window
         self.frame = Frame(self.window.master)
 
-        self.okButton = Button(self.frame, text="OK", width=10, bd=2, relief=GROOVE, command=lambda: self.updateCurrentSettings())
+        self.okButton = HoverButton(self.frame, text="OK", width=10, bd=2, relief=GROOVE, command=lambda: self.updateCurrentSettings())
         self.okButton.grid(row=0, column=0, sticky=E, padx=10)
 
-        self.cancelButton = Button(self.frame, text="Cancel", width=10, bd=2, relief=GROOVE, command=lambda: self.window.master.destroy())
+        self.cancelButton = HoverButton(self.frame, text="Cancel", width=10, bd=2, relief=GROOVE, command=lambda: self.window.master.destroy())
         self.cancelButton.grid(row=0, column=1, sticky=E)
 
     def validateBeforeSaving(self):

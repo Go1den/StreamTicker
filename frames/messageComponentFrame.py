@@ -1,8 +1,9 @@
 import sys
-from tkinter import Frame, GROOVE, Label, W, StringVar, E, Entry, filedialog, Button
+from tkinter import Frame, GROOVE, Label, W, StringVar, E, Entry, filedialog
 from tkinter.ttk import Combobox
 
 from utils import helperMethods
+from utils.hoverButton import HoverButton
 
 class MessageComponentFrame:
     def __init__(self, parent):
@@ -33,12 +34,12 @@ class MessageComponentFrame:
         self.inputTextToDisplay.grid(row=2, column=1, columnspan=2, sticky=W, padx=4, pady=4)
 
         self.labelImage = Label(self.frame, textvariable=self.imagePath, anchor=W)
-        self.buttonImage = Button(self.frame, text='Select File', command=lambda: self.selectImageFile(), width=12)
+        self.buttonImage = HoverButton(self.frame, text='Select File', command=lambda: self.selectImageFile(), width=12)
         self.buttonImage.grid(row=3, column=0, sticky=E, padx=4, pady=4)
         self.labelImage.grid(row=3, column=1, columnspan=2, sticky=W)
 
         self.labelFile = Label(self.frame, textvariable=self.filePath, anchor=W)
-        self.buttonFile = Button(self.frame, text='Select File', command=lambda: self.selectTextFile(), width=12)
+        self.buttonFile = HoverButton(self.frame, text='Select File', command=lambda: self.selectTextFile(), width=12)
         self.buttonFile.grid(row=4, column=0, sticky=E, padx=4, pady=4)
         self.labelFile.grid(row=4, column=1, columnspan=2, sticky=W)
 

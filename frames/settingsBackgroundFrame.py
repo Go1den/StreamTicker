@@ -5,6 +5,7 @@ from PIL import Image
 
 from settingsGUIFields import SettingsGUIFields
 from utils import helperMethods
+from utils.hoverButton import HoverButton
 
 class SettingsBackgroundFrame:
     def __init__(self, parent, fields: SettingsGUIFields):
@@ -29,14 +30,14 @@ class SettingsBackgroundFrame:
         self.LABEL_WINDOW_BG_COLOR = Label(bgColorFrame, textvariable=fields.VAR_LABEL_WINDOW_BG_COLOR_TEXT)
         Label(self.frame, text="Background Settings").grid(row=ROW_BG_SETTINGS, column=0, sticky=W)
 
-        self.BUTTON_WINDOW_BG_COLOR = Button(self.frame, text='Background Color:', width=15, command=lambda: self.updateWindowColor(fields))
+        self.BUTTON_WINDOW_BG_COLOR = HoverButton(self.frame, text='Background Color:', width=15, command=lambda: self.updateWindowColor(fields))
         self.BUTTON_WINDOW_BG_COLOR.grid(row=ROW_BG_COLOR, column=0, sticky=E, padx=4)
 
         self.LABEL_WINDOW_BG_COLOR.grid(row=0, column=1, sticky=W)
 
         self.LABEL_WINDOW_BG_IMAGE = Label(self.frame, textvariable=fields.VAR_DISPLAY_WINDOW_BG_IMAGE, width=20, anchor=W)
 
-        self.BUTTON_WINDOW_BG_IMAGE = Button(self.frame, text='Background Image:', width=15, command=lambda: self.selectImageFile(fields))
+        self.BUTTON_WINDOW_BG_IMAGE = HoverButton(self.frame, text='Background Image:', width=15, command=lambda: self.selectImageFile(fields))
         self.BUTTON_WINDOW_BG_IMAGE.grid(row=ROW_BG_IMAGE, column=0, sticky=E, padx=4, pady=4)
 
         self.LABEL_WINDOW_BG_IMAGE.grid(row=ROW_BG_IMAGE, column=1, sticky=W)
@@ -51,7 +52,7 @@ class SettingsBackgroundFrame:
         self.checkbuttonSetDimensions.grid(row=0, column=0, sticky=W)
         self.fitWindowFrame.grid(row=ROW_SET_DIMENSIONS, column=0, columnspan=2, padx=4, pady=4, sticky=W)
 
-        self.buttonClearImage = Button(self.frame, text='Remove Image', width=15, command=lambda: self.updateBackgroundImage())
+        self.buttonClearImage = HoverButton(self.frame, text='Remove Image', width=15, command=lambda: self.updateBackgroundImage())
         self.buttonClearImage.grid(row=ROW_DO_NOT_USE_BG, column=0, columnspan=3, sticky=SE, padx=4, pady=(0,4))
 
         self.CANVAS_WINDOW_BG_IMAGE.grid(row=0, column=0, sticky=W)

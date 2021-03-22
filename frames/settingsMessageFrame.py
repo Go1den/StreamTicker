@@ -1,6 +1,8 @@
 from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, font, colorchooser, Canvas, EW, Checkbutton, NE
 from tkinter.font import Font
 
+from utils.hoverButton import HoverButton
+
 class SettingsMessageFrame:
     def __init__(self, master, fields):
         self.frame = Frame(master, bd=2, relief=GROOVE)
@@ -43,7 +45,7 @@ class SettingsMessageFrame:
         self.FONT_COMBO_BOX = ttk.Combobox(self.frame, values=self.FONT_FAMILIES, textvariable=self.fields.VAR_FONT_COMBO_BOX, state="readonly")
         self.FONT_COMBO_BOX.grid(row=ROW_FONT, column=1, sticky=W, pady=1)
 
-        self.BUTTON_MESSAGE_COLOR = Button(self.frame, text='Font Color:', command=lambda: self.updateMessageColor())
+        self.BUTTON_MESSAGE_COLOR = HoverButton(self.frame, text='Font Color:', command=lambda: self.updateMessageColor())
         self.BUTTON_MESSAGE_COLOR.grid(row=ROW_MESSAGE_COLOR, column=0, sticky=E, padx=4, pady=1)
 
         messageColorFrame = Frame(self.frame)
