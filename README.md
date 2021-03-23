@@ -22,3 +22,8 @@ The message itself is a collection of these components, which are sorted on the 
 You can choose the order the messages are displayed in on the Message Manager screen. You can also delete, copy, edit, or create new messages here.
 
 ![StreamTicker Message Manager](https://go1den.com/wp-content/uploads/2021/03/streamticker_2021-03-23_00-34-52.png)
+
+# Donate
+StreamTicker is free to own and use. If you enjoy StreamTicker and would like to make a small contribution:
+
+![Donate](https://go1den.com/wp-content/uploads/2021/03/donate.png)
