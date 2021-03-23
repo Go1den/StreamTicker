@@ -23,7 +23,7 @@ def selectDepartureAnimation(canvas: Canvas, settings: Settings, departure: str,
 def pickDeparture(italic: str) -> str:
     if italic == "italic":
         return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down"])
-    return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"])
+    return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down", "Unzip Forward", "Unzip Backward", "Unzip Randomly"])
 
 def slideLeft(width: int, canvas: Canvas, scrollSpeed: float):
     for x in range(width):
