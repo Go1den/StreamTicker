@@ -27,7 +27,7 @@ class StreamTickerWindow(Tk):
 
     def __init__(self, master=None):
         Tk.__init__(self, master)
-        self.overrideredirect(True)
+        self.resizable(False, False)
         self.bind('<Button-1>', self.clickwin)
         self.bind('<B1-Motion>', self.dragwin)
         self.streamTickerWindowJSON = self.getSettingsJSONOnStartup()
@@ -37,6 +37,7 @@ class StreamTickerWindow(Tk):
         self._offsety = self.getOnStartup("offsety", 0)
         self.geometry('+{x}+{y}'.format(x=self._offsetx, y=self._offsety))
         self.messages = self.getMessages(self.messagesPath)
+        self.title("StreamTicker")
         self.currentIndex = 0
         self.xCoord = 0
         self.yCoord = 0
