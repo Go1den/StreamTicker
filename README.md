@@ -1,4 +1,5 @@
-![StreamTicker Logo](https://go1den.com/wp-content/uploads/2021/03/stLogo64.png)
+<img align="left" width="64" height="64" src="https://go1den.com/wp-content/uploads/2021/03/stLogo64.png" alt="StreamTicker">
+
 # StreamTicker
 
 StreamTicker is a highly customizable tool for streamers to display combinations of images and text, either preset or read in from files.
