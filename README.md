@@ -26,4 +26,4 @@ You can choose the order the messages are displayed in on the Message Manager sc
 # Donate
 StreamTicker is free to own and use. If you enjoy StreamTicker and would like to make a small contribution:
 
-![Donate](https://go1den.com/wp-content/uploads/2021/03/donate.png)
+[Donate](https://www.paypal.com/donate/?hosted_button_id=LXMBXT59KL578)
