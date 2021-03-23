@@ -219,7 +219,7 @@ class StreamTickerWindow(Tk):
                 messagebox.showerror("Error", "Failed to load messages!", parent=self)
 
     def checkForUpdates(self):
-        currentVersion = "2.0.0"
+        currentVersion = "2.0.2"
         try:
             f = urllib.request.urlopen('https://go1den.com/streamtickerversion/version.txt')
             if currentVersion == f.read().decode():
