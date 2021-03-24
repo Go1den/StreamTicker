@@ -22,7 +22,7 @@ class AboutWindow:
         self.aboutImageLabel.bind("<Button-1>", lambda x: webbrowser.open('https://www.go1den.com/streamticker', new=2))
         self.aboutImageLabel.grid(row=0, column=0, padx=4, pady=4)
 
-        self.aboutLabel = Label(self.frameTop, text="StreamTicker\n\nVersion 2.0.5\n\nReleased: 3/23/2021", justify=LEFT)
+        self.aboutLabel = Label(self.frameTop, text="StreamTicker\n\nVersion 2.0.6\n\nReleased: 3/24/2021", justify=LEFT)
         self.aboutLabel.grid(row=0, column=1, sticky=W, pady=4)
 
         self.frameTop.grid(row=0, column=0, sticky=W)
@@ -41,7 +41,6 @@ class AboutWindow:
         self.aboutThanksLabel.grid(row=3, column=0, sticky=W, pady=4, padx=4)
 
         self.okButton = HoverButton(self.aboutWindow, text="OK", width=10, bd=2, relief=GROOVE, command=lambda: self.aboutWindow.destroy())
-        # self.okButton = HoverButton(self.aboutWindow, text="OK", width=10, bd=2, relief=GROOVE, command=lambda: self.aboutWindow.destroy(), activebackground="#e8f1f8")
         self.okButton.grid(row=4, column=0, sticky=SE, pady=4)
 
         self.aboutWindow.deiconify()

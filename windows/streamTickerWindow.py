@@ -61,8 +61,12 @@ class StreamTickerWindow(Tk):
 
         self.canvas.grid(row=0, column=0)
 
-        self.thread = Thread(target=self.displayNextMessage, daemon=True).start()
+        self.thread = Thread(target=self.displayThread, daemon=True).start()
         self.mainloop()
+
+    def displayThread(self):
+        while True:
+            self.displayNextMessage()
 
     def displayNextMessage(self):
         try:
@@ -97,7 +101,6 @@ class StreamTickerWindow(Tk):
         time.sleep(duration)
         selectDepartureAnimation(self.canvas, self.settings, departure, height, scrollSpeed, width)
         self.clearCanvasAndResetVariables(intermission)
-        self.displayNextMessage()
 
     def clearCanvasAndResetVariables(self, intermission):
         self.canvas.delete("currentMessage")
@@ -219,7 +222,7 @@ class StreamTickerWindow(Tk):
                 messagebox.showerror("Error", "Failed to load messages!", parent=self)
 
     def checkForUpdates(self):
-        currentVersion = "2.0.5"
+        currentVersion = "2.0.6"
         try:
             f = urllib.request.urlopen('https://www.go1den.com/streamtickerversion/version.txt')
             if currentVersion == str(f.read().decode()):
