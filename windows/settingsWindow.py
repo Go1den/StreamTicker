@@ -10,7 +10,7 @@ class SettingsWindow:
     def __init__(self, parent):
         self.master = Toplevel(parent)
         self.master.withdraw()
-        self.master.geometry('+{x}+80'.format(x=parent.winfo_x()))
+        self.master.geometry('+{x}+{y}'.format(x=parent.winfo_x(), y=parent.winfo_y()))
         self.master.wm_attributes("-topmost", 1)
         self.master.focus_force()
         self.master.wm_title("StreamTicker Settings")

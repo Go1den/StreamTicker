@@ -7,7 +7,7 @@ class AboutWindow:
     def __init__(self, parent):
         self.aboutWindow = Toplevel(parent)
         self.aboutWindow.withdraw()
-        self.aboutWindow.geometry('+{x}+80'.format(x=parent.winfo_x()))
+        self.aboutWindow.geometry('+{x}+{y}'.format(x=parent.winfo_x(), y=parent.winfo_y()))
         self.aboutWindow.wm_attributes("-topmost", 1)
         self.aboutWindow.focus_force()
         self.aboutWindow.iconbitmap("imagefiles/stIcon.ico")
