@@ -17,6 +17,6 @@
         "bold": false,
         "italic": false,
         "overstrike": false,
-        "shuffle": true
+        "shuffle": false
     }
 }
