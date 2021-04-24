@@ -16,6 +16,7 @@
         "departure": "Pick For Me",
         "bold": false,
         "italic": false,
-        "overstrike": false
+        "overstrike": false,
+        "shuffle": true
     }
 }

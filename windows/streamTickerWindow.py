@@ -173,7 +173,7 @@ class StreamTickerWindow(Tk):
         windowSettings = WindowSettings(w['moveAllOnLineDelay'], w['bgImage'], w['width'], w['height'], w['bgColor'])
         m = s["messageSettings"]
         messageSettings = MessageSettings(m['color'], m['fontFace'], m['intermission'], m['fontSize'], m['duration'],
-                                          m['arrival'], m['departure'], m['bold'], m['italic'], m['overstrike'])
+                                          m['arrival'], m['departure'], m['bold'], m['italic'], m['overstrike'], m['shuffle'])
         return Settings(windowSettings, messageSettings)
 
     def updateAlwaysOnTop(self):

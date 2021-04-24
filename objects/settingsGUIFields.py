@@ -15,6 +15,7 @@ class SettingsGUIFields:
         self.VAR_FONT_IS_BOLD = BooleanVar()
         self.VAR_FONT_IS_ITALIC = BooleanVar()
         self.VAR_FONT_IS_OVERSTRIKE = BooleanVar()
+        self.VAR_MESSAGE_SHUFFLE = BooleanVar()
 
         self.VAR_WINDOW_WIDTH = StringVar()
         self.VAR_WINDOW_HEIGHT = StringVar()
@@ -37,6 +38,7 @@ class SettingsGUIFields:
         self.VAR_FONT_IS_BOLD.set(False)
         self.VAR_FONT_IS_ITALIC.set(False)
         self.VAR_FONT_IS_OVERSTRIKE.set(False)
+        self.VAR_MESSAGE_SHUFFLE.set(False)
 
         self.VAR_WINDOW_WIDTH.set("400")
         self.VAR_WINDOW_HEIGHT.set("44")
@@ -64,6 +66,7 @@ class SettingsGUIFields:
                 self.VAR_FONT_IS_BOLD.set(m.bold)
                 self.VAR_FONT_IS_ITALIC.set(m.italic)
                 self.VAR_FONT_IS_OVERSTRIKE.set(m.overstrike)
+                self.VAR_MESSAGE_SHUFFLE.set(m.shuffle)
                 mFrame.updateFontPreview(None, None, None)
 
             if s.windowSettings:

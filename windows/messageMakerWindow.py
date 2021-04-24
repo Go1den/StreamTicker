@@ -142,6 +142,7 @@ class MessageMakerWindow:
         self.fields.VAR_FONT_IS_BOLD.set(gmSettings.bold)
         self.fields.VAR_FONT_IS_ITALIC.set(gmSettings.italic)
         self.fields.VAR_FONT_IS_OVERSTRIKE.set(gmSettings.overstrike)
+        self.fields.VAR_MESSAGE_SHUFFLE.set(gmSettings.shuffle)
 
     def disableGlobalMessageFields(self):
         for child in self.globalMessageSettingsFrame.frame.winfo_children():

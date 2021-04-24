@@ -42,6 +42,7 @@ class OkCancelFrame:
                 self.window.fields.VAR_FONT_IS_BOLD.get(),
                 self.window.fields.VAR_FONT_IS_ITALIC.get(),
                 self.window.fields.VAR_FONT_IS_OVERSTRIKE.get(),
+                self.window.fields.VAR_MESSAGE_SHUFFLE.get()
             )
             self.window.parent.settings = Settings(windowSettings, messageSettings)
             self.window.parent.applyCurrentWindowSettings()
