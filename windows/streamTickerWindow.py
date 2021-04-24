@@ -8,6 +8,7 @@ from threading import Thread
 from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
 from tkinter.font import Font
 from urllib.error import HTTPError
+from random import randrange
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
@@ -107,7 +108,9 @@ class StreamTickerWindow(Tk):
         self.images = []
         self.xCoord = 0
         self.yCoord = 0
-        if len(self.messages) > 0:
+        if len(self.messages) > 0 and self.settings.messageSettings.shuffle:
+            self.currentIndex = randrange(len(self.messages))
+        elif len(self.messages) > 0:
             self.currentIndex = (self.currentIndex + 1) % len(self.messages)
         else:
             self.currentIndex = 0
