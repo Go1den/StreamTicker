@@ -108,7 +108,7 @@ class StreamTickerWindow(Tk):
         self.images = []
         self.xCoord = 0
         self.yCoord = 0
-        if len(self.messages) > 0 and self.settings.messageSettings.shuffle:
+        if len(self.messages) > 0 and self.settings.windowSettings.shuffle:
             self.currentIndex = randrange(len(self.messages))
         elif len(self.messages) > 0:
             self.currentIndex = (self.currentIndex + 1) % len(self.messages)
@@ -173,10 +173,10 @@ class StreamTickerWindow(Tk):
     def getSettings(self, path) -> Settings:
         s = readJSON(path)
         w = s["windowSettings"]
-        windowSettings = WindowSettings(w['moveAllOnLineDelay'], w['bgImage'], w['width'], w['height'], w['bgColor'])
+        windowSettings = WindowSettings(w['moveAllOnLineDelay'], w['bgImage'], w['width'], w['height'], w['bgColor'], w['shuffle'])
         m = s["messageSettings"]
         messageSettings = MessageSettings(m['color'], m['fontFace'], m['intermission'], m['fontSize'], m['duration'],
-                                          m['arrival'], m['departure'], m['bold'], m['italic'], m['overstrike'], m['shuffle'])
+                                          m['arrival'], m['departure'], m['bold'], m['italic'], m['overstrike'])
         return Settings(windowSettings, messageSettings)
 
     def updateAlwaysOnTop(self):

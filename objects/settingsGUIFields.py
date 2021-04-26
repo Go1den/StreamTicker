@@ -66,7 +66,6 @@ class SettingsGUIFields:
                 self.VAR_FONT_IS_BOLD.set(m.bold)
                 self.VAR_FONT_IS_ITALIC.set(m.italic)
                 self.VAR_FONT_IS_OVERSTRIKE.set(m.overstrike)
-                self.VAR_MESSAGE_SHUFFLE.set(m.shuffle)
                 mFrame.updateFontPreview(None, None, None)
 
             if s.windowSettings:
@@ -78,6 +77,8 @@ class SettingsGUIFields:
                 self.VAR_PATH_WINDOW_BG_IMAGE.set(w.bgImage)
                 self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(w.bgImage))
                 self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.moveAllOnLineDelay)
+                self.VAR_MESSAGE_SHUFFLE.set(w.shuffle)
+
                 self.updateColorBoxes(mFrame, bgFrame)
         except Exception:
             messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.", parent=master)

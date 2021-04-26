@@ -30,6 +30,7 @@ class OkCancelFrame:
                 self.window.fields.VAR_WINDOW_WIDTH.get(),
                 self.window.fields.VAR_WINDOW_HEIGHT.get(),
                 self.window.fields.VAR_LABEL_WINDOW_BG_COLOR_TEXT.get(),
+                self.window.fields.VAR_MESSAGE_SHUFFLE.get()
             )
             messageSettings = MessageSettings(
                 self.window.mFrame.LABEL_MESSAGE_COLOR.cget("text"),
@@ -41,8 +42,7 @@ class OkCancelFrame:
                 self.window.fields.VAR_DEPARTURE.get(),
                 self.window.fields.VAR_FONT_IS_BOLD.get(),
                 self.window.fields.VAR_FONT_IS_ITALIC.get(),
-                self.window.fields.VAR_FONT_IS_OVERSTRIKE.get(),
-                self.window.fields.VAR_MESSAGE_SHUFFLE.get()
+                self.window.fields.VAR_FONT_IS_OVERSTRIKE.get()
             )
             self.window.parent.settings = Settings(windowSettings, messageSettings)
             self.window.parent.applyCurrentWindowSettings()

@@ -14,14 +14,13 @@ class SettingsMessageFrame:
         ROW_MESSAGE_DURATION = 1
         ROW_MESSAGE_INTERMISSION = 2
         ROW_MESSAGE_SPEED = 3
-        ROW_MESSAGE_SHUFFLE = 4
-        ROW_FONT = 5
-        ROW_NORMAL_FONT_SIZE = 6
-        ROW_FONT_STYLE = 7
-        ROW_MESSAGE_COLOR = 8
-        ROW_ARRIVAL = 9
-        ROW_DEPARTURE = 10
-        ROW_FONT_PREVIEW = 11
+        ROW_FONT = 4
+        ROW_NORMAL_FONT_SIZE = 5
+        ROW_FONT_STYLE = 6
+        ROW_MESSAGE_COLOR = 7
+        ROW_ARRIVAL = 8
+        ROW_DEPARTURE = 9
+        ROW_FONT_PREVIEW = 10
         
 
         Label(self.frame, text="Global Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
@@ -40,9 +39,6 @@ class SettingsMessageFrame:
         self.ENTRY_MESSAGE_INTERMISSION.grid(row=0, column=0, sticky=W, pady=1)
         Label(messageIntermissionFrame, text="seconds").grid(row=0, column=1, sticky=W, pady=1)
         messageIntermissionFrame.grid(row=ROW_MESSAGE_INTERMISSION, column=1, sticky=W, pady=1)
-
-        self.checkButtonShuffle = Checkbutton(self.frame, borderwidth=0, text="Shuffle Message Order", variable=self.fields.VAR_MESSAGE_SHUFFLE)
-        self.checkButtonShuffle.grid(row=ROW_MESSAGE_SHUFFLE, column=0, pady=1, sticky=E)
 
         self.LABEL_MESSAGE_FONT_FACE = Label(self.frame, text="Message Font:")
         self.LABEL_MESSAGE_FONT_FACE.grid(row=ROW_FONT, column=0, sticky=E, pady=1)
