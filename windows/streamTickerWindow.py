@@ -108,10 +108,11 @@ class StreamTickerWindow(Tk):
         self.images = []
         self.xCoord = 0
         self.yCoord = 0
-        if len(self.messages) > 0 and self.settings.windowSettings.shuffle:
-            self.currentIndex = randrange(len(self.messages))
-        elif len(self.messages) > 0:
-            self.currentIndex = (self.currentIndex + 1) % len(self.messages)
+        if len(self.messages) > 0:      
+            if self.settings.windowSettings.shuffle:
+                self.currentIndex = randrange(len(self.messages))
+            else:
+                self.currentIndex = (self.currentIndex + 1) % len(self.messages)
         else:
             self.currentIndex = 0
         time.sleep(intermission)
