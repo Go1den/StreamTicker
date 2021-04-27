@@ -8,7 +8,7 @@ from threading import Thread
 from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
 from tkinter.font import Font
 from urllib.error import HTTPError
-from random import randrange
+from random import shuffle
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
@@ -49,7 +49,8 @@ class StreamTickerWindow(Tk):
         self.alwaysOnTop.set(self.getOnStartup("alwaysontop", False))
         self.iconbitmap('imagefiles/stIcon.ico')
         self.updateAlwaysOnTop()
-
+        self.shufflePool = []
+        
         self.canvas = Canvas(self, width=self.settings.windowSettings.width, height=self.settings.windowSettings.height, bd=0, highlightthickness=0,
                              background=self.settings.windowSettings.bgColor)
         self.canvas.bind('<Button-3>', self.rightClickMenu)
@@ -68,6 +69,18 @@ class StreamTickerWindow(Tk):
     def displayThread(self):
         while True:
             self.displayNextMessage()
+            
+    def getNextShuffledMessage(self):
+        if len(self.messages) == 0:
+            return 0
+        if not self.shufflePool:
+            self.shufflePool = list(range(len(self.messages)))
+            shuffle(self.shufflePool)
+        candidate = self.shufflePool.pop()
+        #do this check because scared of going out of bounds if a message gets removed after shuffle gets turned on
+        if candidate >= len(self.messages):
+            candidate = 0
+        return candidate
 
     def displayNextMessage(self):
         try:
@@ -110,7 +123,7 @@ class StreamTickerWindow(Tk):
         self.yCoord = 0
         if len(self.messages) > 0:      
             if self.settings.windowSettings.shuffle:
-                self.currentIndex = randrange(len(self.messages))
+                self.currentIndex = self.getNextShuffledMessage()
             else:
                 self.currentIndex = (self.currentIndex + 1) % len(self.messages)
         else:
