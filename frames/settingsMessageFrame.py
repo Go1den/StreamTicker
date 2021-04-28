@@ -21,6 +21,7 @@ class SettingsMessageFrame:
         ROW_ARRIVAL = 8
         ROW_DEPARTURE = 9
         ROW_FONT_PREVIEW = 10
+        
 
         Label(self.frame, text="Global Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
         self.LABEL_MESSAGE_DURATION = Label(self.frame, text="Show Each Message For:")

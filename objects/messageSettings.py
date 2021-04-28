@@ -24,3 +24,4 @@ class MessageSettings:
         print("Bold: " + str(self.bold))
         print("Italic: " + str(self.italic))
         print("Overstrike: " + str(self.overstrike))
+        

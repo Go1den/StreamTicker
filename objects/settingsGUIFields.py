@@ -15,6 +15,7 @@ class SettingsGUIFields:
         self.VAR_FONT_IS_BOLD = BooleanVar()
         self.VAR_FONT_IS_ITALIC = BooleanVar()
         self.VAR_FONT_IS_OVERSTRIKE = BooleanVar()
+        self.VAR_MESSAGE_SHUFFLE = BooleanVar()
 
         self.VAR_WINDOW_WIDTH = StringVar()
         self.VAR_WINDOW_HEIGHT = StringVar()
@@ -37,6 +38,7 @@ class SettingsGUIFields:
         self.VAR_FONT_IS_BOLD.set(False)
         self.VAR_FONT_IS_ITALIC.set(False)
         self.VAR_FONT_IS_OVERSTRIKE.set(False)
+        self.VAR_MESSAGE_SHUFFLE.set(False)
 
         self.VAR_WINDOW_WIDTH.set("400")
         self.VAR_WINDOW_HEIGHT.set("44")
@@ -75,6 +77,8 @@ class SettingsGUIFields:
                 self.VAR_PATH_WINDOW_BG_IMAGE.set(w.bgImage)
                 self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(w.bgImage))
                 self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.moveAllOnLineDelay)
+                self.VAR_MESSAGE_SHUFFLE.set(w.shuffle)
+
                 self.updateColorBoxes(mFrame, bgFrame)
         except Exception:
             messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.", parent=master)

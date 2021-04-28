@@ -4,7 +4,8 @@
         "bgImage": "imagefiles/background.png",
         "width": "400",
         "height": "44",
-        "bgColor": "#000000"
+        "bgColor": "#000000",
+        "shuffle": false
     },
     "messageSettings": {
         "color": "#ffffff",
