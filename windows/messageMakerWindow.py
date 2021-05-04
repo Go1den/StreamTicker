@@ -69,8 +69,6 @@ class MessageMakerWindow:
 
     def applyOverrides(self):
         overrides = self.message.overrides
-        print("overrides:")
-        overrides.print()
         if overrides:
             if overrides.duration:
                 self.fields.VAR_ENTRY_MESSAGE_DURATION.set(overrides.duration)
@@ -132,8 +130,6 @@ class MessageMakerWindow:
     def setGlobalMessageSettings(self):
         gmSettings = self.listFrame.window.window.settings.messageSettings
         wSettings = self.listFrame.window.window.settings.windowSettings
-        gmSettings.print()
-        wSettings.print()
         self.fields.VAR_ENTRY_MESSAGE_DURATION.set(gmSettings.duration)
         self.fields.VAR_ENTRY_MESSAGE_INTERMISSION.set(gmSettings.intermission)
         self.fields.VAR_FONT_COMBO_BOX.set(gmSettings.fontFace)

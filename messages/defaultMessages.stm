@@ -35,7 +35,8 @@
             "departure": "",
             "bold": false,
             "italic": false,
-            "overstrike": false
+            "overstrike": false,
+            "alignment": ""
         }
     },
     {
@@ -74,7 +75,8 @@
             "departure": "",
             "bold": false,
             "italic": false,
-            "overstrike": false
+            "overstrike": false,
+            "alignment": ""
         }
     }
 ]

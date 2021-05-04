@@ -89,9 +89,6 @@ def getStartingXYCoordinates(width: int, height: int, arrival: str, settings: Se
         if arrival == "Zip Forward" or arrival == "Zip Backward" or arrival == "Zip Randomly":
             yCoord = -1 * height
             yCoord2 = height + int(settings.windowSettings.height)
-    print("Arrival: " + arrival)
-    print("Alignment: " + alignment)
-    print("X Coord: " + str(xCoord))
     return xCoord, yCoord, yCoord2
 
 def slideLeft(settings: Settings, canvas: Canvas, scrollSpeed: float, width: int, alignment: str):
