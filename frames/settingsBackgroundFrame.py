@@ -1,4 +1,4 @@
-import os
+from os import getcwd
 from tkinter import Frame, GROOVE, Label, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE
 
 from PIL import Image
@@ -87,7 +87,7 @@ class SettingsBackgroundFrame:
             self.CANVAS_WINDOW_BG_IMAGE.itemconfig(self.RECTANGLE_WINDOW_BG_IMAGE, fill=fields.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND)
 
     def selectImageFile(self, fields):
-        filename = filedialog.askopenfilename(initialdir=os.getcwd() + "/imagefiles", title="Select image file",
+        filename = filedialog.askopenfilename(initialdir=getcwd() + "/imagefiles", title="Select image file",
                                               filetypes=[("PNG", "*.png"), ("JPEG", "*.jpg; *.jpeg; *.jpe; *.jfif")])
         if filename:
             fields.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(filename))

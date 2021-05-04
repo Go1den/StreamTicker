@@ -1,4 +1,4 @@
-import random
+from random import sample, choice
 from tkinter import Canvas
 
 from objects.settings import Settings
@@ -23,8 +23,8 @@ def selectDepartureAnimation(canvas: Canvas, settings: Settings, departure: str,
 
 def pickDeparture(italic: str) -> str:
     if italic == "italic":
-        return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down"])
-    return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down", "Unzip Forward", "Unzip Backward", "Unzip Randomly"])
+        return choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down"])
+    return choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down", "Unzip Forward", "Unzip Backward", "Unzip Randomly"])
 
 def slideLeft(settings: Settings, width: int, canvas: Canvas, scrollSpeed: float, alignment: str):
     delta = 0
@@ -76,7 +76,7 @@ def unzipBackward(height: int, settings: Settings, canvas: Canvas, scrollSpeed: 
 
 def unzipRandomly(height: int, settings: Settings, canvas: Canvas, scrollSpeed: float):
     deltaY = 1
-    elems = random.sample(list(canvas.find_withtag("currentMessage")), len(list(canvas.find_withtag("currentMessage"))))
+    elems = sample(list(canvas.find_withtag("currentMessage")), len(list(canvas.find_withtag("currentMessage"))))
     for elem in elems:
         for x in range(height + int(int(settings.windowSettings.height) / 2)):
             canvas.move(elem, 0, deltaY)

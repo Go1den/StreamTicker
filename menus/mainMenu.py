@@ -1,4 +1,4 @@
-import webbrowser
+from webbrowser import open
 from tkinter import Menu
 
 from windows.aboutWindow import AboutWindow
@@ -23,8 +23,8 @@ def getMainMenu(win, e):
     settingsMenu.add_command(label="Default", command=lambda: win.loadDefaultSettings())
 
     issueMenu = Menu(rmenu, tearoff=0, takefocus=0, bg="#ffffff")
-    issueMenu.add_command(label="via Discord", command=lambda: webbrowser.open('https://discord.gg/nqWxgHm', new=2))
-    issueMenu.add_command(label="via Github", command=lambda: webbrowser.open('https://github.com/Go1den/StreamTicker/issues', new=2))
+    issueMenu.add_command(label="via Discord", command=lambda: open('https://discord.gg/nqWxgHm', new=2))
+    issueMenu.add_command(label="via Github", command=lambda: open('https://github.com/Go1den/StreamTicker/issues', new=2))
 
     rmenu.add_cascade(label="  Messages", menu=messagesMenu)
     rmenu.add_cascade(label="  Settings", menu=settingsMenu)
@@ -32,7 +32,7 @@ def getMainMenu(win, e):
     rmenu.add_checkbutton(label="  Always on Top", variable=win.alwaysOnTop, onvalue=True, offvalue=False, command=lambda: win.updateAlwaysOnTop())
     rmenu.add_separator()
     rmenu.add_cascade(label="  Report Issue", menu=issueMenu)
-    rmenu.add_command(label="  Release Notes", command=lambda: webbrowser.open('https://pastebin.com/wJpGZE0F', new=2))
+    rmenu.add_command(label="  Release Notes", command=lambda: open('https://pastebin.com/wJpGZE0F', new=2))
     rmenu.add_command(label='  Check for Updates', command=lambda: win.checkForUpdates())
     rmenu.add_separator()
     rmenu.add_command(label='  About', command=lambda: AboutWindow(win))

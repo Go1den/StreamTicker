@@ -1,5 +1,5 @@
-import json
-import time
+from json import dump, load
+from time import time
 
 from objects.message import Message, MessageEncoder
 from objects.settings import Settings, SettingsEncoder
@@ -29,7 +29,7 @@ def getFileNameFromPath(path) -> str:
 def readJSON(path) -> dict:
     try:
         with open(path) as f:
-            return json.load(f)
+            return load(f)
     except:
         return {}
 
@@ -37,7 +37,7 @@ def writeJSON(path, data) -> bool:
     try:
         print(data)
         with open(path, 'w') as f:
-            json.dump(data, f, indent=4)
+            dump(data, f, indent=4)
             return True
     except:
         return False
@@ -45,7 +45,7 @@ def writeJSON(path, data) -> bool:
 def writeMessagesToJSON(path, messages: list[Message]) -> bool:
     try:
         with open(path, 'w') as f:
-            json.dump(messages, f, indent=4, cls=MessageEncoder)
+            dump(messages, f, indent=4, cls=MessageEncoder)
             return True
     except Exception as e:
         print(e)
@@ -54,7 +54,7 @@ def writeMessagesToJSON(path, messages: list[Message]) -> bool:
 def writeSettingsToJSON(path, settings: Settings) -> bool:
     try:
         with open(path, 'w') as f:
-            json.dump(settings, f, indent=4, cls=SettingsEncoder)
+            dump(settings, f, indent=4, cls=SettingsEncoder)
             return True
     except Exception as e:
         print(e)
@@ -65,7 +65,7 @@ def getScrollSpeedFloat(speedString: str) -> float:
 
 def pause(delay: float):
     if delay > 0:
-        t = time.time()
+        t = time()
         while True:
-            if t + delay <= time.time():
+            if t + delay <= time():
                 break

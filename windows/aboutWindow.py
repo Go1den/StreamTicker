@@ -1,4 +1,4 @@
-import webbrowser
+from webbrowser import open
 from tkinter import W, Toplevel, Label, LEFT, PhotoImage, Frame, SE, GROOVE
 
 from utils.hoverButton import HoverButton
@@ -19,7 +19,7 @@ class AboutWindow:
 
         self.aboutImage = PhotoImage(file="imagefiles/stLogo64.png")
         self.aboutImageLabel = Label(self.frameTop, image=self.aboutImage, cursor="hand2")
-        self.aboutImageLabel.bind("<Button-1>", lambda x: webbrowser.open('https://www.go1den.com/streamticker', new=2))
+        self.aboutImageLabel.bind("<Button-1>", lambda x: open('https://www.go1den.com/streamticker', new=2))
         self.aboutImageLabel.grid(row=0, column=0, padx=4, pady=4)
 
         self.aboutLabel = Label(self.frameTop, text="StreamTicker\n\nVersion 2.0.7\n\nReleased: 5/4/2021", justify=LEFT)

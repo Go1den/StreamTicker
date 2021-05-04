@@ -1,14 +1,14 @@
-import json
-import os
-import sys
-import time
-import urllib.request
-import webbrowser
+from urllib.request import urlopen
+from json import load
+from os import getcwd
 from random import shuffle
+from sys import exit as sysexit
 from threading import Thread
+from time import sleep
 from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
 from tkinter.font import Font
 from urllib.error import HTTPError
+from webbrowser import open as webbrowseropen
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
@@ -113,7 +113,7 @@ class StreamTickerWindow(Tk):
         self.xCoord, self.yCoord, self.yCoord2 = getStartingXYCoordinates(width, height, arrival, self.settings, alignment)
         self.setupCanvas(arrival, currentMessage, font, fontColor)
         selectArrivalAnimation(self.canvas, self.settings, arrival, height, scrollSpeed, width, alignment)
-        time.sleep(duration)
+        sleep(duration)
         selectDepartureAnimation(self.canvas, self.settings, departure, height, scrollSpeed, width, alignment)
         self.clearCanvasAndResetVariables(intermission)
 
@@ -129,7 +129,7 @@ class StreamTickerWindow(Tk):
                 self.currentIndex = (self.currentIndex + 1) % len(self.messages)
         else:
             self.currentIndex = 0
-        time.sleep(intermission)
+        sleep(intermission)
 
     def setupCanvas(self, arrival: str, currentMessage: Message, font: Font, fontColor: str):
         for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):
@@ -238,7 +238,7 @@ class StreamTickerWindow(Tk):
     def getSettingsJSONOnStartup(self):
         try:
             with open("settings.cfg", "r") as f:
-                return json.load(f)
+                return load(f)
         except Exception as e:
             print("Error loading settings on startup: " + str(e))
             return {"messages": "", "settings": ""}
@@ -251,7 +251,7 @@ class StreamTickerWindow(Tk):
             return default
 
     def loadMessages(self):
-        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd() + "/messages", title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
+        fileToLoad = filedialog.askopenfilename(initialdir=getcwd() + "/messages", title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
         if not fileToLoad or fileToLoad is None:
             return
         else:
@@ -265,12 +265,12 @@ class StreamTickerWindow(Tk):
     def checkForUpdates(self):
         currentVersion = "2.0.7"
         try:
-            f = urllib.request.urlopen('https://www.go1den.com/streamtickerversion/version.txt')
+            f = urlopen('https://www.go1den.com/streamtickerversion/version.txt')
             if currentVersion == str(f.read().decode()):
                 messagebox.showinfo("Info", "You have the latest version of StreamTicker.", parent=self)
             else:
                 if messagebox.askyesno("New Version Available", "A new version of StreamTicker is available. Would you like to open a browser now?", parent=self):
-                    webbrowser.open('https://www.go1den.com/streamticker/', new=2)
+                    webbrowseropen('https://www.go1den.com/streamticker/', new=2)
         except HTTPError:
             messagebox.showerror("Error", "Unable to connect to the web.", parent=self)
 
@@ -291,7 +291,7 @@ class StreamTickerWindow(Tk):
                                                          MessagePart("Text", 4, "Made by Go1den")])]
 
     def loadSettings(self):
-        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd() + "/settings", title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])
+        fileToLoad = filedialog.askopenfilename(initialdir=getcwd() + "/settings", title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])
         if not fileToLoad or fileToLoad is None:
             return
         else:
@@ -305,7 +305,7 @@ class StreamTickerWindow(Tk):
 
     def saveSettings(self, saveAs):
         if self.settingsPath == "" or saveAs:
-            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd() + "/settings", title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")],
+            saveFile = filedialog.asksaveasfilename(initialdir=getcwd() + "/settings", title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")],
                                                     defaultextension='.sts')
         else:
             saveFile = self.settingsPath
@@ -319,7 +319,7 @@ class StreamTickerWindow(Tk):
 
     def saveMessages(self, saveAs):
         if self.messagesPath == "" or saveAs:
-            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd() + "/messages", title="Save as...", filetypes=[("StreamTicker Messages", "*.stm")],
+            saveFile = filedialog.asksaveasfilename(initialdir=getcwd() + "/messages", title="Save as...", filetypes=[("StreamTicker Messages", "*.stm")],
                                                     defaultextension='.stm')
         else:
             saveFile = self.messagesPath
@@ -347,4 +347,4 @@ class StreamTickerWindow(Tk):
         self.streamTickerWindowJSON["offsety"] = self.winfo_y()
         self.streamTickerWindowJSON["alwaysontop"] = self.alwaysOnTop.get()
         writeJSON("settings.cfg", self.streamTickerWindowJSON)
-        sys.exit(1)
+        sysexit(1)

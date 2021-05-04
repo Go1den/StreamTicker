@@ -1,4 +1,4 @@
-import random
+from random import choice, sample
 from tkinter import Canvas, W
 from tkinter.font import Font
 
@@ -65,8 +65,8 @@ def getWidthAndHeight(currentMessage: Message, settings: Settings, font: Font) -
 
 def pickArrival(italic: str) -> str:
     if italic == "italic":
-        return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down"])
-    return random.choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"])
+        return choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down"])
+    return choice(["Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"])
 
 def getStartingXYCoordinates(width: int, height: int, arrival: str, settings: Settings, alignment: str) -> (int, int):
     xCoord = 0
@@ -156,7 +156,7 @@ def zipBackward(settings: Settings, canvas: Canvas, scrollSpeed: float):
         return
 
 def zipRandomly(settings: Settings, canvas: Canvas, scrollSpeed: float):
-    elems = random.sample(list(canvas.find_withtag("currentMessage")), len(list(canvas.find_withtag("currentMessage"))))
+    elems = sample(list(canvas.find_withtag("currentMessage")), len(list(canvas.find_withtag("currentMessage"))))
     try:
         for elem in elems:
             crashPrevention = 0
