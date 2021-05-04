@@ -14,4 +14,4 @@ class GlobalMessageSettings:
         self.VAR_FONT_IS_BOLD = BooleanVar()
         self.VAR_FONT_IS_ITALIC = BooleanVar()
         self.VAR_FONT_IS_OVERSTRIKE = BooleanVar()
-        
+        self.VAR_ALIGNMENT = StringVar()

@@ -1,4 +1,4 @@
-from tkinter import Label, Entry, Frame, GROOVE, E, W, Button, ttk, font, colorchooser, Canvas, EW, Checkbutton, NE
+from tkinter import Label, Entry, Frame, GROOVE, E, W, ttk, font, colorchooser, Canvas, EW, Checkbutton, NE
 from tkinter.font import Font
 
 from utils.hoverButton import HoverButton
@@ -18,10 +18,10 @@ class SettingsMessageFrame:
         ROW_NORMAL_FONT_SIZE = 5
         ROW_FONT_STYLE = 6
         ROW_MESSAGE_COLOR = 7
-        ROW_ARRIVAL = 8
-        ROW_DEPARTURE = 9
-        ROW_FONT_PREVIEW = 10
-        
+        ROW_ALIGNMENT = 8
+        ROW_ARRIVAL = 9
+        ROW_DEPARTURE = 10
+        ROW_FONT_PREVIEW = 11
 
         Label(self.frame, text="Global Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
         self.LABEL_MESSAGE_DURATION = Label(self.frame, text="Show Each Message For:")
@@ -66,9 +66,11 @@ class SettingsMessageFrame:
         self.LABEL_FONT_STYLE.grid(row=ROW_FONT_STYLE, column=0, sticky=NE, pady=1)
 
         self.fontStyleFrame = Frame(self.frame)
-        self.checkButtonBold = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Bold", variable=self.fields.VAR_FONT_IS_BOLD, command=lambda: self.updateFontPreview(None, None, None))
+        self.checkButtonBold = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Bold", variable=self.fields.VAR_FONT_IS_BOLD,
+                                           command=lambda: self.updateFontPreview(None, None, None))
         self.checkButtonBold.grid(row=0, padx=1, sticky=W)
-        self.checkButtonItalic = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Italic", variable=self.fields.VAR_FONT_IS_ITALIC, command=lambda: self.updateFontPreview(None, None, None))
+        self.checkButtonItalic = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Italic", variable=self.fields.VAR_FONT_IS_ITALIC,
+                                             command=lambda: self.updateFontPreview(None, None, None))
         self.checkButtonItalic.grid(row=1, padx=1, sticky=W)
         self.checkButtonOverstrike = Checkbutton(self.fontStyleFrame, borderwidth=0, text="Strikethrough", variable=self.fields.VAR_FONT_IS_OVERSTRIKE,
                                                  command=lambda: self.updateFontPreview(None, None, None))
@@ -83,8 +85,14 @@ class SettingsMessageFrame:
         Label(moveAllOnLineDelayFrame, text="(1-100)").grid(row=ROW_MESSAGE_SPEED, column=1, sticky=W, pady=1)
         moveAllOnLineDelayFrame.grid(row=ROW_MESSAGE_SPEED, column=1, sticky=W, pady=1)
 
+        self.ALIGNMENT_OPTIONS = ["Left", "Center", "Right"]
         self.ARRIVAL_ANIMATIONS = ["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Zip Forward", "Zip Backward", "Zip Randomly"]
         self.DEPARTURE_ANIMATIONS = ["Pick For Me", "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Unzip Forward", "Unzip Backward", "Unzip Randomly"]
+
+        self.LABEL_ALIGNMENT = Label(self.frame, text="Message Alignment:")
+        self.LABEL_ALIGNMENT.grid(row=ROW_ALIGNMENT, column=0, sticky=E, pady=1)
+        self.ALIGNMENT_COMBO_BOX = ttk.Combobox(self.frame, values=self.ALIGNMENT_OPTIONS, textvariable=self.fields.VAR_ALIGNMENT, state="readonly")
+        self.ALIGNMENT_COMBO_BOX.grid(row=ROW_ALIGNMENT, column=1, sticky=W, pady=1, padx=(0, 4))
 
         self.LABEL_ARRIVAL = Label(self.frame, text="Arrival Animation:")
         self.LABEL_ARRIVAL.grid(row=ROW_ARRIVAL, column=0, sticky=E, pady=1)

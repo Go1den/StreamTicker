@@ -14,6 +14,7 @@ class OverrideFrame:
         self.overrideFont = BooleanVar()
         self.overrideFontSize = BooleanVar()
         self.overrideFontColor = BooleanVar()
+        self.overrideAlignment = BooleanVar()
         self.overrideArrival = BooleanVar()
         self.overrideDeparture = BooleanVar()
         self.overrideFontStyle = BooleanVar()
@@ -73,19 +74,26 @@ class OverrideFrame:
         self.checkboxFontColor = Checkbutton(self.frame, borderwidth=0, variable=self.overrideFontColor, command=lambda: self.toggleColors())
         self.checkboxFontColor.grid(row=7, column=1, sticky=E, pady=(0, 9))
 
+        self.checkboxAlignment = Checkbutton(self.frame, borderwidth=0, variable=self.overrideAlignment,
+                                             command=lambda: self.toggleField(self.overrideAlignment, self.gmsFrame.ALIGNMENT_COMBO_BOX,
+                                                                              self.gmsFrame.fields.VAR_ALIGNMENT,
+                                                                              self.defaultSettings.messageSettings.alignment,
+                                                                              "readonly"))
+        self.checkboxAlignment.grid(row=8, column=1, sticky=E, pady=(0, 3))
+
         self.checkboxArrival = Checkbutton(self.frame, borderwidth=0, variable=self.overrideArrival,
                                            command=lambda: self.toggleField(self.overrideArrival, self.gmsFrame.ARRIVAL_COMBO_BOX,
                                                                             self.gmsFrame.fields.VAR_ARRIVAL,
                                                                             self.defaultSettings.messageSettings.arrival,
                                                                             "readonly"))
-        self.checkboxArrival.grid(row=8, column=1, sticky=E, pady=(0, 4))
+        self.checkboxArrival.grid(row=9, column=1, sticky=E, pady=(0, 3))
 
         self.checkboxDeparture = Checkbutton(self.frame, borderwidth=0, variable=self.overrideDeparture,
                                              command=lambda: self.toggleField(self.overrideDeparture, self.gmsFrame.DEPARTURE_COMBO_BOX,
                                                                               self.gmsFrame.fields.VAR_DEPARTURE,
                                                                               self.defaultSettings.messageSettings.departure,
                                                                               "readonly"))
-        self.checkboxDeparture.grid(row=9, column=1, sticky=E)
+        self.checkboxDeparture.grid(row=10, column=1, sticky=E)
 
     def toggleField(self, checkbox, toggleField, var, defaultSetting, state):
         if checkbox.get():

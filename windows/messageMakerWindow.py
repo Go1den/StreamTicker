@@ -119,6 +119,10 @@ class MessageMakerWindow:
                 self.fields.VAR_FONT_IS_OVERSTRIKE.set(overrides.overstrike)
                 self.overrideFrame.overrideFontStyle.set(True)
                 self.configureFontStyleFields()
+            if overrides.alignment:
+                self.fields.VAR_ALIGNMENT.set(overrides.alignment)
+                self.overrideFrame.overrideAlignment.set(True)
+                self.overrideFrame.gmsFrame.ALIGNMENT_COMBO_BOX.config(state="readonly")
 
     def configureFontStyleFields(self):
         self.overrideFrame.gmsFrame.checkButtonBold.config(state=NORMAL)
@@ -142,7 +146,7 @@ class MessageMakerWindow:
         self.fields.VAR_FONT_IS_BOLD.set(gmSettings.bold)
         self.fields.VAR_FONT_IS_ITALIC.set(gmSettings.italic)
         self.fields.VAR_FONT_IS_OVERSTRIKE.set(gmSettings.overstrike)
-        self.fields.VAR_MESSAGE_SHUFFLE.set(gmSettings.shuffle)
+        self.fields.VAR_ALIGNMENT.set(gmSettings.alignment)
 
     def disableGlobalMessageFields(self):
         for child in self.globalMessageSettingsFrame.frame.winfo_children():
@@ -176,6 +180,8 @@ class MessageMakerWindow:
                 override.bold = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_BOLD.get()
                 override.italic = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_ITALIC.get()
                 override.overstrike = self.globalMessageSettingsFrame.fields.VAR_FONT_IS_OVERSTRIKE.get()
+            if self.overrideFrame.overrideAlignment.get():
+                override.alignment = self.globalMessageSettingsFrame.fields.VAR_ALIGNMENT.get()
 
             for part in self.message.parts:
                 part.sortOrder = self.message.parts.index(part) + 1
