@@ -15,7 +15,7 @@ class SettingsGUIFields:
         self.VAR_FONT_IS_BOLD = BooleanVar()
         self.VAR_FONT_IS_ITALIC = BooleanVar()
         self.VAR_FONT_IS_OVERSTRIKE = BooleanVar()
-        self.VAR_MESSAGE_SHUFFLE = BooleanVar()
+        self.VAR_ALIGNMENT = StringVar()
 
         self.VAR_WINDOW_WIDTH = StringVar()
         self.VAR_WINDOW_HEIGHT = StringVar()
@@ -24,6 +24,7 @@ class SettingsGUIFields:
         self.VAR_DISPLAY_WINDOW_BG_IMAGE = StringVar()
         self.VAR_PATH_WINDOW_BG_IMAGE = StringVar()
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY = StringVar()
+        self.VAR_MESSAGE_SHUFFLE = BooleanVar()
         self.getDefaultValues()
 
     def getDefaultValues(self, mFrame=None, bgFrame=None):
@@ -38,7 +39,7 @@ class SettingsGUIFields:
         self.VAR_FONT_IS_BOLD.set(False)
         self.VAR_FONT_IS_ITALIC.set(False)
         self.VAR_FONT_IS_OVERSTRIKE.set(False)
-        self.VAR_MESSAGE_SHUFFLE.set(False)
+        self.VAR_ALIGNMENT.set("Left")
 
         self.VAR_WINDOW_WIDTH.set("400")
         self.VAR_WINDOW_HEIGHT.set("44")
@@ -47,6 +48,7 @@ class SettingsGUIFields:
         self.VAR_PATH_WINDOW_BG_IMAGE.set("imagefiles/background.png")
         self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background.png")
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("99")
+        self.VAR_MESSAGE_SHUFFLE.set(False)
         if mFrame and bgFrame:
             self.updateColorBoxes(mFrame, bgFrame)
 
@@ -66,6 +68,7 @@ class SettingsGUIFields:
                 self.VAR_FONT_IS_BOLD.set(m.bold)
                 self.VAR_FONT_IS_ITALIC.set(m.italic)
                 self.VAR_FONT_IS_OVERSTRIKE.set(m.overstrike)
+                self.VAR_ALIGNMENT.set(m.alignment if m.alignment else "Left")
                 mFrame.updateFontPreview(None, None, None)
 
             if s.windowSettings:

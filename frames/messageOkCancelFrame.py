@@ -1,4 +1,4 @@
-from tkinter import Frame, Button, E, GROOVE, messagebox
+from tkinter import Frame, E, GROOVE
 
 from utils.hoverButton import HoverButton
 
@@ -22,5 +22,3 @@ class MessageOkCancelFrame:
     def cancel(self):
         self.window.window.messages = self.window.cancelMessages
         self.window.master.destroy()
-
-

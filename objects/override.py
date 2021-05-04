@@ -1,7 +1,7 @@
 class Override:
     def __init__(self, duration: str = "", intermission: str = "", scrollSpeed: str = "",
                  font: str = "", fontSize: str = "", fontColor: str = "", arrival: str = "", departure: str = "",
-                 bold: bool = False, italic: bool = False, overstrike: bool = False):
+                 bold: bool = False, italic: bool = False, overstrike: bool = False, alignment: str = ""):
         self.duration = duration
         self.intermission = intermission
         self.scrollSpeed = scrollSpeed
@@ -13,6 +13,7 @@ class Override:
         self.bold = bold
         self.italic = italic
         self.overstrike = overstrike
+        self.alignment = alignment
 
     def print(self):
         print("Override:")
@@ -27,3 +28,4 @@ class Override:
         print("Bold: " + str(self.bold))
         print("Italic: " + str(self.italic))
         print("Overstrike: " + str(self.overstrike))
+        print("Alignment: " + self.alignment)

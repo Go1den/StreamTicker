@@ -4,11 +4,11 @@ import sys
 import time
 import urllib.request
 import webbrowser
+from random import shuffle
 from threading import Thread
 from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
 from tkinter.font import Font
 from urllib.error import HTTPError
-from random import shuffle
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
@@ -50,7 +50,7 @@ class StreamTickerWindow(Tk):
         self.iconbitmap('imagefiles/stIcon.ico')
         self.updateAlwaysOnTop()
         self.shufflePool = []
-        
+
         self.canvas = Canvas(self, width=self.settings.windowSettings.width, height=self.settings.windowSettings.height, bd=0, highlightthickness=0,
                              background=self.settings.windowSettings.bgColor)
         self.canvas.bind('<Button-3>', self.rightClickMenu)
@@ -69,7 +69,7 @@ class StreamTickerWindow(Tk):
     def displayThread(self):
         while True:
             self.displayNextMessage()
-            
+
     def getNextShuffledMessage(self):
         if len(self.messages) == 0:
             return 0
@@ -77,7 +77,7 @@ class StreamTickerWindow(Tk):
             self.shufflePool = list(range(len(self.messages)))
             shuffle(self.shufflePool)
         candidate = self.shufflePool.pop()
-        #do this check because scared of going out of bounds if a message gets removed after shuffle gets turned on
+        # do this check because scared of going out of bounds if a message gets removed after shuffle gets turned on
         if candidate >= len(self.messages):
             candidate = 0
         return candidate
@@ -97,6 +97,7 @@ class StreamTickerWindow(Tk):
         italic = "italic" if italic else "roman"
         overstrike = currentMessage.overrides.overstrike if currentMessage.overrides.overstrike else self.settings.messageSettings.overstrike
         overstrike = 1 if overstrike else 0
+        alignment = currentMessage.overrides.alignment if currentMessage.overrides.alignment else self.settings.messageSettings.alignment
         duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
         intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
         scrollSpeed = getScrollSpeedFloat(currentMessage.overrides.scrollSpeed) if currentMessage.overrides.scrollSpeed else getScrollSpeedFloat(
@@ -109,11 +110,11 @@ class StreamTickerWindow(Tk):
             departure = pickDeparture(italic)
         font = Font(family=fontFamily, size=fontSize, weight=bold, overstrike=overstrike, slant=italic)
         width, height = getWidthAndHeight(currentMessage, self.settings, font)
-        self.xCoord, self.yCoord, self.yCoord2 = getStartingXYCoordinates(width, height, arrival, self.settings)
+        self.xCoord, self.yCoord, self.yCoord2 = getStartingXYCoordinates(width, height, arrival, self.settings, alignment)
         self.setupCanvas(arrival, currentMessage, font, fontColor)
-        selectArrivalAnimation(self.canvas, self.settings, arrival, height, scrollSpeed, width)
+        selectArrivalAnimation(self.canvas, self.settings, arrival, height, scrollSpeed, width, alignment)
         time.sleep(duration)
-        selectDepartureAnimation(self.canvas, self.settings, departure, height, scrollSpeed, width)
+        selectDepartureAnimation(self.canvas, self.settings, departure, height, scrollSpeed, width, alignment)
         self.clearCanvasAndResetVariables(intermission)
 
     def clearCanvasAndResetVariables(self, intermission):
@@ -121,7 +122,7 @@ class StreamTickerWindow(Tk):
         self.images = []
         self.xCoord = 0
         self.yCoord = 0
-        if len(self.messages) > 0:      
+        if len(self.messages) > 0:
             if self.settings.windowSettings.shuffle:
                 self.currentIndex = self.getNextShuffledMessage()
             else:
@@ -138,14 +139,14 @@ class StreamTickerWindow(Tk):
                 for char in part.value:
                     self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=font, tags="currentMessage", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
-                    self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
+                    self.xCoord = box[2]
                     self.swapYCoords(arrival)
             elif part.partType == "Text From File":
                 fileText = readFile(part.value)
                 for char in fileText:
                     self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=font, tags="currentMessage", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
-                    self.xCoord = box[2] - 1  # TODO This -1 could be a message setting "gap between letters" or some such
+                    self.xCoord = box[2]
                     self.swapYCoords(arrival)
             elif part.partType == "Image":
                 try:
@@ -153,7 +154,7 @@ class StreamTickerWindow(Tk):
                     self.images.append(img)
                     self.canvas.create_image(self.xCoord, self.yCoord, image=img, anchor=W, tags="currentMessage")
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
-                    self.xCoord = box[2] - 1
+                    self.xCoord = box[2]
                     self.swapYCoords(arrival)
                 except Exception as e:
                     print("Error loading image: " + str(e))
@@ -178,19 +179,42 @@ class StreamTickerWindow(Tk):
                 parts.append(MessagePart(partType, partSortOrder, partValue))
 
             overrides = message["overrides"]
-            override = Override(overrides["duration"], overrides["intermission"], overrides["scrollSpeed"], overrides["font"],
-                                overrides["fontSize"], overrides["fontColor"], overrides["arrival"], overrides["departure"],
-                                overrides["bold"], overrides["italic"], overrides["overstrike"])
+            override = Override(overrides.get("duration", ""),
+                                overrides.get("intermission", ""),
+                                overrides.get("scrollSpeed", ""),
+                                overrides.get("font", ""),
+                                overrides.get("fontSize", ""),
+                                overrides.get("fontColor", ""),
+                                overrides.get("arrival", ""),
+                                overrides.get("departure", ""),
+                                overrides.get("bold", False),
+                                overrides.get("italic", False),
+                                overrides.get("overstrike", False))
             messages.append(Message(nickname, sortOrder, parts, override))
         return messages
 
     def getSettings(self, path) -> Settings:
         s = readJSON(path)
         w = s["windowSettings"]
-        windowSettings = WindowSettings(w['moveAllOnLineDelay'], w['bgImage'], w['width'], w['height'], w['bgColor'], w['shuffle'])
+        windowSettings = WindowSettings(w.get('moveAllOnLineDelay', "99"),
+                                        w.get('bgImage', "imagefiles/background.png"),
+                                        w.get('width', "400"),
+                                        w.get('height', "44"),
+                                        w.get('bgColor', "#000000"),
+                                        w.get('shuffle', False))
+
         m = s["messageSettings"]
-        messageSettings = MessageSettings(m['color'], m['fontFace'], m['intermission'], m['fontSize'], m['duration'],
-                                          m['arrival'], m['departure'], m['bold'], m['italic'], m['overstrike'])
+        messageSettings = MessageSettings(m.get('color', "#ffffff"),
+                                          m.get('fontFace', "Courier New"),
+                                          m.get('intermission', ".5"),
+                                          m.get('fontSize', "26"),
+                                          m.get('duration', "10"),
+                                          m.get('arrival', "Pick For Me"),
+                                          m.get('departure', "Pick For Me"),
+                                          m.get('bold', False),
+                                          m.get('italic', False),
+                                          m.get('overstrike', False),
+                                          m.get('alignment', "Left"))
         return Settings(windowSettings, messageSettings)
 
     def updateAlwaysOnTop(self):
@@ -227,7 +251,7 @@ class StreamTickerWindow(Tk):
             return default
 
     def loadMessages(self):
-        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd()+"/messages", title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
+        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd() + "/messages", title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
         if not fileToLoad or fileToLoad is None:
             return
         else:
@@ -267,7 +291,7 @@ class StreamTickerWindow(Tk):
                                                          MessagePart("Text", 4, "Made by Go1den")])]
 
     def loadSettings(self):
-        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd()+"/settings", title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])
+        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd() + "/settings", title="Load settings", filetypes=[("StreamTicker Messages", "*.sts")])
         if not fileToLoad or fileToLoad is None:
             return
         else:
@@ -281,7 +305,8 @@ class StreamTickerWindow(Tk):
 
     def saveSettings(self, saveAs):
         if self.settingsPath == "" or saveAs:
-            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd()+"/settings", title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")], defaultextension='.sts')
+            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd() + "/settings", title="Save as...", filetypes=[("StreamTicker Settings", "*.sts")],
+                                                    defaultextension='.sts')
         else:
             saveFile = self.settingsPath
         if not saveFile or saveFile is None:
@@ -294,7 +319,8 @@ class StreamTickerWindow(Tk):
 
     def saveMessages(self, saveAs):
         if self.messagesPath == "" or saveAs:
-            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd()+"/messages", title="Save as...", filetypes=[("StreamTicker Messages", "*.stm")], defaultextension='.stm')
+            saveFile = filedialog.asksaveasfilename(initialdir=os.getcwd() + "/messages", title="Save as...", filetypes=[("StreamTicker Messages", "*.stm")],
+                                                    defaultextension='.stm')
         else:
             saveFile = self.messagesPath
         if not saveFile or saveFile is None:

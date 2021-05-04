@@ -17,6 +17,7 @@
         "departure": "Pick For Me",
         "bold": false,
         "italic": false,
-        "overstrike": false
+        "overstrike": false,
+        "alignment": "Left"
     }
 }
