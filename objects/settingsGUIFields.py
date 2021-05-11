@@ -25,6 +25,11 @@ class SettingsGUIFields:
         self.VAR_PATH_WINDOW_BG_IMAGE = StringVar()
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY = StringVar()
         self.VAR_MESSAGE_SHUFFLE = BooleanVar()
+
+        self.VAR_CHALLONGE_USERNAME = StringVar()
+        self.VAR_CHALLONGE_API_KEY = StringVar()
+        self.VAR_SMASHGG_API_KEY = StringVar()
+
         self.getDefaultValues()
 
     def getDefaultValues(self, mFrame=None, bgFrame=None):
@@ -49,6 +54,11 @@ class SettingsGUIFields:
         self.VAR_DISPLAY_WINDOW_BG_IMAGE.set("background.png")
         self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set("99")
         self.VAR_MESSAGE_SHUFFLE.set(False)
+
+        self.VAR_CHALLONGE_USERNAME.set("")
+        self.VAR_CHALLONGE_API_KEY.set("")
+        self.VAR_SMASHGG_API_KEY.set("")
+
         if mFrame and bgFrame:
             self.updateColorBoxes(mFrame, bgFrame)
 
@@ -83,6 +93,13 @@ class SettingsGUIFields:
                 self.VAR_MESSAGE_SHUFFLE.set(w.shuffle)
 
                 self.updateColorBoxes(mFrame, bgFrame)
+
+            if s.apiSettings:
+                a = s.apiSettings
+                self.VAR_CHALLONGE_USERNAME.set(a.challongeUsername)
+                self.VAR_CHALLONGE_API_KEY.set(a.challongeAPIKey)
+                self.VAR_SMASHGG_API_KEY.set(a.smashggAPIKey)
+
         except Exception:
             messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.", parent=master)
             self.getDefaultValues(mFrame, bgFrame)

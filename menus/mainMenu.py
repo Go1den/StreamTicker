@@ -2,17 +2,23 @@ import webbrowser
 from tkinter import Menu
 
 from windows.aboutWindow import AboutWindow
+from windows.challongeWindow import ChallongeWindow
 from windows.messageManagerWindow import MessageManagerWindow
 from windows.settingsWindow import SettingsWindow
 
 def getMainMenu(win, e):
     rmenu = Menu(e.widget.master, tearoff=0, takefocus=0, bg="#ffffff")
 
+    tournamentMenu = Menu(rmenu, tearoff=0, takefocus=0, bg="#ffffff")
+    tournamentMenu.add_command(label="Challonge Tournament", command=lambda: ChallongeWindow(win))
+    tournamentMenu.add_command(label="Smash.gg Tournament")
+
     messagesMenu = Menu(rmenu, tearoff=0, takefocus=0, bg="#ffffff")
     messagesMenu.add_command(label="Edit...", command=lambda: MessageManagerWindow(win))
     messagesMenu.add_command(label="Load", command=lambda: win.loadMessages())
     messagesMenu.add_command(label="Save", command=lambda: win.saveMessages(False))
     messagesMenu.add_command(label="Save as...", command=lambda: win.saveMessages(True))
+    messagesMenu.add_cascade(label="Generate From...", menu=tournamentMenu)
     messagesMenu.add_command(label="Default", command=lambda: win.loadDefaultMessages())
 
     settingsMenu = Menu(rmenu, tearoff=0, takefocus=0, bg="#ffffff")

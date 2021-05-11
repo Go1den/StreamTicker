@@ -1,8 +1,11 @@
 import json
 import time
 
+from objects.matchInfo import MatchInfo
 from objects.message import Message, MessageEncoder
+from objects.playerInfo import PlayerInfo
 from objects.settings import Settings, SettingsEncoder
+from objects.tournamentInfo import TournamentInfo
 
 def isFloat(value) -> bool:
     try:

@@ -14,6 +14,7 @@ from PIL import Image
 from PIL.ImageTk import PhotoImage
 
 from menus.mainMenu import getMainMenu
+from objects.apiSettings import APISettings
 from objects.message import Message
 from objects.messagePart import MessagePart
 from objects.messageSettings import MessageSettings
@@ -83,6 +84,7 @@ class StreamTickerWindow(Tk):
         return candidate
 
     def displayNextMessage(self):
+        #TODO: local variable currentMessage referenced before assignment
         try:
             currentMessage = self.messages[self.currentIndex]
         except IndexError:
@@ -215,7 +217,12 @@ class StreamTickerWindow(Tk):
                                           m.get('italic', False),
                                           m.get('overstrike', False),
                                           m.get('alignment', "Left"))
-        return Settings(windowSettings, messageSettings)
+
+        a = readJSON("settings.cfg")
+        apiSettings = APISettings(a.get('challongeUsername', ""),
+                                  a.get('challongeAPIKey', ""),
+                                  a.get('smashggAPIKey', ""))
+        return Settings(windowSettings, messageSettings, apiSettings)
 
     def updateAlwaysOnTop(self):
         if self.alwaysOnTop.get():
@@ -255,12 +262,15 @@ class StreamTickerWindow(Tk):
         if not fileToLoad or fileToLoad is None:
             return
         else:
-            try:
-                self.messages = self.getMessages(fileToLoad)
-                self.messagesPath = fileToLoad
-                messagebox.showinfo("Info", "Messages were loaded successfully.", parent=self)
-            except:
-                messagebox.showerror("Error", "Failed to load messages!", parent=self)
+            self.load(fileToLoad)
+
+    def load(self, fileToLoad: str):
+        try:
+            self.messages = self.getMessages(fileToLoad)
+            self.messagesPath = fileToLoad
+            messagebox.showinfo("Info", "Messages were loaded successfully.", parent=self)
+        except:
+            messagebox.showerror("Error", "Failed to load messages!", parent=self)
 
     def checkForUpdates(self):
         currentVersion = "2.0.7"
@@ -346,5 +356,8 @@ class StreamTickerWindow(Tk):
         self.streamTickerWindowJSON["offsetx"] = self.winfo_x()
         self.streamTickerWindowJSON["offsety"] = self.winfo_y()
         self.streamTickerWindowJSON["alwaysontop"] = self.alwaysOnTop.get()
+        self.streamTickerWindowJSON["challongeUsername"] = self.settings.apiSettings.challongeUsername
+        self.streamTickerWindowJSON["challongeAPIKey"] = self.settings.apiSettings.challongeAPIKey
+        self.streamTickerWindowJSON["smashggAPIKey"] = self.settings.apiSettings.smashggAPIKey
         writeJSON("settings.cfg", self.streamTickerWindowJSON)
         sys.exit(1)

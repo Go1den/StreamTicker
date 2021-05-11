@@ -1,0 +1,70 @@
+{
+    "nickname": "challonge",
+    "sortOrder": 1,
+    "parts": [
+        {
+            "partType": "Pixel Gap",
+            "sortOrder": 0,
+            "value": "16"
+        },
+        {
+            "partType": "Tournament Data",
+            "sortOrder": 3,
+            "value": "Round"
+        },
+        {
+            "partType": "Pixel Gap",
+            "sortOrder": 4,
+            "value": "40"
+        },
+        {
+            "partType": "Tournament Data",
+            "sortOrder": 5,
+            "value": "Player 1's Display Name"
+        },
+        {
+            "partType": "Tournament Data",
+            "sortOrder": 7,
+            "value": "Player 1's Score"
+        },
+        {
+            "partType": "Pixel Gap",
+            "sortOrder": 6,
+            "value": "10"
+        },
+        {
+            "partType": "Pixel Gap",
+            "sortOrder": 8,
+            "value": "80"
+        },
+        {
+            "partType": "Tournament Data",
+            "sortOrder": 9,
+            "value": "Player 2's Display Name"
+        },
+        {
+            "partType": "Pixel Gap",
+            "sortOrder": 10,
+            "value": "10"
+        },
+        {
+            "partType": "Tournament Data",
+            "sortOrder": 11,
+            "value": "Player 2's Score"
+        }
+    ],
+    "overrides": {
+        "duration": "",
+        "intermission": "",
+        "scrollSpeed": "",
+        "font": "",
+        "fontSize": "",
+        "fontColor": "",
+        "arrival": "",
+        "departure": "",
+        "bold": false,
+        "italic": false,
+        "overstrike": false,
+        "alignment": ""
+    }
+}

@@ -1,5 +1,6 @@
 from tkinter import Frame, E, GROOVE
 
+from objects.apiSettings import APISettings
 from objects.messageSettings import MessageSettings
 from objects.settings import Settings
 from objects.windowSettings import WindowSettings
@@ -45,6 +46,11 @@ class OkCancelFrame:
                 self.window.fields.VAR_FONT_IS_OVERSTRIKE.get(),
                 self.window.fields.VAR_ALIGNMENT.get()
             )
-            self.window.parent.settings = Settings(windowSettings, messageSettings)
+            apiSettings = APISettings(
+                self.window.fields.VAR_CHALLONGE_USERNAME.get(),
+                self.window.fields.VAR_CHALLONGE_API_KEY.get(),
+                self.window.fields.VAR_SMASHGG_API_KEY.get()
+            )
+            self.window.parent.settings = Settings(windowSettings, messageSettings, apiSettings)
             self.window.parent.applyCurrentWindowSettings()
             self.window.master.destroy()
