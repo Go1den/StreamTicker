@@ -1,5 +1,5 @@
 import os
-from tkinter import Frame, GROOVE, Label, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE
+from tkinter import Frame, GROOVE, Label, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE, NSEW
 
 from PIL import Image
 
@@ -23,7 +23,6 @@ class SettingsBackgroundFrame:
         ROW_BG_COLOR = 1
         ROW_BG_IMAGE = 2
         ROW_SET_DIMENSIONS = 3
-        ROW_DO_NOT_USE_BG = 4
 
         bgColorFrame = Frame(self.frame)
 
@@ -50,10 +49,10 @@ class SettingsBackgroundFrame:
         self.checkbuttonSetDimensions = Checkbutton(self.fitWindowFrame, text="Fit window to background image", variable=self.dimensionCheckbutton,
                                                     command=lambda: self.updateWindowDimensions())
         self.checkbuttonSetDimensions.grid(row=0, column=0, sticky=W)
-        self.fitWindowFrame.grid(row=ROW_SET_DIMENSIONS, column=0, columnspan=2, padx=4, pady=4, sticky=W)
 
-        self.buttonClearImage = HoverButton(self.frame, text='Remove Image', width=15, command=lambda: self.updateBackgroundImage())
-        self.buttonClearImage.grid(row=ROW_DO_NOT_USE_BG, column=0, columnspan=3, sticky=SE, padx=4, pady=(0, 4))
+        self.buttonClearImage = HoverButton(self.fitWindowFrame, text='Remove Image', width=15, command=lambda: self.updateBackgroundImage())
+        self.buttonClearImage.grid(row=0, column=1, sticky=E, padx=4, pady=(0, 4))
+        self.fitWindowFrame.grid(row=ROW_SET_DIMENSIONS, column=0, columnspan=3, padx=4, pady=(0,4), sticky=NSEW)
 
         self.CANVAS_WINDOW_BG_IMAGE.grid(row=0, column=0, sticky=W)
         bgColorFrame.grid(row=ROW_BG_COLOR, column=1, sticky=W)

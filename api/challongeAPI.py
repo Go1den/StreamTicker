@@ -3,18 +3,17 @@ from base64 import b64encode
 import requests
 from requests.auth import HTTPBasicAuth
 
+from exceptions.challongeAPIException import ChallongeAPIException
+from exceptions.noResultsMatchCriteriaException import NoResultsMatchCriteriaException
 from objects.formatInfo import FormatInfo
 from objects.matchInfo import MatchInfo
 from objects.playerInfo import PlayerInfo
 from objects.tournamentInfo import TournamentInfo
 
 def getAuthString(username, apiKey) -> str:
-    try:
-        thing = username + ":" + apiKey
-        s = b64encode(thing.encode()).decode()
-        return "Basic %s" % s
-    except Exception as e:
-        print("Unable to get auth string")
+    joinedUsernameAndKey = username + ":" + apiKey
+    s = b64encode(joinedUsernameAndKey.encode()).decode()
+    return "Basic %s" % s
 
 def getTournament(username: str, apiKey: str, url: str = "", subdomain: str = "") -> dict:
     apiEndpoint = 'https://api.challonge.com/v1/tournaments/'
@@ -26,9 +25,8 @@ def getTournament(username: str, apiKey: str, url: str = "", subdomain: str = ""
         r = requests.get(apiEndpoint, auth=basicAuth, headers={"User-Agent": "Mozilla/5.0"}, params={"include_participants": 1, "include_matches": 1})
         t = r.json()["tournament"]
         return t
-    except Exception as e:
-        print("Unable to obtain tournament information from the API")
-        return {}
+    except Exception:
+        raise ChallongeAPIException
 
 def getParticipants(participants: dict) -> list[PlayerInfo]:
     result = []
@@ -46,10 +44,24 @@ def getParticipantDictionary(participants: list[PlayerInfo]) -> dict[int, Player
             result[p.playerID] = p
     return result
 
-def getMatches(matches: dict) -> list[MatchInfo]:
-    return [MatchInfo(match["match"]) for match in matches]
+def getMatches(matches: dict, includeCompleted: bool, includeInProgress: bool, includeLosersBracket: bool, mostRecentRounds: int) -> list[MatchInfo]:
+    result = [MatchInfo(match["match"]) for match in matches if match["match"]["state"] != "pending"]
+    if not includeCompleted:
+        result = [match for match in result if match.state != "complete"]
+    if not includeInProgress:
+        result = [match for match in result if match.state != "open"]
+    if not includeLosersBracket:
+        result = [match for match in result if match.round > 0]
+    if mostRecentRounds > 0:
+        mostRecentWinnersBracketRound = max([match.round for match in result])
+        mostRecentLosersBracketRound = min(0, min([match.round for match in result]))
+        result = [match for match in result if (match.round >= mostRecentWinnersBracketRound - mostRecentRounds + 1 and match.round > 0) or match.round < 0]
+        if mostRecentLosersBracketRound < 0:
+            result = [match for match in result if (match.round <= mostRecentLosersBracketRound + mostRecentRounds - 1 and match.round < 0) or match.round > 0]
+    return result
 
-def getTournamentInfo(challongeUsername: str, challongeAPIKey: str, tournamentURL: str) -> TournamentInfo:
+def getTournamentInfo(challongeUsername: str, challongeAPIKey: str, tournamentURL: str, includeCompleted: bool, includeInProgress: bool, includeLosersBracket: bool,
+                      mostRecentRounds: int) -> TournamentInfo:
     try:
         url = tournamentURL.rstrip('/').split('/')[-1]
     except:
@@ -64,5 +76,7 @@ def getTournamentInfo(challongeUsername: str, challongeAPIKey: str, tournamentUR
     formatInfo = FormatInfo(t["group_stages_enabled"], t["hold_third_place_match"], t["full_challonge_url"], t["swiss_rounds"], t["tournament_type"])
     entrants = getParticipants(t["participants"])
     entrantsDict = getParticipantDictionary(entrants)
-    games = getMatches(t["matches"])
+    games = getMatches(t["matches"], includeCompleted, includeInProgress, includeLosersBracket, mostRecentRounds)
+    if len(games) == 0:
+        raise NoResultsMatchCriteriaException
     return TournamentInfo(games, entrantsDict, formatInfo)

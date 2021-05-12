@@ -1,0 +1,2 @@
+class ChallongeAPIException(Exception):
+    pass

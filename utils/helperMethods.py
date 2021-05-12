@@ -1,11 +1,8 @@
 import json
 import time
 
-from objects.matchInfo import MatchInfo
 from objects.message import Message, MessageEncoder
-from objects.playerInfo import PlayerInfo
 from objects.settings import Settings, SettingsEncoder
-from objects.tournamentInfo import TournamentInfo
 
 def isFloat(value) -> bool:
     try:
@@ -38,7 +35,6 @@ def readJSON(path) -> dict:
 
 def writeJSON(path, data) -> bool:
     try:
-        print(data)
         with open(path, 'w') as f:
             json.dump(data, f, indent=4)
             return True

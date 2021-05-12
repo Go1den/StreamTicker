@@ -1,0 +1,2 @@
+class NoResultsMatchCriteriaException(Exception):
+    pass

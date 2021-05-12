@@ -7,7 +7,13 @@ class ChallongeOkCancelFrame:
         self.frame = Frame(challongeWindow.master)
         self.window = challongeWindow
 
-        self.okButton = HoverButton(self.frame, text="OK", width=10, bd=2, relief=GROOVE, command=lambda: self.window.generateChallongeMessages(self.window.challongeFrame.url.get()))
+        self.okButton = HoverButton(self.frame, text="OK", width=10, bd=2, relief=GROOVE,
+                                    command=lambda: self.window.generateChallongeMessages(self.window.challongeFrame.url.get(),
+                                                                                          self.window.challongeFrame.completedCheckbutton.get(),
+                                                                                          self.window.challongeFrame.inProgressCheckbutton.get(),
+                                                                                          self.window.challongeFrame.losersBracketCheckbutton.get(),
+                                                                                          self.window.challongeFrame.recentRounds.get() if self.window.challongeFrame.showRecentRoundsOnlyCheckbutton.get() else 0
+                                                                                          ))
         self.okButton.grid(row=0, column=0, sticky=E, padx=10)
 
         self.cancelButton = HoverButton(self.frame, text="Cancel", width=10, bd=2, relief=GROOVE, command=lambda: self.window.master.destroy())

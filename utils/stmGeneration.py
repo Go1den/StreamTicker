@@ -9,6 +9,7 @@ from utils.helperMethods import writeJSON
 def generateStmFile(tournamentInfo: TournamentInfo, template: dict):
     result = []
     sortOrder = 0
+    template = template[0]
     for match in sorted(tournamentInfo.matches, key=lambda x: x.roundForSortingPurposes):
         sortOrder += 1
         message = {}
