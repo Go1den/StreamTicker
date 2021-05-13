@@ -39,10 +39,9 @@ class ChallongeWindow:
         try:
             tournamentInfo = getTournamentInfo(self.parent.settings.apiSettings.challongeUsername, self.parent.settings.apiSettings.challongeAPIKey, url, includeCompleted,
                                                includeInProgress, includeLosersBracket, mostRecentRounds)
-            # tournamentInfo.print()
             template = readJSON("messages/tournamentTemplate.stm")
-            generateStmFile(tournamentInfo, template)
-            self.parent.load(os.getcwd() + "/messages/challonge.stm")
+            generatedFileLocation = generateStmFile(tournamentInfo, template)
+            self.parent.load(os.getcwd() + "/" + generatedFileLocation)
             self.master.destroy()
         except NoResultsMatchCriteriaException:
             messagebox.showerror("Error", "No results matched the criteria.", parent=self.master)

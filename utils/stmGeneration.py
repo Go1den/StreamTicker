@@ -1,4 +1,5 @@
 from copy import deepcopy
+from datetime import datetime
 
 from objects.formatInfo import FormatInfo
 from objects.matchInfo import MatchInfo
@@ -6,30 +7,29 @@ from objects.playerInfo import PlayerInfo
 from objects.tournamentInfo import TournamentInfo
 from utils.helperMethods import writeJSON
 
-def generateStmFile(tournamentInfo: TournamentInfo, template: dict):
+def generateStmFile(tournamentInfo: TournamentInfo, template: dict) -> str:
     result = []
     sortOrder = 0
     template = template[0]
     for match in sorted(tournamentInfo.matches, key=lambda x: x.roundForSortingPurposes):
         sortOrder += 1
-        message = {}
-        message["nickname"] = template["nickname"] + str(match.round) + match.identifier
-        message["sortOrder"] = sortOrder
-        message["parts"] = deepcopy(template["parts"])
+        message = {"nickname": template["nickname"] + str(match.round) + match.identifier,
+                   "sortOrder": sortOrder,
+                   "parts": deepcopy(template["parts"])}
         for part in message["parts"]:
             if part["partType"] == "Tournament Data":
                 part["partType"] = "Text"
-                try:
-                    part["value"] = getTournamentPartValue(match, tournamentInfo.entrants[match.player1ID], tournamentInfo.entrants[match.player2ID], tournamentInfo.format, part["value"])
-                except:
-                    print("Well shit!")
-                print(part["value"])
+                part["value"] = getTournamentPartValue(match, tournamentInfo.entrants[match.player1ID], tournamentInfo.entrants[match.player2ID], tournamentInfo.format,
+                                                       part["value"])
         message["overrides"] = deepcopy(template["overrides"])
         result.append(message)
-    writeJSON("messages/challonge.stm", result)
+    timestamp = datetime.now().strftime("%m%d%y-%H%M%S")
+    writeTo = "messages/challonge_" + timestamp + ".stm"
+    writeJSON(writeTo, result)
+    return writeTo
 
 def getTournamentPartValue(match: MatchInfo, player1: PlayerInfo, player2: PlayerInfo, format: FormatInfo, value: str) -> str:
-    #TODO implement reading image from URL for the player icons
+    # TODO implement reading image from URL for the player icons
     if value == "Player 1's Score":
         return str(','.join(match.player1Scores))
     elif value == "Player 2's Score":
@@ -99,4 +99,4 @@ def getRoundName(match: MatchInfo, player1: PlayerInfo, format: FormatInfo):
         return "Pools"
     return "Round " + str(abs(match.round))
 
-#TODO we gotta figure out how to deal with these group->bracket tournaments
+# TODO we gotta figure out how to deal with these group->bracket tournaments
