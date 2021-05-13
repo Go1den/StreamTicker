@@ -39,10 +39,14 @@ class ChallongeWindow:
         try:
             tournamentInfo = getTournamentInfo(self.parent.settings.apiSettings.challongeUsername, self.parent.settings.apiSettings.challongeAPIKey, url, includeCompleted,
                                                includeInProgress, includeLosersBracket, mostRecentRounds)
-            template = readJSON("messages/tournamentTemplate.stm")
+            template = readJSON(self.parent.settings.apiSettings.templatePath)
+            if template == {}:
+                raise FileNotFoundError
             generatedFileLocation = generateStmFile(tournamentInfo, template)
             self.parent.load(os.getcwd() + "/" + generatedFileLocation)
             self.master.destroy()
+        except FileNotFoundError:
+            messagebox.showerror("Error", "Unable to read tournament template file. Set a valid template file in the settings menu.", parent=self.master)
         except NoResultsMatchCriteriaException:
             messagebox.showerror("Error", "No results matched the criteria.", parent=self.master)
         except ChallongeAPIException:
