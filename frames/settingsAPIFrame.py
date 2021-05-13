@@ -44,7 +44,7 @@ class SettingsAPIFrame:
 
     def selectTemplateFile(self, fields):
         filename = filedialog.askopenfilename(initialdir=os.getcwd() + "/templates", title="Select template",
-                                              filetypes=[("StreamTicker Messages", "*.stm")])
+                                              filetypes=[("StreamTicker Template", "*.stt")])
         if filename:
             fields.VAR_DISPLAY_TEMPLATE.set(getFileNameFromPath(filename))
             fields.VAR_PATH_TEMPLATE.set(filename)

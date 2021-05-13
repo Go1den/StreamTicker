@@ -3,6 +3,7 @@ import time
 
 from objects.message import Message, MessageEncoder
 from objects.settings import Settings, SettingsEncoder
+from objects.writeSettings import WriteSettings
 
 def isFloat(value) -> bool:
     try:
@@ -52,8 +53,9 @@ def writeMessagesToJSON(path, messages: list[Message]) -> bool:
 
 def writeSettingsToJSON(path, settings: Settings) -> bool:
     try:
+        writeSettings = WriteSettings(settings.windowSettings, settings.messageSettings)
         with open(path, 'w') as f:
-            json.dump(settings, f, indent=4, cls=SettingsEncoder)
+            json.dump(writeSettings, f, indent=4, cls=SettingsEncoder)
             return True
     except Exception as e:
         print(e)

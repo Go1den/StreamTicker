@@ -60,8 +60,8 @@ class SettingsGUIFields:
         self.VAR_CHALLONGE_USERNAME.set("")
         self.VAR_CHALLONGE_API_KEY.set("")
         self.VAR_SMASHGG_API_KEY.set("")
-        self.VAR_DISPLAY_TEMPLATE.set("tournamentTemplate.stm")
-        self.VAR_PATH_TEMPLATE.set("templates/tournamentTemplate.stm")
+        self.VAR_DISPLAY_TEMPLATE.set("tournamentTemplate.stt")
+        self.VAR_PATH_TEMPLATE.set("templates/tournamentTemplate.stt")
 
         if mFrame and bgFrame:
             self.updateColorBoxes(mFrame, bgFrame)
@@ -103,8 +103,8 @@ class SettingsGUIFields:
                 self.VAR_CHALLONGE_USERNAME.set(a.challongeUsername)
                 self.VAR_CHALLONGE_API_KEY.set(a.challongeAPIKey)
                 self.VAR_SMASHGG_API_KEY.set(a.smashggAPIKey)
-                self.VAR_DISPLAY_TEMPLATE.set(getFileNameFromPath(a.templatePath) if getFileNameFromPath(a.templatePath) else "tournamentTemplate.stm")
-                self.VAR_PATH_TEMPLATE.set(a.templatePath if a.templatePath else "templates/tournamentTemplate.stm")
+                self.VAR_DISPLAY_TEMPLATE.set(getFileNameFromPath(a.templatePath) if getFileNameFromPath(a.templatePath) else "tournamentTemplate.stt")
+                self.VAR_PATH_TEMPLATE.set(a.templatePath if a.templatePath else "templates/tournamentTemplate.stt")
 
         except Exception:
             messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.", parent=master)

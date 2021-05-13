@@ -221,7 +221,8 @@ class StreamTickerWindow(Tk):
         a = readJSON("settings.cfg")
         apiSettings = APISettings(a.get('challongeUsername', ""),
                                   a.get('challongeAPIKey', ""),
-                                  a.get('smashggAPIKey', ""))
+                                  a.get('smashggAPIKey', ""),
+                                  a.get('templatePath', "templates/tournamentTemplate.stt"))
         return Settings(windowSettings, messageSettings, apiSettings)
 
     def updateAlwaysOnTop(self):
@@ -359,5 +360,6 @@ class StreamTickerWindow(Tk):
         self.streamTickerWindowJSON["challongeUsername"] = self.settings.apiSettings.challongeUsername
         self.streamTickerWindowJSON["challongeAPIKey"] = self.settings.apiSettings.challongeAPIKey
         self.streamTickerWindowJSON["smashggAPIKey"] = self.settings.apiSettings.smashggAPIKey
+        self.streamTickerWindowJSON["templatePath"] = self.settings.apiSettings.templatePath
         writeJSON("settings.cfg", self.streamTickerWindowJSON)
         sys.exit(1)

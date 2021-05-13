@@ -1,5 +1,5 @@
 class APISettings:
-    def __init__(self, challongeUsername: str="", challongeAPIKey: str="", smashggAPIKey: str="", templatePath: str=""):
+    def __init__(self, challongeUsername: str="", challongeAPIKey: str="", smashggAPIKey: str="", templatePath: str="templates/tournamentTemplate.stt"):
         self.challongeUsername = challongeUsername
         self.challongeAPIKey = challongeAPIKey
         self.smashggAPIKey = smashggAPIKey
