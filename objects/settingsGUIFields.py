@@ -1,6 +1,6 @@
 from tkinter import StringVar, messagebox, BooleanVar
 
-from utils import helperMethods
+from utils.helperMethods import getFileNameFromPath
 
 class SettingsGUIFields:
     def __init__(self):
@@ -29,6 +29,8 @@ class SettingsGUIFields:
         self.VAR_CHALLONGE_USERNAME = StringVar()
         self.VAR_CHALLONGE_API_KEY = StringVar()
         self.VAR_SMASHGG_API_KEY = StringVar()
+        self.VAR_DISPLAY_TEMPLATE = StringVar()
+        self.VAR_PATH_TEMPLATE = StringVar()
 
         self.getDefaultValues()
 
@@ -58,6 +60,8 @@ class SettingsGUIFields:
         self.VAR_CHALLONGE_USERNAME.set("")
         self.VAR_CHALLONGE_API_KEY.set("")
         self.VAR_SMASHGG_API_KEY.set("")
+        self.VAR_DISPLAY_TEMPLATE.set("tournamentTemplate.stm")
+        self.VAR_PATH_TEMPLATE.set("templates/tournamentTemplate.stm")
 
         if mFrame and bgFrame:
             self.updateColorBoxes(mFrame, bgFrame)
@@ -88,7 +92,7 @@ class SettingsGUIFields:
                 self.VAR_LABEL_WINDOW_BG_COLOR_TEXT.set(w.bgColor)
                 self.VAR_LABEL_WINDOW_BG_COLOR_BACKGROUND = w.bgColor
                 self.VAR_PATH_WINDOW_BG_IMAGE.set(w.bgImage)
-                self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(helperMethods.getFileNameFromPath(w.bgImage))
+                self.VAR_DISPLAY_WINDOW_BG_IMAGE.set(getFileNameFromPath(w.bgImage))
                 self.VAR_ENTRY_MOVE_ALL_ON_LINE_DELAY.set(w.moveAllOnLineDelay)
                 self.VAR_MESSAGE_SHUFFLE.set(w.shuffle)
 
@@ -99,6 +103,8 @@ class SettingsGUIFields:
                 self.VAR_CHALLONGE_USERNAME.set(a.challongeUsername)
                 self.VAR_CHALLONGE_API_KEY.set(a.challongeAPIKey)
                 self.VAR_SMASHGG_API_KEY.set(a.smashggAPIKey)
+                self.VAR_DISPLAY_TEMPLATE.set(getFileNameFromPath(a.templatePath) if getFileNameFromPath(a.templatePath) else "tournamentTemplate.stm")
+                self.VAR_PATH_TEMPLATE.set(a.templatePath if a.templatePath else "templates/tournamentTemplate.stm")
 
         except Exception:
             messagebox.showerror("Error", "Something is wrong with the current settings. Reverting to default values.", parent=master)

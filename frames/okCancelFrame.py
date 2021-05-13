@@ -49,7 +49,8 @@ class OkCancelFrame:
             apiSettings = APISettings(
                 self.window.fields.VAR_CHALLONGE_USERNAME.get(),
                 self.window.fields.VAR_CHALLONGE_API_KEY.get(),
-                self.window.fields.VAR_SMASHGG_API_KEY.get()
+                self.window.fields.VAR_SMASHGG_API_KEY.get(),
+                self.window.fields.VAR_PATH_TEMPLATE.get()
             )
             self.window.parent.settings = Settings(windowSettings, messageSettings, apiSettings)
             self.window.parent.applyCurrentWindowSettings()
