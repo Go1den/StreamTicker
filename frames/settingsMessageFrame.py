@@ -24,7 +24,7 @@ class SettingsMessageFrame:
         ROW_FONT_PREVIEW = 11
 
         Label(self.frame, text="Global Message Settings").grid(row=ROW_MESSAGE_SETTINGS, column=0, columnspan=3, sticky=W, pady=1)
-        self.LABEL_MESSAGE_DURATION = Label(self.frame, text="Show Each Message For:")
+        self.LABEL_MESSAGE_DURATION = Label(self.frame, text="Show Message For:")
         self.LABEL_MESSAGE_DURATION.grid(row=ROW_MESSAGE_DURATION, column=0, sticky=E, pady=1)
         messageDurationFrame = Frame(self.frame)
         self.ENTRY_MESSAGE_DURATION = Entry(messageDurationFrame, textvariable=self.fields.VAR_ENTRY_MESSAGE_DURATION, width=4)
@@ -32,7 +32,7 @@ class SettingsMessageFrame:
         Label(messageDurationFrame, text="seconds").grid(row=0, column=1, sticky=W, pady=1)
         messageDurationFrame.grid(row=ROW_MESSAGE_DURATION, column=1, sticky=W, pady=1)
 
-        self.LABEL_MESSAGE_INTERMISSION = Label(self.frame, text="Time Between Messages:")
+        self.LABEL_MESSAGE_INTERMISSION = Label(self.frame, text="Pause After Message For:")
         self.LABEL_MESSAGE_INTERMISSION.grid(row=ROW_MESSAGE_INTERMISSION, column=0, sticky=E, pady=1)
         messageIntermissionFrame = Frame(self.frame)
         self.ENTRY_MESSAGE_INTERMISSION = Entry(messageIntermissionFrame, textvariable=self.fields.VAR_ENTRY_MESSAGE_INTERMISSION, width=4)
