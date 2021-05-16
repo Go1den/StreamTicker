@@ -24,4 +24,4 @@ class Message:
 
 class MessageEncoder(JSONEncoder):
     def default(self, o):
-        return o.__dict__
+        return {k: v for k, v in o.__dict__.items() if v}

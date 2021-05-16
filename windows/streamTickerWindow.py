@@ -178,7 +178,7 @@ class StreamTickerWindow(Tk):
                 partValue = part["value"]
                 parts.append(MessagePart(partType, partSortOrder, partValue))
 
-            overrides = message["overrides"]
+            overrides = message.get("overrides", {})
             override = Override(overrides.get("duration", ""),
                                 overrides.get("intermission", ""),
                                 overrides.get("scrollSpeed", ""),
@@ -195,7 +195,7 @@ class StreamTickerWindow(Tk):
 
     def getSettings(self, path) -> Settings:
         s = readJSON(path)
-        w = s["windowSettings"]
+        w = s.get("windowSettings", {})
         windowSettings = WindowSettings(w.get('moveAllOnLineDelay', "99"),
                                         w.get('bgImage', "imagefiles/background.png"),
                                         w.get('width', "400"),
@@ -203,7 +203,7 @@ class StreamTickerWindow(Tk):
                                         w.get('bgColor', "#000000"),
                                         w.get('shuffle', False))
 
-        m = s["messageSettings"]
+        m = s.get("messageSettings", {})
         messageSettings = MessageSettings(m.get('color', "#ffffff"),
                                           m.get('fontFace', "Courier New"),
                                           m.get('intermission', ".5"),

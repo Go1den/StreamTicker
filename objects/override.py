@@ -1,7 +1,7 @@
 class Override:
-    def __init__(self, duration: str = "", intermission: str = "", scrollSpeed: str = "",
-                 font: str = "", fontSize: str = "", fontColor: str = "", arrival: str = "", departure: str = "",
-                 bold: bool = False, italic: bool = False, overstrike: bool = False, alignment: str = ""):
+    def __init__(self, duration: str = None, intermission: str = None, scrollSpeed: str = None,
+                 font: str = None, fontSize: str = None, fontColor: str = None, arrival: str = None, departure: str = None,
+                 bold: bool = None, italic: bool = None, overstrike: bool = None, alignment: str = None):
         self.duration = duration
         self.intermission = intermission
         self.scrollSpeed = scrollSpeed
