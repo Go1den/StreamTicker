@@ -63,7 +63,7 @@ class StreamTickerWindow(Tk):
 
         self.canvas.grid(row=0, column=0)
         self.updateCurrentDirectoryInUpdaterSettings()
-        self.checkForUpdates()
+        self.after(1000, self.checkForUpdates)
         self.thread = Thread(target=self.displayThread, daemon=True).start()
         self.mainloop()
 
