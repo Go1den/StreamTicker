@@ -1,9 +1,9 @@
 import json
 import os
+import subprocess
 import sys
 import time
 import urllib.request
-import webbrowser
 from random import shuffle
 from threading import Thread
 from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
@@ -62,9 +62,15 @@ class StreamTickerWindow(Tk):
         self.canvas.create_image(0, 0, anchor=NW, image=self.bgImage)
 
         self.canvas.grid(row=0, column=0)
-
+        self.updateCurrentDirectoryInUpdaterSettings()
+        self.checkForUpdates()
         self.thread = Thread(target=self.displayThread, daemon=True).start()
         self.mainloop()
+
+    def updateCurrentDirectoryInUpdaterSettings(self):
+        updaterSettings = readJSON("updater/updaterSettings.cfg")
+        updaterSettings["destinationDirectory"] = os.getcwd()
+        writeJSON("updater/updaterSettings.cfg", updaterSettings)
 
     def displayThread(self):
         while True:
@@ -266,13 +272,17 @@ class StreamTickerWindow(Tk):
         currentVersion = "2.0.7"
         try:
             f = urllib.request.urlopen('https://www.go1den.com/streamtickerversion/version.txt')
-            if currentVersion == str(f.read().decode()):
-                messagebox.showinfo("Info", "You have the latest version of StreamTicker.", parent=self)
-            else:
-                if messagebox.askyesno("New Version Available", "A new version of StreamTicker is available. Would you like to open a browser now?", parent=self):
-                    webbrowser.open('https://www.go1den.com/streamticker/', new=2)
+            if not currentVersion == str(f.read().decode()) and messagebox.askyesno("New Version Available",
+                                                                                    "A new version of StreamTicker is available. Would you like to update now?", parent=self):
+                self.updateStreamTicker()
         except HTTPError:
-            messagebox.showerror("Error", "Unable to connect to the web.", parent=self)
+            messagebox.showerror("Error", "Failed to update. You may need to download the new version manually.", parent=self)
+
+    def updateStreamTicker(self):
+        # There's very little chance this is compatible with Mac or Linux
+        os.chdir(os.getcwd() + "/updater")
+        subprocess.Popen("start cmd /C updater.exe", shell=True)
+        exit(0)
 
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?", parent=self):
