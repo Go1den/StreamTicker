@@ -45,7 +45,6 @@ def getMainMenu(win, e):
     rmenu.add_cascade(label="  Community", menu=communityMenu)
     rmenu.add_cascade(label="  Feedback", menu=issueMenu)
     rmenu.add_command(label="  Release Notes", command=lambda: webbrowser.open('https://pastebin.com/wJpGZE0F', new=2))
-    rmenu.add_command(label='  Check for Updates', command=lambda: win.checkForUpdates())
     rmenu.add_separator()
     rmenu.add_command(label='  About', command=lambda: AboutWindow(win))
     rmenu.add_command(label='  Exit', command=lambda: win.closeWindow())

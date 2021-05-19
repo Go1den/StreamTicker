@@ -29,7 +29,7 @@ def getFileNameFromPath(path) -> str:
 
 def readJSON(path) -> dict:
     try:
-        with open(path) as f:
+        with open(path, encoding="utf8") as f:
             return json.load(f)
     except:
         return {}
