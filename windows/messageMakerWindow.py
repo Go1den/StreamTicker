@@ -188,4 +188,4 @@ class MessageMakerWindow:
             else:
                 self.parentWindow.messages.append(newMessage)
             self.parentWindow.mlFrame.populateListbox(self.parentWindow.messages)
-            self.master.destroy()
+            self.deleteWindow()
