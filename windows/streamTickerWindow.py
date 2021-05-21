@@ -272,17 +272,12 @@ class StreamTickerWindow(Tk):
         currentVersion = "2.0.8"
         try:
             f = urllib.request.urlopen('https://www.go1den.com/streamtickerversion/version.txt')
-            if not currentVersion == str(f.read().decode()) and messagebox.askyesno("New Version Available",
-                                                                                    "A new version of StreamTicker is available. Would you like to update now?", parent=self):
-                self.updateStreamTicker()
+            if not currentVersion == str(f.read().decode()):
+                messagebox.showinfo("New Version Available",
+                                    "A new version of StreamTicker is available. To update, open your StreamTicker directory, navigate to the updater folder, and run updater.exe, or you can download it manually from the website.",
+                                    parent=self)
         except HTTPError:
             messagebox.showerror("Error", "Failed to update. You may need to download the new version manually.", parent=self)
-
-    def updateStreamTicker(self):
-        # There's very little chance this is compatible with Mac or Linux
-        os.chdir(os.getcwd() + "/updater")
-        subprocess.Popen("start cmd /C updater.exe", shell=True)
-        exit(0)
 
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?", parent=self):
