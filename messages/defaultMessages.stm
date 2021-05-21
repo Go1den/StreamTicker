@@ -24,20 +24,7 @@
                 "value": "StreamTicker"
             }
         ],
-        "overrides": {
-            "duration": "",
-            "intermission": "",
-            "scrollSpeed": "",
-            "font": "",
-            "fontSize": "",
-            "fontColor": "",
-            "arrival": "",
-            "departure": "",
-            "bold": false,
-            "italic": false,
-            "overstrike": false,
-            "alignment": ""
-        }
+        "overrides": {}
     },
     {
         "nickname": "Made by Go1den",
@@ -64,19 +51,6 @@
                 "value": "Made by Go1den"
             }
         ],
-        "overrides": {
-            "duration": "",
-            "intermission": "",
-            "scrollSpeed": "",
-            "font": "",
-            "fontSize": "",
-            "fontColor": "",
-            "arrival": "",
-            "departure": "",
-            "bold": false,
-            "italic": false,
-            "overstrike": false,
-            "alignment": ""
-        }
+        "overrides": {}
     }
 ]
