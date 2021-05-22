@@ -281,7 +281,7 @@ class StreamTickerWindow(Tk):
     def updateStreamTicker(self):
         # There's very little chance this is compatible with Mac or Linux
         os.chdir(os.getcwd() + "/updater")
-        subprocess.Popen("start cmd /C updater.exe", shell=True, stdin=None, stdout=None, stderr=None, close_fds=True)
+        subprocess.Popen("start cmd /C updater.exe", shell=True, stdin=None, stdout=None, stderr=None, close_fds=True, creationflags=subprocess.DETACHED_PROCESS)
         exit(0)
 
     def loadDefaultSettings(self):
