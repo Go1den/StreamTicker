@@ -282,8 +282,7 @@ class StreamTickerWindow(Tk):
         # There's very little chance this is compatible with Mac or Linux
         os.chdir(os.getcwd() + "/updater")
         DETACHED_PROCESS = 0x00000008
-        pid = subprocess.Popen([sys.executable, "updater.exe"],
-                               creationflags=DETACHED_PROCESS).pid
+        subprocess.Popen("updater.exe", creationflags=DETACHED_PROCESS)
         exit(0)
 
     def loadDefaultSettings(self):
