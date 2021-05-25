@@ -281,7 +281,7 @@ class StreamTickerWindow(Tk):
     def updateStreamTicker(self):
         # This is not compatible with Mac or Linux
         os.startfile(os.getcwd() + "/updater")
-        exit(0)
+        self.closeWindow()
 
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?", parent=self):
@@ -356,4 +356,4 @@ class StreamTickerWindow(Tk):
         self.streamTickerWindowJSON["offsety"] = self.winfo_y()
         self.streamTickerWindowJSON["alwaysontop"] = self.alwaysOnTop.get()
         writeJSON("settings.cfg", self.streamTickerWindowJSON)
-        sys.exit(1)
+        sys.exit(0)
