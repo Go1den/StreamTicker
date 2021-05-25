@@ -1,6 +1,5 @@
 import json
 import os
-import subprocess
 import sys
 import time
 import urllib.request
@@ -273,16 +272,15 @@ class StreamTickerWindow(Tk):
         try:
             f = urllib.request.urlopen('https://www.go1den.com/streamtickerversion/version.txt')
             if not currentVersion == str(f.read().decode()) and messagebox.askyesno("New Version Available",
-                                                                                    "A new version of StreamTicker is available. Would you like to update now?", parent=self):
+                                                                                    "A new version of StreamTicker is available. You can run the updater.exe script while StreamTicker is closed to update. Would you like to close StreamTicker now?",
+                                                                                    parent=self):
                 self.updateStreamTicker()
         except HTTPError:
             messagebox.showerror("Error", "Failed to update. You may need to download the new version manually.", parent=self)
 
     def updateStreamTicker(self):
-        # There's very little chance this is compatible with Mac or Linux
-        os.chdir(os.getcwd() + "/updater")
-        DETACHED_PROCESS = 0x00000008
-        subprocess.Popen("updater.exe", creationflags=DETACHED_PROCESS)
+        # This is not compatible with Mac or Linux
+        os.startfile(os.getcwd() + "/updater")
         exit(0)
 
     def loadDefaultSettings(self):
