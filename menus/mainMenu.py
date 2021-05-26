@@ -48,5 +48,5 @@ def getMainMenu(win, e):
     rmenu.add_separator()
     rmenu.add_command(label='  About', command=lambda: AboutWindow(win))
     rmenu.add_command(label='  Exit', command=lambda: win.closeWindow())
-    rmenu.tk_popup(e.x_root + 65, e.y_root + 11, entry="0")
+    rmenu.tk_popup(e.x_root + 55, e.y_root + 11, entry="0")
     return rmenu

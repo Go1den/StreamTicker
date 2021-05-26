@@ -1,6 +1,5 @@
 import json
 import os
-import subprocess
 import sys
 import time
 import urllib.request
@@ -64,7 +63,7 @@ class StreamTickerWindow(Tk):
 
         self.canvas.grid(row=0, column=0)
         self.updateCurrentDirectoryInUpdaterSettings()
-        self.checkForUpdates()
+        self.after(1000, self.checkForUpdates)
         self.thread = Thread(target=self.displayThread, daemon=True).start()
         self.mainloop()
 
@@ -280,20 +279,20 @@ class StreamTickerWindow(Tk):
             messagebox.showerror("Error", "Failed to load messages!", parent=self)
 
     def checkForUpdates(self):
-        currentVersion = "2.0.7"
+        currentVersion = "2.0.8"
         try:
             f = urllib.request.urlopen('https://www.go1den.com/streamtickerversion/version.txt')
             if not currentVersion == str(f.read().decode()) and messagebox.askyesno("New Version Available",
-                                                                                    "A new version of StreamTicker is available. Would you like to update now?", parent=self):
+                                                                                    "A new version of StreamTicker is available. You can run the updater.exe script while StreamTicker is closed to update. Would you like to close StreamTicker now?",
+                                                                                    parent=self):
                 self.updateStreamTicker()
         except HTTPError:
             messagebox.showerror("Error", "Failed to update. You may need to download the new version manually.", parent=self)
 
     def updateStreamTicker(self):
-        # There's very little chance this is compatible with Mac or Linux
-        os.chdir(os.getcwd() + "/updater")
-        subprocess.Popen("start cmd /C updater.exe", shell=True)
-        exit(0)
+        # This is not compatible with Mac or Linux
+        os.startfile(os.getcwd() + "/updater")
+        self.closeWindow()
 
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?", parent=self):
@@ -372,4 +371,4 @@ class StreamTickerWindow(Tk):
         self.streamTickerWindowJSON["smashggAPIKey"] = self.settings.apiSettings.smashggAPIKey
         self.streamTickerWindowJSON["templatePath"] = self.settings.apiSettings.templatePath
         writeJSON("settings.cfg", self.streamTickerWindowJSON)
-        sys.exit(1)
+        sys.exit(0)
