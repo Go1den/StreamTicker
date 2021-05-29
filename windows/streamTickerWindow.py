@@ -49,6 +49,7 @@ class StreamTickerWindow(Tk):
         self.iconbitmap('imagefiles/stIcon.ico')
         self.updateAlwaysOnTop()
         self.shufflePool = []
+        self.protocol("WM_DELETE_WINDOW", lambda: self.closeWindow())
 
         self.canvas = Canvas(self, width=self.settings.windowSettings.width, height=self.settings.windowSettings.height, bd=0, highlightthickness=0,
                              background=self.settings.windowSettings.bgColor)
