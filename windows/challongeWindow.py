@@ -35,14 +35,14 @@ class ChallongeWindow:
             self.master.deiconify()
             self.master.mainloop()
 
-    def generateChallongeMessages(self, url: str, includeCompleted: bool, includeInProgress: bool, includeLosersBracket: bool, mostRecentRounds: int):
+    def generateChallongeMessages(self, url: str, includeCompleted: bool, includeInProgress: bool, includeLosersBracket: bool, includePrelims: bool, includeShoutout: bool, mostRecentRounds: int):
         try:
             tournamentInfo = getTournamentInfo(self.parent.settings.apiSettings.challongeUsername, self.parent.settings.apiSettings.challongeAPIKey, url, includeCompleted,
-                                               includeInProgress, includeLosersBracket, mostRecentRounds)
+                                               includeInProgress, includeLosersBracket, includePrelims, mostRecentRounds)
             template = readJSON(self.parent.settings.apiSettings.templatePath)
             if template == {}:
                 raise FileNotFoundError
-            generatedFileLocation = generateStmFile(tournamentInfo, template)
+            generatedFileLocation = generateStmFile(tournamentInfo, template, includeShoutout)
             self.parent.load(os.getcwd() + "/" + generatedFileLocation)
             self.master.destroy()
         except FileNotFoundError:

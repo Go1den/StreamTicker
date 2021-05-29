@@ -1,5 +1,5 @@
 class MatchInfo:
-    def __init__(self, match: dict):
+    def __init__(self, match: dict, entrantsDict: dict):
         self.matchID = match["id"]
         self.state = match["state"]
         self.round = match["round"]
@@ -9,6 +9,7 @@ class MatchInfo:
         self.scoreString = match["scores_csv"]
         self.winnerID = match["winner_id"]
         self.loserID = match["loser_id"]
+        self.isPrelim = self.getIsPreliminaryRound(entrantsDict)
         self.setScore = ""
         self.player1Scores = []
         self.player2Scores = []
@@ -17,6 +18,9 @@ class MatchInfo:
         self.scoreStringWithWinningPlayersScoresFirst = ""
         self.setPlayerScores()
         self.roundForSortingPurposes = (self.round - 0.5) * -1 if self.round < 0 else self.round
+
+    def getIsPreliminaryRound(self, entrantsDict: dict) -> bool:
+        return entrantsDict.get(self.player1ID).isGroupID
 
     def setPlayerScores(self):
         if self.scoreString:

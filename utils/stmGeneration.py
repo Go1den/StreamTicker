@@ -7,11 +7,13 @@ from objects.playerInfo import PlayerInfo
 from objects.tournamentInfo import TournamentInfo
 from utils.helperMethods import writeJSON
 
-def generateStmFile(tournamentInfo: TournamentInfo, template: dict) -> str:
+def generateStmFile(tournamentInfo: TournamentInfo, template: dict, includeShoutout: bool) -> str:
     result = []
     sortOrder = 0
     template = template[0]
-    for match in sorted(tournamentInfo.matches, key=lambda x: x.roundForSortingPurposes):
+    if includeShoutout:
+        result.append(getShoutout())
+    for match in tournamentInfo.matches:
         sortOrder += 1
         message = {"nickname": template["nickname"] + str(match.round) + match.identifier,
                    "sortOrder": sortOrder,
@@ -27,6 +29,35 @@ def generateStmFile(tournamentInfo: TournamentInfo, template: dict) -> str:
     writeTo = "messages/challonge_" + timestamp + ".stm"
     writeJSON(writeTo, result)
     return writeTo
+
+def getShoutout() -> dict:
+    return {
+        "nickname": "StreamTicker",
+        "sortOrder": 1,
+        "parts": [
+            {
+                "partType": "Pixel Gap",
+                "sortOrder": 1,
+                "value": "8"
+            },
+            {
+                "partType": "Image",
+                "sortOrder": 2,
+                "value": "imagefiles/stLogo28.png"
+            },
+            {
+                "partType": "Pixel Gap",
+                "sortOrder": 3,
+                "value": "8"
+            },
+            {
+                "partType": "Text",
+                "sortOrder": 4,
+                "value": "Powered by StreamTicker"
+            }
+        ],
+        "overrides": {}
+    }
 
 def getTournamentPartValue(match: MatchInfo, player1: PlayerInfo, player2: PlayerInfo, format: FormatInfo, value: str) -> str:
     # TODO implement reading image from URL for the player icons
@@ -85,8 +116,13 @@ def getWinningPlayer(match: MatchInfo, player1: PlayerInfo, player2: PlayerInfo)
     return PlayerInfo()
 
 def getRoundName(match: MatchInfo, player1: PlayerInfo, format: FormatInfo):
+    if player1.isGroupID:
+        return "Pools Round " + str(abs(match.round))
     if format.type == "single elimination":
-        return "Round " + str(abs(match.round))
+        if format.hasGroupStages:
+            return "Bracket Round " + str(abs(match.round))
+        else:
+            return "Round " + str(abs(match.round))
     if format.type == "double elimination":
         result = ""
         if match.round * -1 < 0:
@@ -95,8 +131,4 @@ def getRoundName(match: MatchInfo, player1: PlayerInfo, format: FormatInfo):
             result += "Losers "
         result += "Round " + str(abs(match.round))
         return result
-    if player1.isGroupID:
-        return "Pools"
     return "Round " + str(abs(match.round))
-
-# TODO we gotta figure out how to deal with these group->bracket tournaments

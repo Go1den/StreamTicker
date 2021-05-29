@@ -54,19 +54,6 @@
                 "value": "Player 2's Score"
             }
         ],
-        "overrides": {
-            "duration": "",
-            "intermission": "",
-            "scrollSpeed": "",
-            "font": "",
-            "fontSize": "",
-            "fontColor": "",
-            "arrival": "",
-            "departure": "",
-            "bold": false,
-            "italic": false,
-            "overstrike": false,
-            "alignment": ""
-        }
+        "overrides": {}
     }
 ]

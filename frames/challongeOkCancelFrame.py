@@ -12,6 +12,8 @@ class ChallongeOkCancelFrame:
                                                                                           self.window.challongeFrame.completedCheckbutton.get(),
                                                                                           self.window.challongeFrame.inProgressCheckbutton.get(),
                                                                                           self.window.challongeFrame.losersBracketCheckbutton.get(),
+                                                                                          self.window.challongeFrame.prelimsCheckbutton.get(),
+                                                                                          self.window.challongeFrame.includeShoutoutCheckbutton.get(),
                                                                                           self.window.challongeFrame.recentRounds.get() if self.window.challongeFrame.showRecentRoundsOnlyCheckbutton.get() else 0
                                                                                           ))
         self.okButton.grid(row=0, column=0, sticky=E, padx=10)
