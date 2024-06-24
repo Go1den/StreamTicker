@@ -47,7 +47,7 @@ class OkCancelFrame:
             )
             defaultTemplate = {"parts": [{
                 "partType": x.partType,
-                "sortOrder": self.window.tFrame.messageParts.index(x),
+                "sortOrder": self.window.tFrame.messageParts.index(x) + 1,
                 "value": x.value
             } for x in self.window.tFrame.messageParts], "overrides": {}}
             self.window.parent.settings = Settings(windowSettings, messageSettings, defaultTemplate)
