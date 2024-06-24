@@ -1,10 +1,10 @@
-[//]: # (<img align="left" width="64" height="64" src="https://go1den.com/wp-content/uploads/2021/03/stLogo64.png" alt="StreamTicker">)
+<img align="left" width="64" height="64" src="https://raw.githubusercontent.com/Go1den/StreamTicker/main/imagefiles/stLogo64.png" alt="StreamTicker">
 
 # StreamTicker
 
 StreamTicker is a highly customizable tool for streamers to display combinations of images and text, either preset or read in from files. It was designed and tested on Windows 10. It may not be compatible with other operating systems.
 
-[//]: # (![StreamTicker Example]&#40;https://go1den.com/wp-content/uploads/2021/03/streamTickerExample-1.gif&#41;)
+![StreamTicker Example](https://raw.githubusercontent.com/Go1den/StreamTicker/main/imagefiles/readme/example.gif)
 
 # Settings
 The program is designed to allow you to create and save settings files that will define the characteristics of how messages are presented. Thus, you could easily switch between different window sizes, fonts, background images, and message behaviors by constructing unique settings files.
