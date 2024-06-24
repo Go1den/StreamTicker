@@ -35,7 +35,6 @@ def readJSON(path) -> dict:
 
 def writeJSON(path, data) -> bool:
     try:
-        print(data)
         with open(path, 'w') as f:
             json.dump(data, f, indent=4)
             return True

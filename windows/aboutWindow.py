@@ -18,11 +18,10 @@ class AboutWindow:
         self.frameTop = Frame(self.aboutWindow)
 
         self.aboutImage = PhotoImage(file="imagefiles/stLogo64.png")
-        self.aboutImageLabel = Label(self.frameTop, image=self.aboutImage, cursor="hand2")
-        self.aboutImageLabel.bind("<Button-1>", lambda x: webbrowser.open('https://www.go1den.com/streamticker', new=2))
+        self.aboutImageLabel = Label(self.frameTop, image=self.aboutImage)
         self.aboutImageLabel.grid(row=0, column=0, padx=4, pady=4)
 
-        self.aboutLabel = Label(self.frameTop, text="StreamTicker\n\nVersion 2.0.8\n\nReleased: 5/20/2021", justify=LEFT)
+        self.aboutLabel = Label(self.frameTop, text="StreamTicker\n\nVersion 3.0.0\n\nReleased: 6/24/2024", justify=LEFT)
         self.aboutLabel.grid(row=0, column=1, sticky=W, pady=4)
 
         self.frameTop.grid(row=0, column=0, sticky=W)
