@@ -45,6 +45,11 @@ class OkCancelFrame:
                 self.window.fields.VAR_FONT_IS_OVERSTRIKE.get(),
                 self.window.fields.VAR_ALIGNMENT.get()
             )
-            self.window.parent.settings = Settings(windowSettings, messageSettings)
+            defaultTemplate = {"parts": [{
+                "partType": x.partType,
+                "sortOrder": self.window.tFrame.messageParts.index(x),
+                "value": x.value
+            } for x in self.window.tFrame.messageParts], "overrides": {}}
+            self.window.parent.settings = Settings(windowSettings, messageSettings, defaultTemplate)
             self.window.parent.applyCurrentWindowSettings()
             self.window.master.destroy()

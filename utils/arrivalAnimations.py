@@ -35,7 +35,7 @@ def getWidthAndHeight(currentMessage: Message, settings: Settings, font: Font) -
     for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):
         if part.partType == "Pixel Gap":
             xCoord += int(part.value)
-        elif part.partType == "Text":
+        elif part.partType == "Text" or part.partType == "Streamed Text Line From File":
             for char in part.value:
                 canvas.create_text(xCoord, yCoord, fill=fontColor, text=char, font=font, tags="currentMessage", anchor=W)
                 box = canvas.bbox(canvas.find_withtag("currentMessage")[-1])

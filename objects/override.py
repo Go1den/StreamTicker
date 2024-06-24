@@ -28,4 +28,4 @@ class Override:
         print("Bold: " + str(self.bold))
         print("Italic: " + str(self.italic))
         print("Overstrike: " + str(self.overstrike))
-        print("Alignment: " + self.alignment)
+        print("Alignment: " + str(self.alignment))

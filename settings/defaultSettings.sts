@@ -19,5 +19,15 @@
         "italic": false,
         "overstrike": false,
         "alignment": "Left"
+    },
+    "defaultTemplate": {
+        "parts": [
+            {
+                "partType": "Streamed Text Line From File",
+                "sortOrder": 1,
+                "value": ""
+            }
+        ],
+        "overrides": {}
     }
 }

@@ -14,6 +14,7 @@ def getMainMenu(win, e):
     messagesMenu.add_command(label="Save", command=lambda: win.saveMessages(False))
     messagesMenu.add_command(label="Save as...", command=lambda: win.saveMessages(True))
     messagesMenu.add_command(label="Default", command=lambda: win.loadDefaultMessages())
+    messagesMenu.add_command(label="Stream Lines From File...", command=lambda: win.loadMessagesByContinuousReadFromFile())
 
     settingsMenu = Menu(rmenu, tearoff=0, takefocus=0, bg="#ffffff")
     settingsMenu.add_command(label="Edit...", command=lambda: SettingsWindow(win))

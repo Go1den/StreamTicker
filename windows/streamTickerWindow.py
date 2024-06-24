@@ -2,12 +2,10 @@ import json
 import os
 import sys
 import time
-import urllib.request
 from random import shuffle
 from threading import Thread
 from tkinter import Tk, filedialog, messagebox, BooleanVar, Canvas, NW, W
 from tkinter.font import Font
-from urllib.error import HTTPError
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
@@ -33,6 +31,7 @@ class StreamTickerWindow(Tk):
         self.streamTickerWindowJSON = self.getSettingsJSONOnStartup()
         self.messagesPath = self.getOnStartup("messages", "")
         self.settingsPath = self.getOnStartup("settings", "")
+        self.isContinuousReadFromFile = self.getOnStartup("isContinuousReadFromFile", False)
         self._offsetx = self.getOnStartup("offsetx", 0)
         self._offsety = self.getOnStartup("offsety", 0)
         self.geometry('+{x}+{y}'.format(x=self._offsetx, y=self._offsety))
@@ -62,15 +61,8 @@ class StreamTickerWindow(Tk):
         self.canvas.create_image(0, 0, anchor=NW, image=self.bgImage)
 
         self.canvas.grid(row=0, column=0)
-        self.updateCurrentDirectoryInUpdaterSettings()
-        self.after(1000, self.checkForUpdates)
         self.thread = Thread(target=self.displayThread, daemon=True).start()
         self.mainloop()
-
-    def updateCurrentDirectoryInUpdaterSettings(self):
-        updaterSettings = readJSON("updater/updaterSettings.cfg")
-        updaterSettings["destinationDirectory"] = os.getcwd()
-        writeJSON("updater/updaterSettings.cfg", updaterSettings)
 
     def displayThread(self):
         while True:
@@ -91,37 +83,37 @@ class StreamTickerWindow(Tk):
     def displayNextMessage(self):
         try:
             currentMessage = self.messages[self.currentIndex]
+            fontFamily = currentMessage.overrides.font if currentMessage.overrides.font else self.settings.messageSettings.fontFace
+            fontSize = currentMessage.overrides.fontSize if currentMessage.overrides.fontSize else self.settings.messageSettings.fontSize
+            fontColor = currentMessage.overrides.fontColor if currentMessage.overrides.fontColor else self.settings.messageSettings.color
+            bold = currentMessage.overrides.bold if currentMessage.overrides.bold else self.settings.messageSettings.bold
+            bold = "bold" if bold else "normal"
+            italic = currentMessage.overrides.italic if currentMessage.overrides.italic else self.settings.messageSettings.italic
+            italic = "italic" if italic else "roman"
+            overstrike = currentMessage.overrides.overstrike if currentMessage.overrides.overstrike else self.settings.messageSettings.overstrike
+            overstrike = 1 if overstrike else 0
+            alignment = currentMessage.overrides.alignment if currentMessage.overrides.alignment else self.settings.messageSettings.alignment
+            duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
+            intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
+            scrollSpeed = getScrollSpeedFloat(currentMessage.overrides.scrollSpeed) if currentMessage.overrides.scrollSpeed else getScrollSpeedFloat(
+                self.settings.windowSettings.moveAllOnLineDelay)
+            arrival = currentMessage.overrides.arrival if currentMessage.overrides.arrival else self.settings.messageSettings.arrival
+            if arrival == "Pick For Me":
+                arrival = pickArrival(italic)
+            departure = currentMessage.overrides.departure if currentMessage.overrides.departure else self.settings.messageSettings.departure
+            if departure == "Pick For Me":
+                departure = pickDeparture(italic)
+            font = Font(family=fontFamily, size=fontSize, weight=bold, overstrike=overstrike, slant=italic)
+            width, height = getWidthAndHeight(currentMessage, self.settings, font)
+            self.xCoord, self.yCoord, self.yCoord2 = getStartingXYCoordinates(width, height, arrival, self.settings, alignment)
+            self.setupCanvas(arrival, currentMessage, font, fontColor)
+            selectArrivalAnimation(self.canvas, self.settings, arrival, height, scrollSpeed, width, alignment)
+            time.sleep(duration)
+            selectDepartureAnimation(self.canvas, self.settings, departure, height, scrollSpeed, width, alignment)
+            self.clearCanvasAndResetVariables(intermission)
         except IndexError:
-            self.clearCanvasAndResetVariables(5)
+            self.clearCanvasAndResetVariables(self.settings.messageSettings.intermission)
             self.displayNextMessage()
-        fontFamily = currentMessage.overrides.font if currentMessage.overrides.font else self.settings.messageSettings.fontFace
-        fontSize = currentMessage.overrides.fontSize if currentMessage.overrides.fontSize else self.settings.messageSettings.fontSize
-        fontColor = currentMessage.overrides.fontColor if currentMessage.overrides.fontColor else self.settings.messageSettings.color
-        bold = currentMessage.overrides.bold if currentMessage.overrides.bold else self.settings.messageSettings.bold
-        bold = "bold" if bold else "normal"
-        italic = currentMessage.overrides.italic if currentMessage.overrides.italic else self.settings.messageSettings.italic
-        italic = "italic" if italic else "roman"
-        overstrike = currentMessage.overrides.overstrike if currentMessage.overrides.overstrike else self.settings.messageSettings.overstrike
-        overstrike = 1 if overstrike else 0
-        alignment = currentMessage.overrides.alignment if currentMessage.overrides.alignment else self.settings.messageSettings.alignment
-        duration = float(currentMessage.overrides.duration) if currentMessage.overrides.duration else float(self.settings.messageSettings.duration)
-        intermission = float(currentMessage.overrides.intermission) if currentMessage.overrides.intermission else float(self.settings.messageSettings.intermission)
-        scrollSpeed = getScrollSpeedFloat(currentMessage.overrides.scrollSpeed) if currentMessage.overrides.scrollSpeed else getScrollSpeedFloat(
-            self.settings.windowSettings.moveAllOnLineDelay)
-        arrival = currentMessage.overrides.arrival if currentMessage.overrides.arrival else self.settings.messageSettings.arrival
-        if arrival == "Pick For Me":
-            arrival = pickArrival(italic)
-        departure = currentMessage.overrides.departure if currentMessage.overrides.departure else self.settings.messageSettings.departure
-        if departure == "Pick For Me":
-            departure = pickDeparture(italic)
-        font = Font(family=fontFamily, size=fontSize, weight=bold, overstrike=overstrike, slant=italic)
-        width, height = getWidthAndHeight(currentMessage, self.settings, font)
-        self.xCoord, self.yCoord, self.yCoord2 = getStartingXYCoordinates(width, height, arrival, self.settings, alignment)
-        self.setupCanvas(arrival, currentMessage, font, fontColor)
-        selectArrivalAnimation(self.canvas, self.settings, arrival, height, scrollSpeed, width, alignment)
-        time.sleep(duration)
-        selectDepartureAnimation(self.canvas, self.settings, departure, height, scrollSpeed, width, alignment)
-        self.clearCanvasAndResetVariables(intermission)
 
     def clearCanvasAndResetVariables(self, intermission):
         self.canvas.delete("currentMessage")
@@ -132,16 +124,23 @@ class StreamTickerWindow(Tk):
             if self.settings.windowSettings.shuffle:
                 self.currentIndex = self.getNextShuffledMessage()
             else:
-                self.currentIndex = (self.currentIndex + 1) % len(self.messages)
+                if self.currentIndex >= len(self.messages):
+                    if self.isContinuousReadFromFile:
+                        self.messages = self.getMessagesByContinuousReadFromFile(self.messagesPath)
+                    self.currentIndex = 0
+                else:
+                    self.currentIndex = self.currentIndex + 1
         else:
             self.currentIndex = 0
-        time.sleep(intermission)
+            if self.isContinuousReadFromFile:
+                self.messages = self.getMessagesByContinuousReadFromFile(self.messagesPath)
+        time.sleep(float(intermission))
 
     def setupCanvas(self, arrival: str, currentMessage: Message, font: Font, fontColor: str):
         for part in sorted(currentMessage.parts, key=lambda x: x.sortOrder):
             if part.partType == "Pixel Gap":
                 self.xCoord += int(part.value)
-            elif part.partType == "Text":
+            elif part.partType == "Text" or part.partType == "Streamed Text Line From File":
                 for char in part.value:
                     self.canvas.create_text(self.xCoord, self.yCoord, fill=fontColor, text=char, font=font, tags="currentMessage", anchor=W)
                     box = self.canvas.bbox(self.canvas.find_withtag("currentMessage")[-1])
@@ -221,7 +220,8 @@ class StreamTickerWindow(Tk):
                                           m.get('italic', False),
                                           m.get('overstrike', False),
                                           m.get('alignment', "Left"))
-        return Settings(windowSettings, messageSettings)
+        defaultTemplate = s.get("defaultTemplate", {})
+        return Settings(windowSettings, messageSettings, defaultTemplate)
 
     def updateAlwaysOnTop(self):
         if self.alwaysOnTop.get():
@@ -256,6 +256,51 @@ class StreamTickerWindow(Tk):
         else:
             return default
 
+    def getMessagesByContinuousReadFromFile(self, fileToLoad) -> list[Message]:
+        f = open(fileToLoad, "r")
+        readLines = f.readlines()
+        messages = []
+        sortOrder = 0
+        for line in readLines:
+            sortOrder += 1
+            nickname = "Message " + str(sortOrder)
+            parts = []
+            partSortOrder = 0
+            for part in self.settings.defaultTemplate["parts"]:
+                partSortOrder += 1
+                if part["partType"] == "Streamed Text Line From File":
+                    parts.append(MessagePart(part["partType"], partSortOrder, line))
+                else:
+                    parts.append(MessagePart(part["partType"], partSortOrder, part["value"]))
+
+            overrides = self.settings.defaultTemplate["overrides"]
+            override = Override(overrides.get("duration", ""),
+                                overrides.get("intermission", ""),
+                                overrides.get("scrollSpeed", ""),
+                                overrides.get("font", ""),
+                                overrides.get("fontSize", ""),
+                                overrides.get("fontColor", ""),
+                                overrides.get("arrival", ""),
+                                overrides.get("departure", ""),
+                                overrides.get("bold", False),
+                                overrides.get("italic", False),
+                                overrides.get("overstrike", False))
+            messages.append(Message(nickname, sortOrder, parts, override))
+        return messages
+
+    def loadMessagesByContinuousReadFromFile(self):
+        fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd() + "/messages", title="Load messages", filetypes=[("Text File", "*.txt")])
+        if not fileToLoad or fileToLoad is None:
+            return
+        else:
+            try:
+                self.messages = self.getMessagesByContinuousReadFromFile(fileToLoad)
+                self.messagesPath = fileToLoad
+                self.isContinuousReadFromFile = True
+                messagebox.showinfo("Info", "StreamTicker is now streaming messages from the chosen file.", parent=self)
+            except:
+                messagebox.showerror("Error", "Failed to stream messages from the chosen file!", parent=self)
+
     def loadMessages(self):
         fileToLoad = filedialog.askopenfilename(initialdir=os.getcwd() + "/messages", title="Load messages", filetypes=[("StreamTicker Messages", "*.stm")])
         if not fileToLoad or fileToLoad is None:
@@ -264,25 +309,10 @@ class StreamTickerWindow(Tk):
             try:
                 self.messages = self.getMessages(fileToLoad)
                 self.messagesPath = fileToLoad
+                self.isContinuousReadFromFile = False
                 messagebox.showinfo("Info", "Messages were loaded successfully.", parent=self)
             except:
                 messagebox.showerror("Error", "Failed to load messages!", parent=self)
-
-    def checkForUpdates(self):
-        currentVersion = "2.0.8"
-        try:
-            f = urllib.request.urlopen('https://www.go1den.com/streamtickerversion/version.txt')
-            if not currentVersion == str(f.read().decode()) and messagebox.askyesno("New Version Available",
-                                                                                    "A new version of StreamTicker is available. You can run the updater.exe script while StreamTicker is closed to update. Would you like to close StreamTicker now?",
-                                                                                    parent=self):
-                self.updateStreamTicker()
-        except HTTPError:
-            messagebox.showerror("Error", "Failed to update. You may need to download the new version manually.", parent=self)
-
-    def updateStreamTicker(self):
-        # This is not compatible with Mac or Linux
-        os.startfile(os.getcwd() + "/updater")
-        self.closeWindow()
 
     def loadDefaultSettings(self):
         if messagebox.askokcancel("Restore Default Settings", "Are you sure you want to restore the default settings for StreamTicker?", parent=self):
@@ -291,6 +321,7 @@ class StreamTickerWindow(Tk):
 
     def loadDefaultMessages(self):
         if messagebox.askokcancel("Restore Default Messages", "Are you sure you want to restore the default messages for StreamTicker?", parent=self):
+            self.isContinuousReadFromFile = False
             self.messages = [Message("StreamTicker", 1, [MessagePart("Pixel Gap", 1, "8"),
                                                          MessagePart("Image", 2, "imagefiles/stLogo28.png"),
                                                          MessagePart("Pixel Gap", 3, "8"),
@@ -349,6 +380,7 @@ class StreamTickerWindow(Tk):
         except Exception:
             self.bgImage = None
         self.canvas.create_image(0, 0, anchor=NW, image=self.bgImage)
+        self.currentIndex = len(self.messages) + 1
 
     def closeWindow(self):
         self.streamTickerWindowJSON["messages"] = self.messagesPath
@@ -356,5 +388,6 @@ class StreamTickerWindow(Tk):
         self.streamTickerWindowJSON["offsetx"] = self.winfo_x()
         self.streamTickerWindowJSON["offsety"] = self.winfo_y()
         self.streamTickerWindowJSON["alwaysontop"] = self.alwaysOnTop.get()
+        self.streamTickerWindowJSON["isContinuousReadFromFile"] = self.isContinuousReadFromFile
         writeJSON("settings.cfg", self.streamTickerWindowJSON)
         sys.exit(0)

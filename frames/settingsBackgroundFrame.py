@@ -1,5 +1,5 @@
 import os
-from tkinter import Frame, GROOVE, Label, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED, SE
+from tkinter import Frame, GROOVE, Label, W, E, colorchooser, filedialog, Canvas, Checkbutton, BooleanVar, NORMAL, DISABLED
 
 from PIL import Image
 
@@ -53,7 +53,7 @@ class SettingsBackgroundFrame:
         self.fitWindowFrame.grid(row=ROW_SET_DIMENSIONS, column=0, columnspan=2, padx=4, pady=4, sticky=W)
 
         self.buttonClearImage = HoverButton(self.frame, text='Remove Image', width=15, command=lambda: self.updateBackgroundImage())
-        self.buttonClearImage.grid(row=ROW_DO_NOT_USE_BG, column=0, columnspan=3, sticky=SE, padx=4, pady=(0, 4))
+        self.buttonClearImage.grid(row=ROW_DO_NOT_USE_BG, column=0, columnspan=3, sticky=W, padx=4, pady=(0, 4))
 
         self.CANVAS_WINDOW_BG_IMAGE.grid(row=0, column=0, sticky=W)
         bgColorFrame.grid(row=ROW_BG_COLOR, column=1, sticky=W)
