@@ -2,7 +2,7 @@
 
 # StreamTicker
 
-StreamTicker is a highly customizable tool for streamers to display combinations of images and text, either preset or read in from files. It was designed and tested on Windows 10. It may not be compatible with other operating systems.
+StreamTicker is a highly customizable tool for streamers to display combinations of images and text, either preset or read in from files.
 
 ![StreamTicker Example](https://raw.githubusercontent.com/Go1den/StreamTicker/main/imagefiles/readme/example.gif)
 
